@@ -1,56 +1,75 @@
 package com.uiuang.cloudknowledge.ui.fragemnt.sister
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
+import com.uiuang.cloudknowledge.app.base.BaseFragment
+import com.uiuang.cloudknowledge.databinding.FragmentSisterBinding
+import com.uiuang.cloudknowledge.ext.init
+import com.uiuang.cloudknowledge.ext.loadServiceInit
+import com.uiuang.cloudknowledge.ext.showLoading
+import com.uiuang.cloudknowledge.viewmodel.request.RequestSisterViewModel
+import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
+import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
+import kotlinx.android.synthetic.main.fragment_sister.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
+class SisterFragment : BaseFragment<HomeViewModel, FragmentSisterBinding>() {
+    //界面状态管理者
+    private lateinit var loadsir: LoadService<Any>
 
-class SisterFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    //请求ViewModel
+    private val requestTreeViewModel: RequestSisterViewModel by viewModels()
 
+    //recyclerview的底部加载view 因为要在首页动态改变他的颜色，所以加了他这个字段
+    private lateinit var footView: DefineLoadMoreView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
+    }
+
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = SisterFragment()
+    }
+
+    override fun layoutId(): Int = R.layout.fragment_sister
+
+    override fun initView(savedInstanceState: Bundle?) {
+        //初始化 toolbar
+        toolbar.run {
+            init("福利")
+        }
+//        requestTreeViewModel.getPlazaData(true)
+
+        //状态页配置
+        loadsir = loadServiceInit(swipeRefresh) {
+            //点击重试时触发的操作
+            loadsir.showLoading()
+            requestTreeViewModel.getPlazaData(true)
+        }
+        //初始化recyclerView
+//        recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
+//            it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f)))
+//            footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
+//                requestTreeViewModel.getPlazaData(false)
+//            })
+//            //初始化FloatingActionButton
+//            it.initFloatBtn(floatbtn)
+//        }
+        //初始化 SwipeRefreshLayout
+        swipeRefresh.init {
+            //触发刷新监听时请求数据
+            requestTreeViewModel.getPlazaData(true)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sister, container, false)
+    override fun lazyLoadData() {
+        //设置界面 加载中
+        loadsir.showLoading()
+        requestTreeViewModel.getPlazaData(true)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SisterFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SisterFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

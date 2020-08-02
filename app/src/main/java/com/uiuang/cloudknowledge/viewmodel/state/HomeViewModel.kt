@@ -9,5 +9,5 @@ import com.uiuang.mvvm.base.viewmodel.BaseViewModel
  * @author zsc
  * @date 2020/8/2 19:08
  */
-class HomeViewModel:BaseViewModel() {
+class HomeViewModel : BaseViewModel() {
 }

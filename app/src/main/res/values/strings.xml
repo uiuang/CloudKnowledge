@@ -7,4 +7,5 @@
     <string name="bottom_name5">我的</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="fat_scroll_aware_fab_behavior" translatable="false">com.uiuang.cloudknowledge.weight.recyclerview.FatScrollAwareFabBehavior</string>
 </resources>

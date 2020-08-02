@@ -1,5 +1,11 @@
 package com.uiuang.cloudknowledge.app.http
 
+import com.uiuang.cloudknowledge.bean.GankApiResponse
+import com.uiuang.cloudknowledge.bean.GankIOResultBean
+import com.uiuang.cloudknowledge.bean.ApiPagerResponse
+import retrofit2.http.GET
+import retrofit2.http.Path
+
 
 /**
  * @Title:
@@ -20,4 +26,7 @@ interface ApiService {
         const val API_MTIME = "https://api-m.mtime.cn/"
         const val API_MTIME_TICKET = "https://ticket-api-m.mtime.cn/"
     }
+
+    @GET("v2/data/category/{category}/type/{type}/page/{page}/count/{count}")
+    suspend fun getGankIoData(@Path("category")  category:String, @Path("type")  type:String, @Path("page")  page:Int, @Path("count")  count:Int): GankApiResponse<ApiPagerResponse<ArrayList<GankIOResultBean>>>
 }

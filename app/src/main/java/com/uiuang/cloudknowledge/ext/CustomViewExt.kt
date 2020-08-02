@@ -35,9 +35,11 @@ import com.uiuang.cloudknowledge.utils.SettingUtil
 import com.uiuang.cloudknowledge.weight.loadCallBack.EmptyCallback
 import com.uiuang.cloudknowledge.weight.loadCallBack.ErrorCallback
 import com.uiuang.cloudknowledge.weight.loadCallBack.LoadingCallback
+import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
 import com.uiuang.cloudknowledge.weight.viewpager.ScaleTransitionPagerTitleView
 import com.uiuang.mvvm.base.appContext
 import com.uiuang.mvvm.util.toHtml
+import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
 import net.lucode.hackware.magicindicator.MagicIndicator
 import net.lucode.hackware.magicindicator.buildins.UIUtil
@@ -92,7 +94,7 @@ fun loadServiceInit(view: View, callback: () -> Unit): LoadService<Any> {
         callback.invoke()
     }
     loadsir.showSuccess()
-    SettingUtil.setLoadingColor(SettingUtil.getColor(appContext), loadsir)
+//    SettingUtil.setLoadingColor(SettingUtil.getColor(appContext), loadsir)
     return loadsir
 }
 
@@ -110,36 +112,36 @@ fun RecyclerView.init(
 }
 
 //绑定SwipeRecyclerView
-//fun SwipeRecyclerView.init(
-//    layoutManger: RecyclerView.LayoutManager,
-//    bindAdapter: RecyclerView.Adapter<*>,
-//    isScroll: Boolean = true
-//): SwipeRecyclerView {
-//    layoutManager = layoutManger
-//    setHasFixedSize(true)
-//    adapter = bindAdapter
-//    isNestedScrollingEnabled = isScroll
-//    return this
-//}
+fun SwipeRecyclerView.init(
+    layoutManger: RecyclerView.LayoutManager,
+    bindAdapter: RecyclerView.Adapter<*>,
+    isScroll: Boolean = true
+): SwipeRecyclerView {
+    layoutManager = layoutManger
+    setHasFixedSize(true)
+    adapter = bindAdapter
+    isNestedScrollingEnabled = isScroll
+    return this
+}
 
-//fun SwipeRecyclerView.initFooter(loadmoreListener: SwipeRecyclerView.LoadMoreListener): DefineLoadMoreView {
-//    val footerView = DefineLoadMoreView(appContext)
-//    //给尾部设置颜色
-//    footerView.setLoadViewColor(SettingUtil.getOneColorStateList(appContext))
-//    //设置尾部点击回调
-//    footerView.setmLoadMoreListener(SwipeRecyclerView.LoadMoreListener {
-//        footerView.onLoading()
-//        loadmoreListener.onLoadMore()
-//    })
-//    this.run {
-//        //添加加载更多尾部
-//        addFooterView(footerView)
-//        setLoadMoreView(footerView)
-//        //设置加载更多回调
-//        setLoadMoreListener(loadmoreListener)
-//    }
-//    return footerView
-//}
+fun SwipeRecyclerView.initFooter(loadmoreListener: SwipeRecyclerView.LoadMoreListener): DefineLoadMoreView {
+    val footerView = DefineLoadMoreView(appContext)
+    //给尾部设置颜色
+    footerView.setLoadViewColor(SettingUtil.getOneColorStateList(appContext))
+    //设置尾部点击回调
+    footerView.setmLoadMoreListener(SwipeRecyclerView.LoadMoreListener {
+        footerView.onLoading()
+        loadmoreListener.onLoadMore()
+    })
+    this.run {
+        //添加加载更多尾部
+        addFooterView(footerView)
+        setLoadMoreView(footerView)
+        //设置加载更多回调
+        setLoadMoreListener(loadmoreListener)
+    }
+    return footerView
+}
 
 fun RecyclerView.initFloatBtn(floatbtn: FloatingActionButton) {
     //监听recyclerview滑动到顶部的时候，需要把向上返回顶部的按钮隐藏
