@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">云知</string>
+    <string name="bottom_name1">首页</string><!--玩安卓 公众号 体系 导航-->
+    <string name="bottom_name2">干货</string><!--干货首页，定制 大安卓-->
+    <string name="bottom_name3">妹子</string><!--妹子照片-->
+    <string name="bottom_name4">电影</string><!--豆瓣热映榜，即将上映-->
+    <string name="bottom_name5">我的</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
