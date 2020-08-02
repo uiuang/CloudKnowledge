@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="wan_title">
+        <item>玩安卓</item>
+        <item>发现</item>
+        <item>体系</item>
+        <item>导航</item>
+    </string-array>
+</resources>

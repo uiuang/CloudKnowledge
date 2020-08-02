@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorPrimary">#ffce3d3a</color>
+    <color name="colorPrimaryDark">#ffce3d3a</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="colorTheme">#ffce3d3a</color>
     <color name="textHint">#999999</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="colorGray">#333333</color>
     <color name="colorBlack666">#666666</color>
     <color name="colorBlack333">#333333</color>
+    <color name="colorBackground">#F1F3F4</color>
+
+    <!--主页tab背景-->
+    <color name="colorTabBg">#ffffffff</color>
+    <color name="colorTabTextCheck">#ffce3d3a</color>
+    <color name="colorTabTextNormal">#585858</color>
+    <color name="colorTabLine">#ffce3d3a</color>
 </resources>

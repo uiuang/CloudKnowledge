@@ -26,7 +26,11 @@ import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.bean.ClassifyResponse
-import com.uiuang.cloudknowledge.ui.fragemnt.HomeFragment
+import com.uiuang.cloudknowledge.ui.fragemnt.gank.GankFragment
+import com.uiuang.cloudknowledge.ui.fragemnt.home.HomeFragment
+import com.uiuang.cloudknowledge.ui.fragemnt.mine.MineFragment
+import com.uiuang.cloudknowledge.ui.fragemnt.movie.MovieFragment
+import com.uiuang.cloudknowledge.ui.fragemnt.sister.SisterFragment
 import com.uiuang.cloudknowledge.utils.SettingUtil
 import com.uiuang.cloudknowledge.weight.loadCallBack.EmptyCallback
 import com.uiuang.cloudknowledge.weight.loadCallBack.ErrorCallback
@@ -42,6 +46,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNav
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorTransitionPagerTitleView
 
 /**
  * 作者　: hegaojian
@@ -182,17 +187,17 @@ fun Toolbar.init(titleStr: String = ""): Toolbar {
 /**
  * 初始化有返回键的toolbar
  */
-//fun Toolbar.initClose(
-//    titleStr: String = "",
-//    backImg: Int = R.drawable.ic_back,
-//    onBack: (toolbar: Toolbar) -> Unit
-//): Toolbar {
-//    setBackgroundColor(SettingUtil.getColor(appContext))
-//    title = titleStr.toHtml()
-//    setNavigationIcon(backImg)
-//    setNavigationOnClickListener { onBack.invoke(this) }
-//    return this
-//}
+fun Toolbar.initClose(
+    titleStr: String = "",
+    backImg: Int = R.drawable.ic_back,
+    onBack: (toolbar: Toolbar) -> Unit
+): Toolbar {
+    setBackgroundColor(SettingUtil.getColor(appContext))
+    title = titleStr.toHtml()
+    setNavigationIcon(backImg)
+    setNavigationOnClickListener { onBack.invoke(this) }
+    return this
+}
 
 /**
  * 根据控件的类型设置主题，注意，控件具有优先级， 基本类型的控件建议放到最后，像 Textview，FragmentLayout，不然会出现问题，
@@ -240,6 +245,7 @@ fun MagicIndicator.bindViewPager2(
     action: (index: Int) -> Unit = {}
 ) {
     val commonNavigator = CommonNavigator(appContext)
+    commonNavigator.isAdjustMode = true
     commonNavigator.adapter = object : CommonNavigatorAdapter() {
         override fun getCount(): Int {
             return if (mDataList.size != 0) {
@@ -250,15 +256,16 @@ fun MagicIndicator.bindViewPager2(
         }
 
         override fun getTitleView(context: Context, index: Int): IPagerTitleView {
-            return ScaleTransitionPagerTitleView(appContext).apply {
+            return ColorTransitionPagerTitleView(appContext).apply {
                 text = if (mDataList.size != 0) {
                     mDataList[index].name.toHtml()
                 } else {
                     mStringList[index].toHtml()
                 }
-                textSize = 17f
-                normalColor = Color.WHITE
-                selectedColor = Color.WHITE
+                textSize = 15f
+                normalColor = Color.GRAY
+                selectedColor = Color.RED
+
                 setOnClickListener {
                     viewPager.currentItem = index
                     action.invoke(index)
@@ -277,12 +284,11 @@ fun MagicIndicator.bindViewPager2(
                 startInterpolator = AccelerateInterpolator()
                 endInterpolator = DecelerateInterpolator(2.0f)
                 //线条的颜色
-                setColors(Color.WHITE)
+                setColors(Color.RED)
             }
         }
     }
     this.navigator = commonNavigator
-
     viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
             super.onPageSelected(position)
@@ -333,16 +339,16 @@ fun ViewPager2.initMain(fragment: Fragment): ViewPager2 {
                     return HomeFragment()
                 }
                 1 -> {
-                    return HomeFragment()
+                    return GankFragment()
                 }
                 2 -> {
-                    return HomeFragment()
+                    return SisterFragment()
                 }
                 3 -> {
-                    return HomeFragment()
+                    return MovieFragment()
                 }
                 4 -> {
-                    return HomeFragment()
+                    return MineFragment()
                 }
                 else -> {
                     return HomeFragment()
