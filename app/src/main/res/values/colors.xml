@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ffce3d3a</color>
-    <color name="colorPrimaryDark">#ffce3d3a</color>
+    <color name="colorPrimary">#1C89EF</color>
+    <color name="colorPrimaryDark">#1C89EF</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="colorTheme">#ffce3d3a</color>
+    <color name="colorTheme">#1C89EF</color>
     <color name="textHint">#999999</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
@@ -17,4 +17,11 @@
     <color name="colorTabTextCheck">#ffce3d3a</color>
     <color name="colorTabTextNormal">#585858</color>
     <color name="colorTabLine">#ffce3d3a</color>
+
+    <!--水波纹或5.0以下选择器颜色-->
+    <color name="tabBackground">#777D7D7D</color>
+    <!--item的水波纹颜色-->
+    <color name="itemBackground">#DD7D7D7D</color>
+    <!--item的5.0一下版本选择器颜色-->
+    <color name="itemLowBackground">#d9d9d9</color>
 </resources>

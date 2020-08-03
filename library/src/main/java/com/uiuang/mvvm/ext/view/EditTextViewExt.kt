@@ -1,4 +1,4 @@
-package me.hgj.jetpackmvvm.ext.view
+package com.uiuang.mvvm.ext.view
 
 import android.text.Editable
 import android.text.TextWatcher

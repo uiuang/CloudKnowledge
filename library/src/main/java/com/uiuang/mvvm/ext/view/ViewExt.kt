@@ -1,4 +1,4 @@
-package me.hgj.jetpackmvvm.ext.view
+package com.uiuang.mvvm.ext.view
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.widget.ImageView
-import org.jetbrains.annotations.NotNull
 
 /**
  * 设置view显示

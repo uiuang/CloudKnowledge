@@ -2,16 +2,21 @@ package com.uiuang.cloudknowledge.ui.fragemnt.sister
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.databinding.FragmentSisterBinding
-import com.uiuang.cloudknowledge.ext.init
-import com.uiuang.cloudknowledge.ext.loadServiceInit
-import com.uiuang.cloudknowledge.ext.showLoading
+import com.uiuang.cloudknowledge.ext.*
+import com.uiuang.cloudknowledge.ui.adapter.gank.WelfareAdapter
 import com.uiuang.cloudknowledge.viewmodel.request.RequestSisterViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
+import com.uiuang.cloudknowledge.weight.recyclerview.GridDividerItemDecoration
+import com.uiuang.cloudknowledge.weight.recyclerview.GridSpaceItemDecoration
+import com.uiuang.cloudknowledge.weight.recyclerview.SpaceItemDecoration
+import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.fragment_sister.*
 
 
@@ -20,10 +25,15 @@ class SisterFragment : BaseFragment<HomeViewModel, FragmentSisterBinding>() {
     private lateinit var loadsir: LoadService<Any>
 
     //请求ViewModel
-    private val requestTreeViewModel: RequestSisterViewModel by viewModels()
+    private val requestSisterViewModel: RequestSisterViewModel by viewModels()
 
     //recyclerview的底部加载view 因为要在首页动态改变他的颜色，所以加了他这个字段
     private lateinit var footView: DefineLoadMoreView
+
+    private val welfareAdapter: WelfareAdapter by lazy {
+        WelfareAdapter(arrayListOf())
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -48,28 +58,47 @@ class SisterFragment : BaseFragment<HomeViewModel, FragmentSisterBinding>() {
         loadsir = loadServiceInit(swipeRefresh) {
             //点击重试时触发的操作
             loadsir.showLoading()
-            requestTreeViewModel.getPlazaData(true)
+            requestSisterViewModel.getPlazaData(true)
         }
         //初始化recyclerView
-//        recyclerView.init(LinearLayoutManager(context), articleAdapter).let {
-//            it.addItemDecoration(SpaceItemDecoration(0, ConvertUtils.dp2px(8f)))
-//            footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
-//                requestTreeViewModel.getPlazaData(false)
-//            })
-//            //初始化FloatingActionButton
-//            it.initFloatBtn(floatbtn)
-//        }
+        recyclerView.init(
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL),
+            welfareAdapter
+        ).let {
+            it.addItemDecoration(GridSpaceItemDecoration(12))
+            footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
+                requestSisterViewModel.getPlazaData(false)
+            })
+            //初始化FloatingActionButton
+            it.initFloatBtn(floatbtn)
+        }
         //初始化 SwipeRefreshLayout
         swipeRefresh.init {
             //触发刷新监听时请求数据
-            requestTreeViewModel.getPlazaData(true)
+            requestSisterViewModel.getPlazaData(true)
         }
+        welfareAdapter.run {
+            setOnItemClickListener { adapter, view, position ->
+//                nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
+//                    putParcelable("ariticleData", articleAdapter.data[position])
+//                })
+            }
+        }
+    }
+
+
+    override fun createObserver() {
+        super.createObserver()
+        requestSisterViewModel.sisterDataState.observe(viewLifecycleOwner, Observer {
+            //设值 新写了个拓展函数，搞死了这个恶心的重复代码
+            loadListData(it, welfareAdapter, loadsir, recyclerView, swipeRefresh)
+        })
     }
 
     override fun lazyLoadData() {
         //设置界面 加载中
         loadsir.showLoading()
-        requestTreeViewModel.getPlazaData(true)
+        requestSisterViewModel.getPlazaData(true)
     }
 
 }

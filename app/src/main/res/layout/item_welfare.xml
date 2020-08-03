@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_welfare"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@color/tabBackground"
+        android:scaleType="centerCrop"
+        tools:background="@color/tabBackground"
+        tools:layout_margin="5dp" />
+</FrameLayout>

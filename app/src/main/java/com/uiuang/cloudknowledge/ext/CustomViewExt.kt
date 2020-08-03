@@ -25,6 +25,7 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.uiuang.cloudknowledge.R
+import com.uiuang.cloudknowledge.app.state.ListDataUiState
 import com.uiuang.cloudknowledge.bean.ClassifyResponse
 import com.uiuang.cloudknowledge.ui.fragemnt.gank.GankFragment
 import com.uiuang.cloudknowledge.ui.fragemnt.home.HomeFragment
@@ -110,6 +111,7 @@ fun RecyclerView.init(
     isNestedScrollingEnabled = isScroll
     return this
 }
+
 
 //绑定SwipeRecyclerView
 fun SwipeRecyclerView.init(
@@ -396,40 +398,40 @@ fun hideSoftKeyboard(activity: Activity?) {
 /**
  * 加载列表数据
  */
-//fun <T> loadListData(
-//    data: ListDataUiState<T>,
-//    baseQuickAdapter: BaseQuickAdapter<T, *>,
-//    loadService: LoadService<*>,
-//    recyclerView: SwipeRecyclerView,
-//    swipeRefreshLayout: SwipeRefreshLayout
-//) {
-//    swipeRefreshLayout.isRefreshing = false
-//    recyclerView.loadMoreFinish(data.isEmpty, data.hasMore)
-//    if (data.isSuccess) {
-//        //成功
-//        when {
-//            //第一页并没有数据 显示空布局界面
-//            data.isFirstEmpty -> {
-//                loadService.showEmpty()
-//            }
-//            //是第一页
-//            data.isRefresh -> {
-//                baseQuickAdapter.setList(data.listData)
-//                loadService.showSuccess()
-//            }
-//            //不是第一页
-//            else -> {
-//                baseQuickAdapter.addData(data.listData)
-//                loadService.showSuccess()
-//            }
-//        }
-//    } else {
-//        //失败
-//        if (data.isRefresh) {
-//            //如果是第一页，则显示错误界面，并提示错误信息
-//            loadService.showError(data.errMessage)
-//        } else {
-//            recyclerView.loadMoreError(0, data.errMessage)
-//        }
-//    }
-//}
+fun <T> loadListData(
+    data: ListDataUiState<T>,
+    baseQuickAdapter: BaseQuickAdapter<T, *>,
+    loadService: LoadService<*>,
+    recyclerView: SwipeRecyclerView,
+    swipeRefreshLayout: SwipeRefreshLayout
+) {
+    swipeRefreshLayout.isRefreshing = false
+    recyclerView.loadMoreFinish(data.isEmpty, data.hasMore)
+    if (data.isSuccess) {
+        //成功
+        when {
+            //第一页并没有数据 显示空布局界面
+            data.isFirstEmpty -> {
+                loadService.showEmpty()
+            }
+            //是第一页
+            data.isRefresh -> {
+                baseQuickAdapter.setList(data.listData)
+                loadService.showSuccess()
+            }
+            //不是第一页
+            else -> {
+                baseQuickAdapter.addData(data.listData)
+                loadService.showSuccess()
+            }
+        }
+    } else {
+        //失败
+        if (data.isRefresh) {
+            //如果是第一页，则显示错误界面，并提示错误信息
+            loadService.showError(data.errMessage)
+        } else {
+            recyclerView.loadMoreError(0, data.errMessage)
+        }
+    }
+}
