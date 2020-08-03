@@ -27,17 +27,16 @@ import com.kingja.loadsir.core.LoadSir
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.state.ListDataUiState
 import com.uiuang.cloudknowledge.bean.ClassifyResponse
-import com.uiuang.cloudknowledge.ui.fragemnt.gank.GankFragment
-import com.uiuang.cloudknowledge.ui.fragemnt.home.HomeFragment
-import com.uiuang.cloudknowledge.ui.fragemnt.mine.MineFragment
-import com.uiuang.cloudknowledge.ui.fragemnt.movie.MovieFragment
-import com.uiuang.cloudknowledge.ui.fragemnt.sister.SisterFragment
+import com.uiuang.cloudknowledge.ui.fragment.gank.GankFragment
+import com.uiuang.cloudknowledge.ui.fragment.home.HomeFragment
+import com.uiuang.cloudknowledge.ui.fragment.mine.MineFragment
+import com.uiuang.cloudknowledge.ui.fragment.movie.MovieFragment
+import com.uiuang.cloudknowledge.ui.fragment.sister.SisterFragment
 import com.uiuang.cloudknowledge.utils.SettingUtil
 import com.uiuang.cloudknowledge.weight.loadCallBack.EmptyCallback
 import com.uiuang.cloudknowledge.weight.loadCallBack.ErrorCallback
 import com.uiuang.cloudknowledge.weight.loadCallBack.LoadingCallback
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
-import com.uiuang.cloudknowledge.weight.viewpager.ScaleTransitionPagerTitleView
 import com.uiuang.mvvm.base.appContext
 import com.uiuang.mvvm.util.toHtml
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
@@ -216,7 +215,7 @@ fun setUiTheme(color: Int, vararg anyList: Any?) {
                 is FloatingActionButton -> it.backgroundTintList =
                     SettingUtil.getOneColorStateList(color)
                 is SwipeRefreshLayout -> it.setColorSchemeColors(color)
-//                is DefineLoadMoreView -> it.setLoadViewColor(SettingUtil.getOneColorStateList(color))
+                is DefineLoadMoreView -> it.setLoadViewColor(SettingUtil.getOneColorStateList(color))
                 is BottomNavigationViewEx -> {
                     it.itemIconTintList = SettingUtil.getColorStateList(color)
                     it.itemTextColor = SettingUtil.getColorStateList(color)

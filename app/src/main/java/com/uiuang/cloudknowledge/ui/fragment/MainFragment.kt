@@ -1,4 +1,4 @@
-package com.uiuang.cloudknowledge.ui.fragemnt
+package com.uiuang.cloudknowledge.ui.fragment
 
 import android.os.Bundle
 import androidx.lifecycle.Observer

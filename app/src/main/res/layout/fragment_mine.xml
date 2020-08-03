@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragemnt.mine.MineFragment">
+    tools:context=".ui.fragment.mine.MineFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatbtn"

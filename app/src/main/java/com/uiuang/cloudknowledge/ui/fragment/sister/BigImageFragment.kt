@@ -1,4 +1,4 @@
-package com.uiuang.cloudknowledge.ui.fragemnt.home
+package com.uiuang.cloudknowledge.ui.fragment.sister
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,14 +8,13 @@ import android.view.ViewGroup
 import com.uiuang.cloudknowledge.R
 
 
-
-
-class WanHomeFragment : Fragment() {
-
+/**
+ * 查看大图
+ */
+class BigImageFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -23,11 +22,13 @@ class WanHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_wan_home, container, false)
+        return inflater.inflate(R.layout.fragment_big_image, container, false)
     }
 
     companion object {
+
         @JvmStatic
-        fun newInstance() = WanHomeFragment()
+        fun newInstance() =
+            BigImageFragment()
     }
 }

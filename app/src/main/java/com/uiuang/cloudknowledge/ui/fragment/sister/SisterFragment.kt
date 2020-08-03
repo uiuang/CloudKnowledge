@@ -1,4 +1,4 @@
-package com.uiuang.cloudknowledge.ui.fragemnt.sister
+package com.uiuang.cloudknowledge.ui.fragment.sister
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
@@ -13,9 +13,7 @@ import com.uiuang.cloudknowledge.ui.adapter.gank.WelfareAdapter
 import com.uiuang.cloudknowledge.viewmodel.request.RequestSisterViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
-import com.uiuang.cloudknowledge.weight.recyclerview.GridDividerItemDecoration
 import com.uiuang.cloudknowledge.weight.recyclerview.GridSpaceItemDecoration
-import com.uiuang.cloudknowledge.weight.recyclerview.SpaceItemDecoration
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.fragment_sister.*
 
