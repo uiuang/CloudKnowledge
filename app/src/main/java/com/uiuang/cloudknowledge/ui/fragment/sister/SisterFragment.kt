@@ -68,7 +68,7 @@ class SisterFragment : BaseFragment<HomeViewModel, FragmentSisterBinding>() {
                 requestSisterViewModel.getPlazaData(false)
             })
             //初始化FloatingActionButton
-            it.initFloatBtn(floatbtn)
+            it.initFloatBtn(floatBtn)
         }
         //初始化 SwipeRefreshLayout
         swipeRefresh.init {

@@ -146,15 +146,15 @@ fun SwipeRecyclerView.initFooter(loadmoreListener: SwipeRecyclerView.LoadMoreLis
 
 fun RecyclerView.initFloatBtn(floatbtn: FloatingActionButton) {
     //监听recyclerview滑动到顶部的时候，需要把向上返回顶部的按钮隐藏
-    addOnScrollListener(object : RecyclerView.OnScrollListener() {
-        @SuppressLint("RestrictedApi")
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            super.onScrolled(recyclerView, dx, dy)
-            if (!canScrollVertically(-1)) {
-                floatbtn.visibility = View.INVISIBLE
-            }
-        }
-    })
+//    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//        @SuppressLint("RestrictedApi")
+//        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//            super.onScrolled(recyclerView, dx, dy)
+//            if (!canScrollVertically(-1)) {
+//                floatbtn.visibility = View.INVISIBLE
+//            }
+//        }
+//    })
     floatbtn.backgroundTintList = SettingUtil.getOneColorStateList(appContext)
     floatbtn.setOnClickListener {
         val layoutManager = layoutManager as LinearLayoutManager
