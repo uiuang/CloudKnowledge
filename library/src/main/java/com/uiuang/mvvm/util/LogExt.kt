@@ -1,13 +1,14 @@
 package com.uiuang.mvvm.util
 
 import android.util.Log
+import com.uiuang.mvvm.BuildConfig
 
 const val TAG = "mvvm"
 
 /**
  * 是否需要开启打印日志，默认关闭，关闭后会没有网络请求日志和该框架产生的打印
  */
-var isLog = false
+var isLog = BuildConfig.DEBUG
 
 private enum class LEVEL {
     V, D, I, W, E

@@ -4,16 +4,23 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.gson.ExclusionStrategy
+import com.google.gson.FieldAttributes
+import com.google.gson.GsonBuilder
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
+import com.uiuang.cloudknowledge.bean.GankIOResultBean
 import com.uiuang.cloudknowledge.databinding.FragmentSisterBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.gank.WelfareAdapter
+import com.uiuang.cloudknowledge.utils.ACache
 import com.uiuang.cloudknowledge.viewmodel.request.RequestSisterViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
 import com.uiuang.cloudknowledge.weight.recyclerview.GridSpaceItemDecoration
+import com.uiuang.mvvm.ext.nav
+import com.uiuang.mvvm.ext.navigateAction
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.fragment_sister.*
 
@@ -77,10 +84,30 @@ class SisterFragment : BaseFragment<HomeViewModel, FragmentSisterBinding>() {
         }
         welfareAdapter.run {
             setOnItemClickListener { adapter, view, position ->
-//                nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
-//                    putParcelable("ariticleData", articleAdapter.data[position])
-//                })
+               var data:MutableList<GankIOResultBean> = welfareAdapter.data
+                nav().navigateAction(R.id.action_mainFragment_to_bigImageFragment, Bundle().apply {
+                    putInt("position", position)
+                })
+                val gson =
+                    GsonBuilder().addSerializationExclusionStrategy(object : ExclusionStrategy {
+                        override fun shouldSkipField(f: FieldAttributes): Boolean {
+                            if (f == null || f.name == null) {
+                                return true
+                            }
+                            val name = f.name
+                            return if (name == "url" || name == "desc") {
+                                false
+                            } else true
+                        }
+
+                        override fun shouldSkipClass(clazz: Class<*>?): Boolean {
+                            return false
+                        }
+                    }).create()
+                ACache[mActivity].put("ImageItemsBean", gson.toJson(data))
+
             }
+
         }
     }
 

@@ -6,5 +6,34 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.uiuang.cloudknowledge.ui.fragment.MainFragment"
-        android:label="MainFragment" />
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_bigImageFragment"
+            app:destination="@id/bigImageFragment" >
+            <argument
+                android:name="select"
+                android:defaultValue="2" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/bigImageFragment"
+        android:name="com.uiuang.cloudknowledge.ui.fragment.sister.BigImageFragment"
+        android:label="BigImageFragment" >
+        <argument
+            android:name="select"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="isLocal"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="isApp"
+            app:argType="boolean"
+            android:defaultValue="false" />
+        <argument
+            android:name="id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>
