@@ -12,10 +12,9 @@ import com.uiuang.cloudknowledge.R
 private const val ARG_PARAM1 = "param1"
 
 /**
- *
+ *热映榜
  */
 class FilmShowingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
