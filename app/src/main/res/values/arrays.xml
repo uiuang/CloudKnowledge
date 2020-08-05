@@ -6,4 +6,8 @@
         <item>体系</item>
         <item>导航</item>
     </string-array>
+    <string-array name="movie_title">
+        <item>热映榜</item>
+        <item>即将上映</item>
+    </string-array>
 </resources>
