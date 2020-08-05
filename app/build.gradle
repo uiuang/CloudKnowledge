@@ -16,7 +16,7 @@ android {
         multiDexEnabled true
     }
 
-    dataBinding{
+    dataBinding {
         enabled = true
     }
     //使用Kotlin实验特性

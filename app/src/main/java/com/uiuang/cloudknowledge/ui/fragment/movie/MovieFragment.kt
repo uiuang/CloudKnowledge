@@ -2,24 +2,42 @@ package com.uiuang.cloudknowledge.ui.fragment.movie
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.uiuang.cloudknowledge.R
+import com.uiuang.cloudknowledge.app.base.BaseFragment
+import com.uiuang.cloudknowledge.databinding.FragmentMovieBinding
+import com.uiuang.cloudknowledge.ext.bindViewPager2
+import com.uiuang.cloudknowledge.ext.init
+import com.uiuang.cloudknowledge.ui.fragment.home.NavigationFragment
+import com.uiuang.cloudknowledge.ui.fragment.home.TreeFragment
+import com.uiuang.cloudknowledge.ui.fragment.home.WanFindFragment
+import com.uiuang.cloudknowledge.ui.fragment.home.WanHomeFragment
+import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
+import kotlinx.android.synthetic.main.fragment_home.*
 
 
+class MovieFragment : BaseFragment<HomeViewModel, FragmentMovieBinding>() {
+    //fragment集合
+    var fragments: ArrayList<Fragment> = arrayListOf()
 
+    //标题集合
+    var dataList: ArrayList<String> = arrayListOf()
+    override fun layoutId(): Int = R.layout.fragment_movie
 
-class MovieFragment : Fragment() {
+    override fun initView(savedInstanceState: Bundle?) {
+        //初始化 toolbar
+        toolbar.run {
+            init("电影")
+        }
 
+        fragments.add(FilmShowingFragment.newInstance("热映榜"))
+        fragments.add(FilmComingFragment.newInstance("即将上映"))
+        var stringArray = mActivity.resources.getStringArray(R.array.movie_title)
+        dataList.addAll(stringArray)
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_movie, container, false)
+        //初始化viewpager2
+        view_pager.init(this, fragments)
+        //初始化 magic_indicator
+        magicIndicator.bindViewPager2(view_pager, mStringList = dataList)
     }
 
 
