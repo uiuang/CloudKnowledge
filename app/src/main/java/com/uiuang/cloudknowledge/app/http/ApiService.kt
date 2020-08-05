@@ -41,7 +41,7 @@ interface ApiService {
      * showing/movies.api?locationId=295
      */
     @GET("showing/movies.api?locationId=561")
-    suspend fun getHotFilm():MtimeFilmeBean<ArrayList<FilmItemBean>>
+    suspend fun getHotFilm():FilmApiResponse<FilmApiPagerResponse<ArrayList<FilmItemBean>>>
 
     /**
      * 时光网即将上映电影
@@ -50,7 +50,7 @@ interface ApiService {
      * recommends最受关注
      */
     @GET("movie/mobilemoviecoming.api?locationId=561")
-    suspend fun getComingFilm(): ComingFilmBean
+    suspend fun getComingFilm(): FilmApiResponse<ArrayList<ComingFilmBean.MoviecomingsBean>>
 
     /**
      * 获取电影详情

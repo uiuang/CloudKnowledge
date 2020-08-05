@@ -29,8 +29,8 @@ class MovieFragment : BaseFragment<HomeViewModel, FragmentMovieBinding>() {
             init("电影")
         }
 
-        fragments.add(FilmShowingFragment.newInstance("热映榜"))
-        fragments.add(FilmComingFragment.newInstance("即将上映"))
+        fragments.add(FilmShowingFragment.newInstance())
+        fragments.add(FilmComingFragment.newInstance())
         var stringArray = mActivity.resources.getStringArray(R.array.movie_title)
         dataList.addAll(stringArray)
 

@@ -5,6 +5,13 @@
     <string name="bottom_name3">妹子</string><!--妹子照片-->
     <string name="bottom_name4">电影</string><!--豆瓣热映榜，即将上映-->
     <string name="bottom_name5">我的</string>
+    <!--项目布局文件引用的字符串-->
+    <string name="no_name">佚名</string>
+    <string name="string_rating">评分：</string>
+    <string name="string_rating_num">人评分</string>
+    <string name="string_type">类型：</string>
+    <string name="string_film_time">片长：</string>
+    <string name="string_film_date">上映日期：</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fat_scroll_aware_fab_behavior" translatable="false">com.uiuang.cloudknowledge.weight.recyclerview.FatScrollAwareFabBehavior</string>
