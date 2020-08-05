@@ -59,8 +59,11 @@ interface ApiService {
      *
      * @param movieId 电影bean里的id
      * https://ticket-api-m.mtime.cn/movie/detail.api?locationId=295&movieId=232770
+     * movie/timeNewsList.api?movieId=232770
      * 232770
      */
     @GET("movie/detail.api?locationId=561")
     suspend fun getFilmDetail(@Query("movieId")  movieId:Int):FilmDetailBean
+
+
 }
