@@ -88,4 +88,5 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
 
+
 }
