@@ -22,7 +22,7 @@ class RequestFilmComingViewModel : BaseViewModel() {
                     isEmpty = false,
                     hasMore = false,
                     isFirstEmpty = false,
-                    listData = it
+                    listData = it.moviecomings
                 )
             filmComingDataState.postValue(listDataUiState)
         }, {

@@ -8,7 +8,7 @@ import kotlin.collections.ArrayList
  */
 class ComingFilmBean {
     var attention: ArrayList<MoviecomingsBean>? = null
-    var moviecomings: ArrayList<MoviecomingsBean>? = null
+    var moviecomings: ArrayList<MoviecomingsBean> = arrayListOf()
 
     class AttentionBean {
         /**

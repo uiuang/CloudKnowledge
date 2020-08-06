@@ -50,7 +50,7 @@ interface ApiService {
      * recommends最受关注
      */
     @GET("movie/mobilemoviecoming.api?locationId=561")
-    suspend fun getComingFilm(): FilmApiResponse<ArrayList<ComingFilmBean.MoviecomingsBean>>
+    suspend fun getComingFilm(): FilmApiResponse<ComingFilmBean>
 
     /**
      * 获取电影详情

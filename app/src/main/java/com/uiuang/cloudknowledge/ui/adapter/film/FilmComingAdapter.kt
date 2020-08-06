@@ -34,7 +34,7 @@ class FilmComingAdapter(context: Context,data: MutableList<ComingFilmBean.Moviec
         var ivTopPhoto = holder.getView<ImageView>(R.id.iv_top_photo)
         holder.setText(R.id.tv_name, item.title)
         holder.setText(R.id.tv_rate, item.releaseDate)
-        setWidthHeight(ivTopPhoto, width, 0.758f);
+        setWidthHeight(ivTopPhoto, width, 0.758f)
         Glide.with(ivTopPhoto.context)
             .load(item.image)
             .transition(DrawableTransitionOptions.withCrossFade(500))

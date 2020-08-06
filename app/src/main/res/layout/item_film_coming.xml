@@ -5,10 +5,7 @@
     android:id="@+id/cv_top_movie"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="6dp"
-    android:layout_marginTop="6dp"
-    android:layout_marginEnd="6dp"
-    android:layout_marginBottom="6dp"
+   android:layout_margin="2dp"
     android:foreground="?attr/selectableItemBackgroundBorderless"
     app:cardCornerRadius="2dp"
     app:cardElevation="2dp">

@@ -60,7 +60,9 @@ class FilmComingFragment : BaseFragment<HomeViewModel, FragmentFilmComingBinding
             filmComingAdapter
         ).let {
             it.addItemDecoration(GridSpaceItemDecoration(12))
-
+            footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
+                //                requestSisterViewModel.getPlazaData(false)
+            })
             //初始化FloatingActionButton
             it.initFloatBtn(floatBtn)
         }
