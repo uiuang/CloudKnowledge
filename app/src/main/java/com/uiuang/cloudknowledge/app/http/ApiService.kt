@@ -65,5 +65,15 @@ interface ApiService {
     @GET("movie/detail.api?locationId=561")
     suspend fun getFilmDetail(@Query("movieId")  movieId:Int):FilmDetailBean
 
+    /**
+     * 全球票房排行榜
+     *https://api-m.mtime.cn
+     * /TopList/TopListDetailsByRecommend.api
+     * pageIndex
+     * type
+     * toplistId  北美 2015 内地 2069  香港 2016  台湾 2019 日本 2017 韩国 2018
+     * pageSubAreaID
+     */
+
 
 }
