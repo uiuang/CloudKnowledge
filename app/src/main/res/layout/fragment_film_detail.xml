@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.fragment.movie.FilmDetailFragment">
 
     <androidx.appcompat.widget.Toolbar
@@ -19,10 +18,473 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent">
+
+                <ImageView
+                    android:id="@+id/img_item_bg"
+                    android:layout_width="match_parent"
+                    android:layout_height="330dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/img_default_movie"
+                    tools:background="@color/colorBackground" />
+
+                <LinearLayout
+                    android:id="@+id/ll_one_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:orientation="vertical"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="95dp"
+                    android:paddingBottom="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <!--android:showImg='@{subjectsBean.images.large}'-->
+                        <!--声明 它是可以折叠的-->
+                        <!--app:layout_collapseMode="parallax"-->
+                        <!--视差因子) - 设置视差滚动因子，值为：0~1。-->
+                        <!--app:layout_collapseParallaxMultiplier="0.7"-->
+                        <ImageView
+                            android:id="@+id/iv_one_photo"
+                            android:layout_width="@dimen/movie_detail_width"
+                            android:layout_height="@dimen/movie_detail_height"
+                            android:layout_marginRight="15dp"
+                            android:scaleType="fitXY"
+                            android:transitionName="电影图片" />
+
+                        <!--评分-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="12dp"
+                            android:orientation="vertical">
+
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tv_one_rating_rate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:text='评分：9.0'
+                                    android:textColor="@color/colorBlack666" />
+
+                                <TextView
+                                    android:id="@+id/tv_one_rating_number"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:ellipsize="end"
+                                    android:lines="1"
+                                    tools:text="30人评分"
+                                    android:textColor="@color/white" />
+
+                                <!--android:text='@{subjectsBean.collect_count+@string/string_rating_num}'-->
+
+                            </LinearLayout>
+
+                            <!--导演-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="导演："
+                                        android:textColor="@color/white" />
+
+                                    <View
+                                        android:layout_width="28dp"
+                                        android:layout_height="2dp"
+                                        android:layout_marginTop="2dp"
+                                        android:background="@color/colorTheme" />
+
+                                </LinearLayout>
+
+                                <TextView
+                                    android:id="@+id/tv_one_directors"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:text="导演名字"
+                                    tools:text="柯文龙"
+                                    android:textColor="@color/white" />
+                            </LinearLayout>
+
+                            <!--主演-->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="主演："
+                                    android:textColor="@color/white" />
+
+                                <TextView
+                                    android:id="@+id/tv_one_casts"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:text="actors"
+                                    tools:text="小样"
+                                    android:textColor="@color/white" />
+
+                            </LinearLayout>
+
+                            <!--类型-->
+                            <TextView
+                                android:id="@+id/tv_one_genres"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:ellipsize="end"
+                                android:text='类型：剧情 / 犯罪'
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:id="@+id/tv_one_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:ellipsize="end"
+                                android:text="片长：120分钟"
+                                android:textColor="@color/white" />
+
+                            <!--android:text='@{@string/string_film_time+subjectsBean.rd}'-->
+
+                            <TextView
+                                android:id="@+id/tv_one_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:ellipsize="end"
+                                android:text="上映日期：2020-08-08"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginBottom="2dp"
+                                android:ellipsize="end"
+                                android:text="制片国家：中国"
+                                android:textColor="@color/white"
+                                android:visibility="visible" />
+                            <!--android:text='@{@string/string_film_date+subjectsBean.rd}'-->
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!--又名-->
+                <TextView
+                    android:id="@+id/tv_one_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"
+                    android:text=''
+                    android:textColor="@color/colorBlack333"
+                    android:textStyle="bold|italic"
+                    android:visibility="visible"
+                    tools:text="“超级英雄们共谋大计战灭霸”" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp">
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="18dp"
+                        android:background="@color/colorTheme" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="简介"
+                        android:textColor="@color/colorBlack666"
+                        android:textSize="17sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingExtra="7dp"
+                    android:padding="12dp"
+                    android:text=""
+                    android:textColor="@color/colorBlack333"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:visibility="@{listener.isShowActor?View.VISIBLE:View.GONE}">
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="18dp"
+                        android:background="@color/colorTheme" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="演职员"
+                        android:textColor="@color/colorBlack666"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+                <!--导演&演员-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/xrv_cast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:visibility="@{listener.isShowActor?View.VISIBLE:View.GONE}" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:visibility="@{listener.isShowBoxOffice?View.VISIBLE:View.GONE}">
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="18dp"
+                        android:background="@color/colorTheme" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="票房"
+                        android:textColor="@color/colorBlack666"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@color/x_recycler_color_text_gray"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/colorTheme"
+                            android:textSize="17sp"
+                            tools:text="996.76" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text=""
+                            android:textSize="14sp"
+                            tools:text="今日实时(万)" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/colorTheme"
+                            android:textSize="17sp"
+                            tools:text="996.76" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text=""
+                            android:textSize="14sp"
+                            tools:text="今日实时(万)" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textColor="@color/colorTheme"
+                            android:textSize="17sp"
+                            tools:text="996.76" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="累计排名"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:visibility="visible">
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="18dp"
+                        android:background="@color/colorTheme" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="预告片"
+                        android:textColor="@color/colorBlack666"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+                <!--640*360-->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/iv_video"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="20dp"
+                        android:scaleType="centerCrop"
+
+                        tools:background="@color/white" />
+
+<!--                    <ImageView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:visibility="gone"-->
+<!--                        android:src="@drawable/icon_film_play" />-->
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp">
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="18dp"
+                        android:background="@color/colorTheme" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="剧照"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/xrv_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="30dp"
+                    android:visibility="gone" />
+            </LinearLayout>
         </LinearLayout>
+
+
 
     </androidx.core.widget.NestedScrollView>
 
