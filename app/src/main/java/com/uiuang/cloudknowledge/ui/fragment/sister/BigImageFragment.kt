@@ -46,7 +46,7 @@ class BigImageFragment : BaseFragment<HomeViewModel, FragmentBigImageBinding>() 
             var localPageAdapter: LocalPageAdapter = LocalPageAdapter(mActivity, imageId)
             very_image_viewpager.adapter = localPageAdapter
             very_image_viewpager.isEnabled = false
-            localPageAdapter.setOnBackListener(object : onBackListener {
+            localPageAdapter.setOnBackListener(object : OnBackListener {
                 override fun back() {
                     nav().navigateUp()
                 }
@@ -66,7 +66,7 @@ class BigImageFragment : BaseFragment<HomeViewModel, FragmentBigImageBinding>() 
             very_image_viewpager.addOnPageChangeListener(listener)
             page = position
             very_image_viewpager.isEnabled = false
-            adapter.setOnBackListener(object : onBackListener {
+            adapter.setOnBackListener(object : OnBackListener {
                 override fun back() {
                     nav().navigateUp()
                 }
@@ -114,7 +114,7 @@ class BigImageFragment : BaseFragment<HomeViewModel, FragmentBigImageBinding>() 
     }
 
 
-    interface onBackListener {
+    interface OnBackListener {
         fun back()
     }
 }

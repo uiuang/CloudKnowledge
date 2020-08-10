@@ -8,7 +8,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.ComingFilmBean
+import com.uiuang.cloudknowledge.bean.MoviesBean
 import com.uiuang.mvvm.util.dp2px
 import com.uiuang.mvvm.util.screenWidth
 
@@ -19,8 +19,8 @@ import com.uiuang.mvvm.util.screenWidth
  * @author zsc
  * @date 2020/8/5 22:42
  */
-class FilmComingAdapter(context: Context,data: MutableList<ComingFilmBean.MoviecomingsBean>?) :
-    BaseQuickAdapter<ComingFilmBean.MoviecomingsBean, BaseViewHolder>(
+class FilmComingAdapter(context: Context,data: MutableList<MoviesBean>?) :
+    BaseQuickAdapter<MoviesBean, BaseViewHolder>(
         R.layout.item_film_coming, data
     ) {
     private var width: Int = 0
@@ -30,7 +30,7 @@ class FilmComingAdapter(context: Context,data: MutableList<ComingFilmBean.Moviec
         width = (context.screenWidth - px) / 3
     }
 
-    override fun convert(holder: BaseViewHolder, item: ComingFilmBean.MoviecomingsBean) {
+    override fun convert(holder: BaseViewHolder, item: MoviesBean) {
         var ivTopPhoto = holder.getView<ImageView>(R.id.iv_top_photo)
         holder.setText(R.id.tv_name, item.title)
         holder.setText(R.id.tv_rate, item.releaseDate)

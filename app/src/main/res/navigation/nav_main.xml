@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
     app:startDestination="@id/mainFragment">
 
     <fragment
@@ -14,11 +16,16 @@
                 android:name="select"
                 android:defaultValue="2" />
         </action>
+        <action
+            android:id="@+id/action_mainFragment_to_filmDetailFragment"
+            app:destination="@id/filmDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/bigImageFragment"
         android:name="com.uiuang.cloudknowledge.ui.fragment.sister.BigImageFragment"
-        android:label="BigImageFragment" >
+        android:label="BigImageFragment"
+        tools:layout="@layout/fragment_big_image"
+        >
         <argument
             android:name="select"
             app:argType="integer"
@@ -36,4 +43,9 @@
             app:argType="integer"
             android:defaultValue="0" />
     </fragment>
+    <fragment
+        android:id="@+id/filmDetailFragment"
+        android:name="com.uiuang.cloudknowledge.ui.fragment.movie.FilmDetailFragment"
+        android:label="fragment_film_detail"
+        tools:layout="@layout/fragment_film_detail" />
 </navigation>

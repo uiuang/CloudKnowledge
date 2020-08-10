@@ -23,6 +23,9 @@ import com.uiuang.cloudknowledge.viewmodel.request.RequestFilmComingViewModel
 import com.uiuang.cloudknowledge.viewmodel.request.RequestFilmShowingViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
+import com.uiuang.mvvm.ext.nav
+import com.uiuang.mvvm.ext.navigateAction
+import com.uiuang.mvvm.util.logd
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.fragment_sister.*
 
@@ -70,6 +73,16 @@ class FilmShowingFragment : BaseFragment<HomeViewModel, FragmentFilmShowingBindi
         swipeRefresh.init {
             //触发刷新监听时请求数据
             requestFilmShowingViewModel.getHotFilm()
+        }
+        filmShowingAdapter.run {
+            setOnItemClickListener { adapter, view, position ->
+                var item = filmShowingAdapter.getItem(position)
+                nav().navigateAction(R.id.action_mainFragment_to_filmDetailFragment, Bundle().apply {
+                    putInt("movieId", item.movieId)
+                })
+                item.id.toString().logd()
+
+            }
         }
     }
 

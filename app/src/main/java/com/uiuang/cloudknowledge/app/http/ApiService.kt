@@ -63,7 +63,8 @@ interface ApiService {
      * 232770
      */
     @GET("movie/detail.api?locationId=561")
-    suspend fun getFilmDetail(@Query("movieId")  movieId:Int):FilmDetailBean
+    suspend fun getFilmDetail(@Query("movieId") movieId: Int): FilmApiResponse<FilmDetailBean>
+
 
     /**
      * 全球票房排行榜

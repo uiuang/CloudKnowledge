@@ -21,7 +21,7 @@ import com.uiuang.cloudknowledge.ui.fragment.sister.BigImageFragment
  */
 class LocalPageAdapter constructor(var content: Context, private var imageId: Int) : PagerAdapter(),
     OnPhotoTapListener {
-    private var listener: BigImageFragment.onBackListener? = null
+    private var listener: BigImageFragment.OnBackListener? = null
     override fun getCount(): Int = 1
 
 
@@ -29,7 +29,7 @@ class LocalPageAdapter constructor(var content: Context, private var imageId: In
         return view === obj
     }
 
-    fun setOnBackListener(listener: BigImageFragment.onBackListener) {
+    fun setOnBackListener(listener: BigImageFragment.OnBackListener) {
         this.listener = listener
     }
 

@@ -33,7 +33,7 @@ class ViewPagerAdapter constructor(
     var imageList: MutableList<GankIOResultBean>,
     var isLocal: Boolean
 ) : PagerAdapter(), OnPhotoTapListener {
-    private var listener: BigImageFragment.onBackListener? = null
+    private var listener: BigImageFragment.OnBackListener? = null
 
 
     private var inflater: LayoutInflater? = null
@@ -46,7 +46,7 @@ class ViewPagerAdapter constructor(
         return view === obj
     }
 
-    fun setOnBackListener(listener: BigImageFragment.onBackListener) {
+    fun setOnBackListener(listener: BigImageFragment.OnBackListener) {
         this.listener = listener
     }
 
