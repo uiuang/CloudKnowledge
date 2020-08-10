@@ -181,9 +181,10 @@ fun SwipeRefreshLayout.init(onRefreshListener: () -> Unit) {
 /**
  * 初始化普通的toolbar 只设置标题
  */
-fun Toolbar.init(titleStr: String = ""): Toolbar {
+fun Toolbar.init(titleStr: String = "", subtitleStr: String = ""): Toolbar {
     setBackgroundColor(SettingUtil.getColor(appContext))
     title = titleStr
+    subtitle = subtitleStr
     return this
 }
 
@@ -192,11 +193,13 @@ fun Toolbar.init(titleStr: String = ""): Toolbar {
  */
 fun Toolbar.initClose(
     titleStr: String = "",
+    subtitleStr: String = "",
     backImg: Int = R.drawable.ic_back,
     onBack: (toolbar: Toolbar) -> Unit
 ): Toolbar {
     setBackgroundColor(SettingUtil.getColor(appContext))
     title = titleStr.toHtml()
+    subtitle = subtitleStr.toHtml()
     setNavigationIcon(backImg)
     setNavigationOnClickListener { onBack.invoke(this) }
     return this
@@ -358,6 +361,7 @@ fun ViewPager2.initMain(fragment: Fragment): ViewPager2 {
                 }
             }
         }
+
         override fun getItemCount() = 5
     }
     return this

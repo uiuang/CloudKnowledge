@@ -49,7 +49,7 @@ data class Basic(
     val movieStatus: Int,
     val name: String,
     val nameEn: String,
-    val overallRating: Double,
+    val overallRating: String,
     val personCount: Int,
     val quizGame: QuizGame,
     val ratingCount: Int,
@@ -86,10 +86,10 @@ data class Basic(
 data class BoxOffice(
     val movieId: Int,
     val ranking: Int,
-    val todayBox: Long,
+    val todayBox: String,
     val todayBoxDes: String,
     val todayBoxDesUnit: String,
-    val totalBox: Long,
+    val totalBox: String,
     val totalBoxDes: String,
     val totalBoxUnit: String
 )

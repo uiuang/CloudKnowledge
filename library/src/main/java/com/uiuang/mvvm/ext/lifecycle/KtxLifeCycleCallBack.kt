@@ -1,4 +1,4 @@
-package me.hgj.jetpackmvvm.ext.lifecycle
+package com.uiuang.mvvm.ext.lifecycle
 
 import android.app.Activity
 import android.app.Application

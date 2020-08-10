@@ -1,4 +1,4 @@
-package me.hgj.jetpackmvvm.demo.app.util
+package com.uiuang.cloudknowledge.utils
 
 import android.graphics.Color
 import java.util.*

@@ -7,11 +7,10 @@ import android.content.IntentFilter
 import android.database.Cursor
 import android.net.ConnectivityManager
 import android.net.Uri
-import android.net.http.HttpResponseCache.install
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.uiuang.mvvm.ext.lifecycle.KtxAppLifeObserver
 import com.uiuang.mvvm.network.manager.NetworkStateReceive
-import me.hgj.jetpackmvvm.ext.lifecycle.KtxLifeCycleCallBack
+import com.uiuang.mvvm.ext.lifecycle.KtxLifeCycleCallBack
 
 
 /**
