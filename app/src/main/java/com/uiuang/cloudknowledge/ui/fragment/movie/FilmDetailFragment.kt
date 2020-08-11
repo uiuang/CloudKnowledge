@@ -12,7 +12,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.bean.Basic
+import com.uiuang.cloudknowledge.bean.FilmDetailBean
 import com.uiuang.cloudknowledge.databinding.FragmentFilmDetailBinding
 import com.uiuang.cloudknowledge.ext.init
 import com.uiuang.cloudknowledge.ext.initClose
@@ -68,7 +68,7 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
         super.createObserver()
         requestFilmDetailViewModel.filmDetailBean.observe(viewLifecycleOwner, Observer {
             loadsir.showSuccess()
-            var basic: Basic = it.basic
+            var basic: FilmDetailBean.Basic = it.basic
             toolbar.run {
                 initClose(basic.name, basic.nameEn) {
                     nav().navigateUp()

@@ -76,5 +76,21 @@ interface ApiService {
      * pageSubAreaID
      */
 
+    /**
+     * /movie/hotComment.api?movieId=232770
+     * 获取电影短评
+     * /movie/hotComment201905.api?movieId=232770
+     * 获取短评和影评
+     * /movie/video/detail.api?vId=77070
+     * 视频详情
+     * /movie/externalPlayInfos.api?movieId=232770
+     * 简单介绍
+     * /movie/extendDetail.api?movieId=232770
+     * 时光原创
+     * /movie/score/getShareImage.api?movieId=232770
+     * 分享影评图片
+     * /movie/category/video.api?movieId=232770
+     * 获取所有的预告片和花絮
+     */
 
 }
