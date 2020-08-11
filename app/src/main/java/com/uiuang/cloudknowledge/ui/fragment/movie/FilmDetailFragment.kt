@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.kingja.loadsir.core.LoadService
@@ -13,9 +14,11 @@ import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.bean.Basic
 import com.uiuang.cloudknowledge.databinding.FragmentFilmDetailBinding
+import com.uiuang.cloudknowledge.ext.init
 import com.uiuang.cloudknowledge.ext.initClose
 import com.uiuang.cloudknowledge.ext.loadServiceInit
 import com.uiuang.cloudknowledge.ext.showLoading
+import com.uiuang.cloudknowledge.ui.adapter.film.FilmActorsAdapter
 import com.uiuang.cloudknowledge.viewmodel.request.RequestFilmDetailViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.mvvm.ext.nav
@@ -32,6 +35,10 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
     override fun layoutId(): Int = R.layout.fragment_film_detail
     private var movieId: Int = 0
 
+    private val filmActorsAdapter: FilmActorsAdapter by lazy {
+        FilmActorsAdapter(arrayListOf())
+    }
+
 
     //请求ViewModel
     private val requestFilmDetailViewModel: RequestFilmDetailViewModel by viewModels()
@@ -43,6 +50,10 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
             //点击重试时触发的操作
             loadsir.showLoading()
             requestFilmDetailViewModel.getFilmDetail(movieId)
+        }
+
+        xrv_cast.run {
+            init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false),filmActorsAdapter,true)
         }
 
     }
@@ -69,6 +80,8 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
             tv_one_rating_number.text = "${basic.personCount}人评分"
             tv_one_directors.text = basic.director.name
             tv_one_casts.text = ""
+            tv_story.text = basic.story
+            filmActorsAdapter.setNewInstance(basic.actors)
 
         })
     }

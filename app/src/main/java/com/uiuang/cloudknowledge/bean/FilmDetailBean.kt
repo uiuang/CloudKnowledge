@@ -6,8 +6,19 @@ data class FilmDetailBean(
     val boxOffice: BoxOffice,
     val live: Live,
     val playState: String,
-    val playlist: List<Any>,
+    val playlist: List<PlayListBean>,//在线观影
     val related: Related
+)
+
+data class PlayListBean(
+    val isOpenByBrowser: Boolean = false,
+    val payRule: String,
+    val picUrl: String,
+    val playSourceName: String,
+    val playUrl: String,
+    val playUrlH5: String,
+    val playUrlPC: String,
+    val sourceId: String
 )
 
 
@@ -20,7 +31,7 @@ data class AdvertisementBean(
 
 
 data class Basic(
-    val actors: List<Actor>,
+    val actors: MutableList<Actor>,
     val attitude: Int,
     val award: Award,
     val bigImage: String,
@@ -85,11 +96,11 @@ data class Basic(
  */
 data class BoxOffice(
     val movieId: Int,
-    val ranking: Int,
+    val ranking: Int,//今日票房排名
     val todayBox: String,
-    val todayBoxDes: String,
+    val todayBoxDes: String,//今日实时
     val todayBoxDesUnit: String,
-    val totalBox: String,
+    val totalBox: String,//累计票房
     val totalBoxDes: String,
     val totalBoxUnit: String
 )
@@ -127,8 +138,8 @@ data class Actor(
 
 data class Award(
     val awardList: List<Any>,
-    val totalNominateAward: Int,
-    val totalWinAward: Int
+    val totalNominateAward: Int,//提名
+    val totalWinAward: Int//获奖
 )
 
 class Community(
