@@ -262,6 +262,7 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tv_story"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:lineSpacingExtra="7dp"

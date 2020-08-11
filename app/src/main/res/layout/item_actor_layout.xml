@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="80dp"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/iv_actor_img"
+        android:layout_width="50dp"
+        android:layout_height="80dp"/>
+
+    <TextView
+        android:id="@+id/tv_actor_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="柯文龙"
+        android:layout_gravity="center"
+        android:textColor="@color/colorBlack333"
+        android:textSize="14sp"
+        />
+    <TextView
+        android:id="@+id/tv_actor_nameEn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="英文名"
+        android:textSize="12sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="3dp"
+        android:lines="1"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textColor="@color/colorBlack666"
+        />
+    <TextView
+        android:id="@+id/tv_actor_roleName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="饰演者"
+        android:textColor="@color/colorBlack666"
+        android:textSize="12sp"
+        android:layout_gravity="center"
+        android:layout_marginTop="3dp"
+        android:lines="1"
+        android:singleLine="true"
+        android:ellipsize="end"
+        />
+
+</LinearLayout>
