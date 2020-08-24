@@ -24,4 +24,7 @@
     <color name="itemBackground">#DD7D7D7D</color>
     <!--item的5.0一下版本选择器颜色-->
     <color name="itemLowBackground">#d9d9d9</color>
+
+    <!--首页分割线-->
+    <color name="colorHomeLine">#D4D4D4</color>
 </resources>

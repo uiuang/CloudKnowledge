@@ -26,12 +26,12 @@ class FilmComingAdapter(context: Context,data: MutableList<ComingFilmBean.Movies
     private var width: Int = 0
 
     init {
-        var px =context.dp2px(36)
+        val px =context.dp2px(36)
         width = (context.screenWidth - px) / 3
     }
 
     override fun convert(holder: BaseViewHolder, item: ComingFilmBean.MoviesBean) {
-        var ivTopPhoto = holder.getView<ImageView>(R.id.iv_top_photo)
+        val ivTopPhoto = holder.getView<ImageView>(R.id.iv_top_photo)
         holder.setText(R.id.tv_name, item.title)
         holder.setText(R.id.tv_rate, item.releaseDate)
         setWidthHeight(ivTopPhoto, width, 0.758f)

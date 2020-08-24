@@ -1,9 +1,8 @@
 package com.uiuang.cloudknowledge.app.http
 
+import androidx.databinding.Observable
 import com.uiuang.cloudknowledge.bean.*
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 
 /**
@@ -93,4 +92,49 @@ interface ApiService {
      * 获取所有的预告片和花絮
      */
 
+
+    /**--------------------------------------------玩安卓--------------------------------------------*/
+
+    /**
+     * 玩安卓轮播图
+     */
+    @GET("banner/json")
+    suspend fun getWanAndroidBanner(): ApiResponse<List<WanAndroidBannerBean>>
+
+    /**
+     * 玩安卓，文章列表、知识体系下的文章
+     *
+     * @param page 页码，从0开始
+     * @param cid  体系id
+     */
+    @GET("article/list/{page}/json")
+    suspend fun getHomeList(
+        @Path("page") page: Int,
+        @Query("cid") cid: Int?
+    ): ApiResponse<ApiPagerResponse<ArrayList<HomeListBean>>>
+
+
+    /**
+     * 玩安卓 搜索
+     */
+    @FormUrlEncoded
+    @POST("article/query/{page}/json")
+    suspend fun searchWan(
+        @Path("page") page: Int,
+        @Field("k") k: String?
+    ): ApiResponse<ApiPagerResponse<HomeListBean>>
+
+    /**
+     * 搜索热词
+     */
+    @GET("hotkey/json")
+    suspend fun getHotkey(): ApiResponse<SearchTagBean>
+
+    /**
+     * 玩安卓，首页第二tab 项目；列表
+     *
+     * @param page 页码，从0开始
+     */
+    @GET("article/listproject/{page}/json")
+    suspend fun getProjectList(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<HomeListBean>>>
 }
