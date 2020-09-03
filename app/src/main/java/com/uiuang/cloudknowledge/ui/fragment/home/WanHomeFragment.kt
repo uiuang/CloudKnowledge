@@ -34,7 +34,7 @@ import kotlinx.android.synthetic.main.fragment_wan_home.*
 
 class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
     //界面状态管理者
-    private lateinit var loadsir: LoadService<Any>
+    private lateinit var loadSir: LoadService<Any>
 
     private val requestWanHomeViewModel: RequestWanHomeViewModel by viewModels()
 
@@ -59,9 +59,9 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         //状态页配置
-        loadsir = loadServiceInit(swipeRefresh) {
+        loadSir = loadServiceInit(swipeRefresh) {
             //点击重试时触发的操作
-            loadsir.showLoading()
+            loadSir.showLoading()
             requestWanHomeViewModel.getWanAndroidBanner()
         }
 
@@ -129,8 +129,8 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
             addBannerLifecycleObserver(this@WanHomeFragment)//添加生命周期观察者
             adapter = wanBannerAdapter
             indicator = CircleIndicator(requireActivity())
-            setOnBannerListener { data, position ->
-                var item = wanBannerAdapter.getData(position)
+            setOnBannerListener { _, position ->
+                val item = wanBannerAdapter.getData(position)
                 openDetail(item.url, item.title)
             }
         }
@@ -159,22 +159,22 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
             val listData = it.listData
             when (it.isSuccess) {
                 true -> {
-                    loadsir.showSuccess()
+                    loadSir.showSuccess()
                     headerWanAndroidBinding!!.banner.setDatas(listData)
                 }
                 else -> {
-                    loadsir.showError()
+                    loadSir.showError()
                 }
             }
         })
         requestWanHomeViewModel.homeListBean.observe(viewLifecycleOwner, Observer {
-            loadListData(it, wanAndroidAdapter, loadsir, recyclerView, swipeRefresh)
+            loadListData(it, wanAndroidAdapter, loadSir, recyclerView, swipeRefresh)
         })
     }
 
     override fun lazyLoadData() {
         //设置界面 加载中
-        loadsir.showLoading()
+        loadSir.showLoading()
         requestWanHomeViewModel.getWanAndroidBanner()
         refresh(isChecked = true, isArticle = true, isRefresh = true)
     }
