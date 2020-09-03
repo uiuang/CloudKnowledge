@@ -1,30 +1,32 @@
 package com.uiuang.cloudknowledge.ui.fragment.home
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.databinding.FragmentWanHomeBinding
 import com.uiuang.cloudknowledge.databinding.HeaderWanAndroidBinding
-import com.uiuang.cloudknowledge.ext.init
-import com.uiuang.cloudknowledge.ext.loadServiceInit
-import com.uiuang.cloudknowledge.ext.showError
-import com.uiuang.cloudknowledge.ext.showLoading
+import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.wan.WanAndroidAdapter
 import com.uiuang.cloudknowledge.ui.adapter.wan.WanBannerAdapter
+import com.uiuang.cloudknowledge.utils.toast
 import com.uiuang.cloudknowledge.viewmodel.request.RequestWanHomeViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
+import com.uiuang.mvvm.ext.nav
+import com.uiuang.mvvm.ext.navigateAction
 import com.uiuang.mvvm.util.dp2px
 import com.uiuang.mvvm.util.screenWidth
+import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import com.youth.banner.indicator.CircleIndicator
-import kotlinx.android.synthetic.main.fragment_sister.*
 import kotlinx.android.synthetic.main.fragment_sister.recyclerView
 import kotlinx.android.synthetic.main.fragment_sister.swipeRefresh
 import kotlinx.android.synthetic.main.fragment_wan_home.*
@@ -75,58 +77,98 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
         val height: Float = width / 1.8f
         val lp = ConstraintLayout.LayoutParams(context?.screenWidth!!.toInt(), height.toInt())
         headerWanAndroidBinding!!.banner.layoutParams = lp
+
         headerWanAndroidBinding!!.radioGroup.visibility = View.VISIBLE
-        headerWanAndroidBinding!!.rb1.run {
-            setOnCheckedChangeListener { buttonView, isChecked -> {
-
-            } }
+        headerWanAndroidBinding!!.rb1.setOnCheckedChangeListener { _, isChecked ->
+            refresh(
+                isChecked,
+                isArticle = true,
+                isRefresh = true
+            )
         }
-        headerWanAndroidBinding!!.rb2.run {
-            setOnCheckedChangeListener { buttonView, isChecked -> {
-
-            } }
+        headerWanAndroidBinding!!.rb2.setOnCheckedChangeListener { _, isChecked ->
+            refresh(
+                isChecked,
+                isArticle = false,
+                isRefresh = true
+            )
         }
         recyclerView.addHeaderView(headerWanAndroidBinding?.root)
         recyclerView.init(
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false),
             wanAndroidAdapter
         ).let {
-//            it.addItemDecoration(GridSpaceItemDecoration(12))
-////            footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
-////                requestSisterViewModel.getPlazaData(false)
-////            })
+            it.addItemDecoration(
+                DividerItemDecoration(
+                    requireActivity(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+            footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
+                if (headerWanAndroidBinding?.rb1!!.isChecked) {
+                    refresh(isChecked = true, isArticle = true, isRefresh = false)
+                } else {
+                    refresh(isChecked = true, isArticle = false, isRefresh = false)
+                }
+            })
 //            //初始化FloatingActionButton
-//            it.initFloatBtn(floatBtn)
+            it.initFloatBtn(floatBtnWanAndroid)
         }
         //初始化 SwipeRefreshLayout
         swipeRefresh.init {
             //触发刷新监听时请求数据
             requestWanHomeViewModel.getWanAndroidBanner()
+            if (headerWanAndroidBinding?.rb1!!.isChecked) {
+                refresh(isChecked = true, isArticle = true, isRefresh = true)
+            } else {
+                refresh(isChecked = true, isArticle = false, isRefresh = true)
+            }
         }
 
         headerWanAndroidBinding!!.banner.run {
             addBannerLifecycleObserver(this@WanHomeFragment)//添加生命周期观察者
             adapter = wanBannerAdapter
             indicator = CircleIndicator(requireActivity())
+            setOnBannerListener { data, position ->
+                var item = wanBannerAdapter.getData(position)
+                openDetail(item.url, item.title)
+            }
         }
+        wanAndroidAdapter.run {
+            addChildClickViewIds(R.id.tv_tag_name, R.id.cb_collect)
+            setOnItemClickListener { _, _, position ->
+                val item = getItem(position - 1)
+                openDetail(item.link, item.title)
+            }
+            setOnItemChildClickListener { _, view, position ->
+                when (view.id) {
+                    R.id.tv_tag_name -> getItem(position - 1).chapterName?.toast()
+                    R.id.cb_collect -> "未登录".toast()
+
+                }
+            }
+
+        }
+
     }
 
     override fun createObserver() {
         super.createObserver()
         requestWanHomeViewModel.wanAndroidBannerBean.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            var listData = it.listData
+            val listData = it.listData
             when (it.isSuccess) {
                 true -> {
                     loadsir.showSuccess()
                     headerWanAndroidBinding!!.banner.setDatas(listData)
-//                    wanBannerAdapter.setDatas(listData)
-//                    wanBannerAdapter.notifyDataSetChanged()
                 }
                 else -> {
                     loadsir.showError()
                 }
             }
+        })
+        requestWanHomeViewModel.homeListBean.observe(viewLifecycleOwner, Observer {
+            loadListData(it, wanAndroidAdapter, loadsir, recyclerView, swipeRefresh)
         })
     }
 
@@ -134,18 +176,30 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
         //设置界面 加载中
         loadsir.showLoading()
         requestWanHomeViewModel.getWanAndroidBanner()
+        refresh(isChecked = true, isArticle = true, isRefresh = true)
     }
 
-    private fun refresh(isChecked: Boolean, isArticle: Boolean) {
+    private fun refresh(isChecked: Boolean, isArticle: Boolean, isRefresh: Boolean) {
         if (isChecked) {
-           swipeRefresh.isRefreshing = true
-//            viewModel.setPage(0)
-//            mAdapter.setNoImage(isArticle)
+            swipeRefresh.isRefreshing = true
+            wanAndroidAdapter.setNoImage(isArticle)
             if (isArticle) {
-               requestWanHomeViewModel. getHomeArticleList(true,null)
+                requestWanHomeViewModel.getHomeArticleList(isRefresh, null)
             } else {
-               requestWanHomeViewModel. getHomeProjectList(true)
+                requestWanHomeViewModel.getHomeProjectList(isRefresh)
             }
         }
     }
+
+
+    private fun openDetail(url: String?, title: String?, isTitleFix: Boolean = false) {
+        if (!TextUtils.isEmpty(url)) {
+            nav().navigateAction(R.id.action_mainFragment_to_webViewFragment, Bundle().apply {
+                putString("url", url)
+                putBoolean("isTitleFix", isTitleFix)
+                putString("title", if (TextUtils.isEmpty(title)) url else title)
+            })
+        }
+    }
+
 }

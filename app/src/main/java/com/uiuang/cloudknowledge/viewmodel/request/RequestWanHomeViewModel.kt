@@ -12,7 +12,8 @@ import com.uiuang.mvvm.ext.request
 class RequestWanHomeViewModel : BaseViewModel() {
     private var pageNo = 1
     private var countNo = 20
-    var wanAndroidBannerBean: MutableLiveData<ListDataUiState<WanAndroidBannerBean>> = MutableLiveData()
+    var wanAndroidBannerBean: MutableLiveData<ListDataUiState<WanAndroidBannerBean>> =
+        MutableLiveData()
     var homeListBean: MutableLiveData<ListDataUiState<HomeListBean>> = MutableLiveData()
     fun getWanAndroidBanner() {
         request({ getWanAndroidServer.getWanAndroidBanner() }, {
@@ -27,11 +28,12 @@ class RequestWanHomeViewModel : BaseViewModel() {
         })
     }
 
-    fun getHomeArticleList(isRefresh: Boolean,cid: Int?) {
+    fun getHomeArticleList(isRefresh: Boolean, cid: Int?) {
         if (isRefresh) {
             pageNo = 0
         }
-        request({ getWanAndroidServer.getHomeList(pageNo,cid)},{
+        request({ getWanAndroidServer.getHomeList(pageNo, cid) }, {
+            pageNo++
             val listDataUiState =
                 ListDataUiState(
                     isSuccess = true,
@@ -42,7 +44,7 @@ class RequestWanHomeViewModel : BaseViewModel() {
                     listData = it.datas
                 )
             homeListBean.postValue(listDataUiState)
-        },{
+        }, {
             //请求失败
             val listDataUiState =
                 ListDataUiState(
@@ -59,7 +61,8 @@ class RequestWanHomeViewModel : BaseViewModel() {
         if (isRefresh) {
             pageNo = 0
         }
-        request({ getWanAndroidServer.getProjectList(pageNo)},{
+        request({ getWanAndroidServer.getProjectList(pageNo) }, {
+            pageNo++
             val listDataUiState =
                 ListDataUiState(
                     isSuccess = true,
@@ -70,7 +73,7 @@ class RequestWanHomeViewModel : BaseViewModel() {
                     listData = it.datas
                 )
             homeListBean.postValue(listDataUiState)
-        },{
+        }, {
             //请求失败
             val listDataUiState =
                 ListDataUiState(

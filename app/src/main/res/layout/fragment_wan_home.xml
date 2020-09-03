@@ -25,12 +25,16 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none"
+                android:background="@color/white"
+                android:scrollbars="vertical"
+                tools:itemCount="5"
+                tools:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/item_wan_android"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatBtn"
+            android:id="@+id/floatBtnWanAndroid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
