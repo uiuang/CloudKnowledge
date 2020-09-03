@@ -41,11 +41,12 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
     //recyclerview的底部加载view 因为要在首页动态改变他的颜色，所以加了他这个字段
     private lateinit var footView: DefineLoadMoreView
 
-    //    private var inflate = LayoutInflater.from(requireContext())
-    private var headerWanAndroidBinding: HeaderWanAndroidBinding? = null
+    private lateinit var headerWanAndroidBinding: HeaderWanAndroidBinding
+
     private val wanAndroidAdapter: WanAndroidAdapter by lazy {
         WanAndroidAdapter(arrayListOf())
     }
+
     private val wanBannerAdapter: WanBannerAdapter by lazy {
         WanBannerAdapter(arrayListOf())
     }
@@ -72,28 +73,21 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
             null,
             false
         )
-        val px = context?.dp2px(100)
-        val width: Int = context?.screenWidth!!.minus(px!!)
+        val px = requireActivity().dp2px(100)
+        val screenWidth:Int = requireActivity().screenWidth
+        val width: Int = screenWidth.minus(px)
         val height: Float = width / 1.8f
-        val lp = ConstraintLayout.LayoutParams(context?.screenWidth!!.toInt(), height.toInt())
-        headerWanAndroidBinding!!.banner.layoutParams = lp
+        val lp = ConstraintLayout.LayoutParams(screenWidth, height.toInt())
+        headerWanAndroidBinding.banner.layoutParams = lp
 
-        headerWanAndroidBinding!!.radioGroup.visibility = View.VISIBLE
-        headerWanAndroidBinding!!.rb1.setOnCheckedChangeListener { _, isChecked ->
-            refresh(
-                isChecked,
-                isArticle = true,
-                isRefresh = true
-            )
+        headerWanAndroidBinding.radioGroup.visibility = View.VISIBLE
+        headerWanAndroidBinding.rb1.setOnCheckedChangeListener { _, isChecked ->
+            refresh(isChecked, isArticle = true, isRefresh = true)
         }
-        headerWanAndroidBinding!!.rb2.setOnCheckedChangeListener { _, isChecked ->
-            refresh(
-                isChecked,
-                isArticle = false,
-                isRefresh = true
-            )
+        headerWanAndroidBinding.rb2.setOnCheckedChangeListener { _, isChecked ->
+            refresh(isChecked, isArticle = false, isRefresh = true)
         }
-        recyclerView.addHeaderView(headerWanAndroidBinding?.root)
+        recyclerView.addHeaderView(headerWanAndroidBinding.root)
         recyclerView.init(
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false),
             wanAndroidAdapter
@@ -105,7 +99,7 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
                 )
             )
             footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
-                if (headerWanAndroidBinding?.rb1!!.isChecked) {
+                if (headerWanAndroidBinding.rb1.isChecked) {
                     refresh(isChecked = true, isArticle = true, isRefresh = false)
                 } else {
                     refresh(isChecked = true, isArticle = false, isRefresh = false)
@@ -118,14 +112,14 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
         swipeRefresh.init {
             //触发刷新监听时请求数据
             requestWanHomeViewModel.getWanAndroidBanner()
-            if (headerWanAndroidBinding?.rb1!!.isChecked) {
+            if (headerWanAndroidBinding.rb1.isChecked) {
                 refresh(isChecked = true, isArticle = true, isRefresh = true)
             } else {
                 refresh(isChecked = true, isArticle = false, isRefresh = true)
             }
         }
 
-        headerWanAndroidBinding!!.banner.run {
+        headerWanAndroidBinding.banner.run {
             addBannerLifecycleObserver(this@WanHomeFragment)//添加生命周期观察者
             adapter = wanBannerAdapter
             indicator = CircleIndicator(requireActivity())
@@ -144,12 +138,9 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
                 when (view.id) {
                     R.id.tv_tag_name -> getItem(position - 1).chapterName?.toast()
                     R.id.cb_collect -> "未登录".toast()
-
                 }
             }
-
         }
-
     }
 
     override fun createObserver() {
@@ -157,15 +148,10 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
         requestWanHomeViewModel.wanAndroidBannerBean.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
             val listData = it.listData
-            when (it.isSuccess) {
-                true -> {
-                    loadSir.showSuccess()
-                    headerWanAndroidBinding!!.banner.setDatas(listData)
-                }
-                else -> {
-                    loadSir.showError()
-                }
-            }
+            if (it.isSuccess) {
+                loadSir.showSuccess()
+                headerWanAndroidBinding.banner.setDatas(listData)
+            } else loadSir.showError()
         })
         requestWanHomeViewModel.homeListBean.observe(viewLifecycleOwner, Observer {
             loadListData(it, wanAndroidAdapter, loadSir, recyclerView, swipeRefresh)
@@ -183,21 +169,20 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
         if (isChecked) {
             swipeRefresh.isRefreshing = true
             wanAndroidAdapter.setNoImage(isArticle)
-            if (isArticle) {
+            if (isArticle)
                 requestWanHomeViewModel.getHomeArticleList(isRefresh, null)
-            } else {
+             else
                 requestWanHomeViewModel.getHomeProjectList(isRefresh)
-            }
+
         }
     }
 
-
     private fun openDetail(url: String?, title: String?, isTitleFix: Boolean = false) {
-        if (!TextUtils.isEmpty(url)) {
+        if (!url.isNullOrEmpty()) {
             nav().navigateAction(R.id.action_mainFragment_to_webViewFragment, Bundle().apply {
                 putString("url", url)
                 putBoolean("isTitleFix", isTitleFix)
-                putString("title", if (TextUtils.isEmpty(title)) url else title)
+                putString("title", if (title.isNullOrEmpty()) url else title)
             })
         }
     }
