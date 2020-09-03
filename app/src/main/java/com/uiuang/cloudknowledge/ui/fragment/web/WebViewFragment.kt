@@ -200,6 +200,20 @@ class WebViewFragment : BaseFragment<WebViewModel, FragmentWebViewBinding>() {
         return false
     }
 
+    override fun onPause() {
+        agentWeb?.webLifeCycle?.onPause()
+        super.onPause()
+    }
 
+    override fun onResume() {
+        agentWeb?.webLifeCycle?.onResume()
+        super.onResume()
+    }
+
+    override fun onDestroy() {
+        agentWeb?.webLifeCycle?.onDestroy()
+        mActivity.setSupportActionBar(null)
+        super.onDestroy()
+    }
 
 }

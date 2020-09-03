@@ -1,7 +1,7 @@
 package com.uiuang.cloudknowledge.utils
 
-import android.content.Context
 import android.widget.Toast
+import com.uiuang.cloudknowledge.app.App
 import com.uiuang.mvvm.base.appContext
 
 
@@ -13,4 +13,8 @@ import com.uiuang.mvvm.base.appContext
  */
 fun Any.toast(): Toast {
     return Toast.makeText(appContext, this.toString(), Toast.LENGTH_SHORT).apply { show() }
+}
+
+fun Any.showToastLong(): Toast {
+    return Toast.makeText(appContext, this.toString(), Toast.LENGTH_LONG).apply { show() }
 }
