@@ -1,5 +1,7 @@
 package com.uiuang.cloudknowledge.app.state
 
+import com.uiuang.cloudknowledge.bean.HomeListBean
+
 /**
  * 作者　: hegaojian
  * 时间　: 2020/3/3

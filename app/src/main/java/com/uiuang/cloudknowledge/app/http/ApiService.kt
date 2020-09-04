@@ -158,7 +158,7 @@ interface ApiService {
     suspend fun getAccountList(
         @Path("id") id: Int,
         @Path("page") page: Int
-    ): ApiResponse<ApiPagerResponse<HomeListBean>>
+    ): ApiResponse<ApiPagerResponse<ArrayList<HomeListBean>>>
     /**
      * 获取项目列表
      */

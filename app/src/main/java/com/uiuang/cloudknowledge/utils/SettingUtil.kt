@@ -15,6 +15,7 @@ import com.kingja.loadsir.core.LoadService
 import com.tencent.mmkv.MMKV
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.App
+import com.uiuang.cloudknowledge.app.http.Constants
 import com.uiuang.cloudknowledge.weight.loadCallBack.LoadingCallback
 import java.lang.reflect.InvocationTargetException
 import kotlin.math.roundToInt
@@ -178,6 +179,26 @@ object SettingUtil {
                 view.findViewById<ProgressBar>(R.id.loading_progress).indeterminateTintList = getOneColorStateList(color)
             }
         }
+    }
+
+    /**
+     * 获取列表动画模式
+     */
+    fun getFindPosition(): Int {
+        val kv = MMKV.mmkvWithID("app")
+        return kv.decodeInt(Constants.FIND_POSITION, -1)
+    }
+    /**
+     * 设置列表动画模式
+     */
+    fun setFindPosition(find_position: Int) {
+        val kv = MMKV.mmkvWithID("app")
+        kv.encode(Constants.FIND_POSITION, find_position)
+    }
+
+    fun removeFindPosition() {
+        val kv = MMKV.mmkvWithID("app")
+        kv.removeValueForKey(Constants.FIND_POSITION)
     }
 
 

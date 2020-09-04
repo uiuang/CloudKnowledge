@@ -88,21 +88,19 @@ class SisterFragment : BaseFragment<HomeViewModel, FragmentSisterBinding>() {
                 nav().navigateAction(R.id.action_mainFragment_to_bigImageFragment, Bundle().apply {
                     putInt("position", position)
                 })
-                val gson =
-                    GsonBuilder().addSerializationExclusionStrategy(object : ExclusionStrategy {
+                val gson = GsonBuilder().addSerializationExclusionStrategy(object : ExclusionStrategy {
                         override fun shouldSkipField(f: FieldAttributes): Boolean {
-                            if (f == null || f.name == null) {
+                            if (f.name == null) {
                                 return true
                             }
                             val name = f.name
-                            return if (name == "url" || name == "desc") {
-                                false
-                            } else true
+                            return !(name == "url" || name == "desc")
                         }
 
-                        override fun shouldSkipClass(clazz: Class<*>?): Boolean {
-                            return false
-                        }
+
+
+                        override fun shouldSkipClass(clazz: Class<*>?): Boolean = false
+
                     }).create()
                 ACache[mActivity].put("ImageItemsBean", gson.toJson(data))
 

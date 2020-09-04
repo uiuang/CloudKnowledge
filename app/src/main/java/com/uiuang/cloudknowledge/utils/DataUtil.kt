@@ -2,7 +2,10 @@ package com.uiuang.cloudknowledge.utils
 
 import android.content.Context
 import android.text.TextUtils
-import java.util.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.uiuang.cloudknowledge.bean.TabBean
+import com.uiuang.mvvm.util.toJson
 
 object DataUtil {
     /**
@@ -45,6 +48,20 @@ object DataUtil {
         } else {
             "+$value"
         }
+    }
+
+    /**
+     * 保存知识体系数据
+     */
+    fun putTreeData(context: Context, treeBean: MutableList<TabBean>?) {
+        ACache[context].put("TreeBean", treeBean.toJson())
+    }
+
+    fun getTreeData(context: Context?): MutableList<TabBean>? {
+        var asString = ACache[context!!].getAsString("TreeBean")
+        val listType = object : TypeToken<ArrayList<TabBean>>() {}.type
+        return Gson().fromJson(asString, listType)
+
     }
 
 
