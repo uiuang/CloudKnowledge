@@ -1,6 +1,5 @@
 package com.uiuang.cloudknowledge.app.http
 
-import androidx.databinding.Observable
 import com.uiuang.cloudknowledge.bean.*
 import retrofit2.http.*
 
@@ -137,4 +136,82 @@ interface ApiService {
      */
     @GET("article/listproject/{page}/json")
     suspend fun getProjectList(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<HomeListBean>>>
+
+    /**
+     * 获取项目tab
+     */
+    @GET("/project/tree/json")
+    suspend fun getProjectTabList(): ApiResponse<MutableList<TabBean>>
+
+    /**
+     * 获取公众号列表
+     */
+    @GET("wxarticle/chapters/json")
+    suspend fun getAccountTabList(): ApiResponse<MutableList<TabBean>>
+
+    /**
+     * 单个公众号数据
+     *
+     * @param page 1开始
+     */
+    @GET("wxarticle/list/{id}/{page}/json")
+    suspend fun getAccountList(
+        @Path("id") id: Int,
+        @Path("page") page: Int
+    ): ApiResponse<ApiPagerResponse<HomeListBean>>
+    /**
+     * 获取项目列表
+     */
+    @GET("/project/list/{pageNum}/json")
+    suspend fun getProjectList(@Path("pageNum")pageNum:Int,@Query("cid")cid:Int)
+            :ApiResponse<HomeListBean>
+
+
+    /**
+     * 体系
+     */
+    @GET("/tree/json")
+    suspend fun getSystemList() : ApiResponse<MutableList<SystemBean>>
+
+
+    /**
+     * 获取体系文章列表
+     */
+    @GET("/article/list/{pageNum}/json")
+    suspend fun getSystemArticle(@Path("pageNum")pageNum:Int,@Query("cid")cid:Int)
+            : ApiResponse<HomeListBean>
+    /**
+     * 获取项目tab
+     */
+    @POST("/article/query/{pageNum}/json")
+    suspend fun search(@Path("pageNum")pageNum:Int,@Query("k")k:String)
+            : ApiResponse<HomeListBean>
+    /**
+     * 收藏
+     */
+    @POST("/lg/collect/{id}/json")
+    suspend fun collect(@Path("id")id:Int):ApiResponse<Any>
+
+    /**
+     * 取消收藏
+     */
+    @POST("/lg/uncollect_originId/{id}/json")
+    suspend fun unCollect(@Path("id") id: Int): ApiResponse<Any>
+    /**
+     * 登录
+     */
+    @FormUrlEncoded
+    @POST("/user/login")
+    suspend fun login(@Field("username") username: String,
+                      @Field("password") password: String): ApiResponse<UserInfo>
+
+    @GET("/user/logout/json")
+    suspend fun logout():ApiResponse<Any>
+    /**
+     * 注册
+     */
+    @POST("/user/register")
+    suspend fun register(@Query("username")username: String,
+                         @Query("password")password: String,
+                         @Query("repassword")repassword: String) : ApiResponse<Any>
 }
