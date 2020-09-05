@@ -3,6 +3,7 @@ package com.uiuang.cloudknowledge.viewmodel.request
 import androidx.lifecycle.MutableLiveData
 import com.uiuang.cloudknowledge.app.http.getWanAndroidServer
 import com.uiuang.cloudknowledge.app.state.ListDataUiState
+import com.uiuang.cloudknowledge.bean.ChildrenBean
 import com.uiuang.cloudknowledge.bean.HomeListBean
 import com.uiuang.cloudknowledge.bean.TabBean
 import com.uiuang.cloudknowledge.utils.SettingUtil
@@ -10,9 +11,9 @@ import com.uiuang.mvvm.base.viewmodel.BaseViewModel
 import com.uiuang.mvvm.ext.request
 
 class RequestWanFindViewModel : BaseViewModel() {
-    var pageNo: Int = 0
+    var pageNo: Int = 1
 
-    var dataTitle: MutableLiveData<MutableList<TabBean>> = MutableLiveData()
+    var dataTitle: MutableLiveData<MutableList<ChildrenBean>> = MutableLiveData()
 
     var homeListBean: MutableLiveData<ListDataUiState<HomeListBean>> = MutableLiveData()
 
@@ -28,7 +29,7 @@ class RequestWanFindViewModel : BaseViewModel() {
 
     fun getWxArticleDetail(isRefresh: Boolean, id: Int) {
         if (isRefresh) {
-            pageNo = 0
+            pageNo = 1
         }
         request({ getWanAndroidServer.getAccountList(id, pageNo) }, {
             pageNo++
@@ -58,8 +59,8 @@ class RequestWanFindViewModel : BaseViewModel() {
     fun handleCustomData(treeBean: MutableList<TabBean>?, position: Int): Boolean =
         if (!treeBean.isNullOrEmpty()) {
             SettingUtil.setFindPosition(position)
-            pageNo = 0
-            dataTitle.value = treeBean
+            pageNo = 1
+            dataTitle.value = treeBean[position].children
             true
         } else {
             SettingUtil.removeFindPosition()

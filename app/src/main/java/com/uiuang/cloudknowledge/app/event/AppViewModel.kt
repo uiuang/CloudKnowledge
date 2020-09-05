@@ -24,6 +24,8 @@ class AppViewModel:BaseViewModel() {
     //App 列表动画
     var appAnimation = UnPeekLiveData<Int>()
 
+    var findPosition = UnPeekLiveData<Int>()
+
     init {
         //默认值保存的账户信息，没有登陆过则为null
         userinfo.value = CacheUtil.getUser()
@@ -31,5 +33,7 @@ class AppViewModel:BaseViewModel() {
         appColor.value = SettingUtil.getColor(appContext)
         //初始化列表动画
         appAnimation.value = SettingUtil.getListMode()
+
+        findPosition.value = -1
     }
 }

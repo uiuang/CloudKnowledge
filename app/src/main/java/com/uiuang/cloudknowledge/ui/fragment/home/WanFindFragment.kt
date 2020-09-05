@@ -8,15 +8,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
+import com.uiuang.cloudknowledge.bean.TabBean
 import com.uiuang.cloudknowledge.databinding.FragmentWanFindBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.wan.WanAndroidAdapter
 import com.uiuang.cloudknowledge.ui.adapter.wan.WxArticleAdapter
 import com.uiuang.cloudknowledge.utils.DataUtil
 import com.uiuang.cloudknowledge.utils.SettingUtil
+import com.uiuang.cloudknowledge.utils.showToastLong
+import com.uiuang.cloudknowledge.utils.toast
 import com.uiuang.cloudknowledge.viewmodel.request.RequestWanFindViewModel
-import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
+import com.uiuang.cloudknowledge.viewmodel.state.WanFindViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
+import com.uiuang.mvvm.ext.nav
+import com.uiuang.mvvm.ext.navigateAction
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.fragment_sister.*
 import kotlinx.android.synthetic.main.fragment_sister.swipeRefresh
@@ -24,11 +29,12 @@ import kotlinx.android.synthetic.main.fragment_wan_find.*
 import kotlinx.android.synthetic.main.fragment_wan_find.recyclerView
 
 
-class WanFindFragment : BaseFragment<HomeViewModel, FragmentWanFindBinding>() {
+class WanFindFragment : BaseFragment<WanFindViewModel, FragmentWanFindBinding>() {
     //选中id
     private var wxArticleId: Int = 0
+
     //选中的tabBean
-    private var currentPosition:Int =0
+    private var currentPosition: Int = -1
 
     //界面状态管理者
     private lateinit var loadSir: LoadService<Any>
@@ -36,8 +42,11 @@ class WanFindFragment : BaseFragment<HomeViewModel, FragmentWanFindBinding>() {
     //recyclerview的底部加载view 因为要在首页动态改变他的颜色，所以加了他这个字段
     private lateinit var footView: DefineLoadMoreView
 
+    private var isFirst = true
+
     //请求ViewModel
     private val requestWanFindViewModel: RequestWanFindViewModel by viewModels()
+
     //微信公众号的tab列表adapter
     private val wxArticleAdapter: WxArticleAdapter by lazy {
         WxArticleAdapter(arrayListOf())
@@ -67,7 +76,7 @@ class WanFindFragment : BaseFragment<HomeViewModel, FragmentWanFindBinding>() {
         recyclerView.init(
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false),
             wanAndroidAdapter
-        ).let{
+        ).let {
             it.addItemDecoration(
                 DividerItemDecoration(
                     requireActivity(),
@@ -75,28 +84,34 @@ class WanFindFragment : BaseFragment<HomeViewModel, FragmentWanFindBinding>() {
                 )
             )
             footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
-                requestWanFindViewModel.getWxArticleDetail(false,wxArticleId)
+                requestWanFindViewModel.getWxArticleDetail(false, wxArticleId)
             })
         }
         //初始化 SwipeRefreshLayout
         swipeRefresh.init {
             //触发刷新监听时请求数据
-            requestWanFindViewModel.getWxArticleDetail(true,wxArticleId)
-//            if (headerWanAndroidBinding.rb1.isChecked) {
-//                refresh(isChecked = true, isArticle = true, isRefresh = true)
-//            } else {
-//                refresh(isChecked = true, isArticle = false, isRefresh = true)
-//            }
+            requestWanFindViewModel.getWxArticleDetail(true, wxArticleId)
         }
         wxArticleAdapter.setOnItemClickListener { _, _, position ->
             position.selectItem()
         }
+        wanAndroidAdapter.run {
+            setOnItemChildClickListener { _, _, position ->
+                var homeListBean = data[position]
+                openDetail(homeListBean.link, homeListBean.title)
+            }
+        }
     }
 
     override fun lazyLoadData() {
+        isFirst = false
         val findPosition = SettingUtil.getFindPosition()
         if (findPosition == -1 ||
-            !requestWanFindViewModel.handleCustomData(DataUtil.getTreeData(requireActivity()), findPosition)) {
+            !requestWanFindViewModel.handleCustomData(
+                DataUtil.getTreeData(requireActivity()),
+                findPosition
+            )
+        ) {
             requestWanFindViewModel.getWxArticle()
         }
     }
@@ -109,18 +124,45 @@ class WanFindFragment : BaseFragment<HomeViewModel, FragmentWanFindBinding>() {
         requestWanFindViewModel.homeListBean.observe(viewLifecycleOwner, Observer {
             loadListData(it, wanAndroidAdapter, loadSir, recyclerView, swipeRefresh)
         })
+        appViewModel.findPosition.observe(viewLifecycleOwner, Observer {
+            if (it != -1) {
+                if (!isFirst) {
+                val tabBeanList: MutableList<TabBean>? = DataUtil.getTreeData(activity)
+                if (requestWanFindViewModel.handleCustomData(tabBeanList, it)) {
+                    "发现页内容已改为\" ${tabBeanList?.get(it)?.name.toString()}\"".toast()
+                }
+                }else{
+                    "发现页内容已更改，请打开查看~".showToastLong()
+                }
+            }
+        })
+
     }
 
     private fun Int.selectItem() {
-        if (this < wxArticleAdapter.data.size) {
+        if (currentPosition != this) {
             wxArticleId = wxArticleAdapter.data[this].id
             wxArticleAdapter.setId(wxArticleId)
-            swipeRefresh.isRefreshing = true
-            requestWanFindViewModel.getWxArticleDetail( true,
-                wxArticleId
-            )
+            wxArticleAdapter.notifyItemChanged(currentPosition)
+            wxArticleAdapter.notifyItemChanged(this)
+            currentPosition = this
+            if (this < wxArticleAdapter.data.size) {
+                swipeRefresh.isRefreshing = true
+                requestWanFindViewModel.getWxArticleDetail(
+                    true,
+                    wxArticleId
+                )
+            }
         }
-        wxArticleAdapter.notifyItemChanged(this)
-        currentPosition = this
+    }
+
+    private fun openDetail(url: String?, title: String?, isTitleFix: Boolean = false) {
+        if (!url.isNullOrEmpty()) {
+            nav().navigateAction(R.id.action_mainFragment_to_webViewFragment, Bundle().apply {
+                putString("url", url)
+                putBoolean("isTitleFix", isTitleFix)
+                putString("title", if (title.isNullOrEmpty()) url else title)
+            })
+        }
     }
 }

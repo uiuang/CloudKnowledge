@@ -51,9 +51,27 @@ object DataUtil {
     }
 
     /**
+     * 直接使用html格式化会有性能问题
+     */
+    fun getHtmlString(content: String?): String? {
+        return if (content.isNullOrEmpty() && content!!.contains("&amp;")) {
+            content.replace("&amp;", "&")
+        } else content
+    }
+
+    /**
+     * 直接使用html格式化会有性能问题
+     */
+    fun getGanHuoTime(content: String?): String? {
+        return if (TextUtils.isEmpty(content)) {
+            ""
+        } else content
+    }
+
+    /**
      * 保存知识体系数据
      */
-    fun putTreeData(context: Context, treeBean: MutableList<TabBean>?) {
+    fun putTreeData(context: Context, treeBean: List<TabBean>?) {
         ACache[context].put("TreeBean", treeBean.toJson())
     }
 

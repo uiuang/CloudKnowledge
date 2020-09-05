@@ -17,6 +17,6 @@ data class TabBean (
      var order:Int = 0,
      var parentChapterId:Int = 0,
      var visible:Int = 0,
-     var children: List<*>? = null,
+     var children: MutableList<ChildrenBean>? = null,
      var userControlSetTop:Boolean = false
 )

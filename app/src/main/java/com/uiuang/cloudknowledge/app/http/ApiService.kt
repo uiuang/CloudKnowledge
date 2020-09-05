@@ -138,6 +138,12 @@ interface ApiService {
     suspend fun getProjectList(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<HomeListBean>>>
 
     /**
+     *  体系数据
+     */
+    @GET("/tree/json")
+    suspend fun getTreeList():ApiResponse<MutableList<TabBean>>
+
+    /**
      * 获取项目tab
      */
     @GET("/project/tree/json")
@@ -147,7 +153,7 @@ interface ApiService {
      * 获取公众号列表
      */
     @GET("wxarticle/chapters/json")
-    suspend fun getAccountTabList(): ApiResponse<MutableList<TabBean>>
+    suspend fun getAccountTabList(): ApiResponse<MutableList<ChildrenBean>>
 
     /**
      * 单个公众号数据
