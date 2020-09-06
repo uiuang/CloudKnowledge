@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.uiuang.cloudknowledge.app.http.getWanAndroidServer
 import com.uiuang.cloudknowledge.app.state.ListDataUiState
 import com.uiuang.cloudknowledge.bean.ChildrenBean
-import com.uiuang.cloudknowledge.bean.HomeListBean
+import com.uiuang.cloudknowledge.bean.ArticlesBean
 import com.uiuang.cloudknowledge.bean.TabBean
 import com.uiuang.cloudknowledge.utils.SettingUtil
 import com.uiuang.mvvm.base.viewmodel.BaseViewModel
@@ -15,7 +15,7 @@ class RequestWanFindViewModel : BaseViewModel() {
 
     var dataTitle: MutableLiveData<MutableList<ChildrenBean>> = MutableLiveData()
 
-    var homeListBean: MutableLiveData<ListDataUiState<HomeListBean>> = MutableLiveData()
+    var articlesBean: MutableLiveData<ListDataUiState<ArticlesBean>> = MutableLiveData()
 
     fun getWxArticle() {
         request({ getWanAndroidServer.getAccountTabList() }, {
@@ -42,7 +42,7 @@ class RequestWanFindViewModel : BaseViewModel() {
                     isFirstEmpty = isRefresh && it.isEmpty(),
                     listData = it.datas
                 )
-            homeListBean.postValue(listDataUiState)
+            articlesBean.postValue(listDataUiState)
         }, {
             //请求失败
             val listDataUiState =
@@ -50,9 +50,9 @@ class RequestWanFindViewModel : BaseViewModel() {
                     isSuccess = false,
                     errMessage = it.errorMsg,
                     isRefresh = isRefresh,
-                    listData = arrayListOf<HomeListBean>()
+                    listData = arrayListOf<ArticlesBean>()
                 )
-            homeListBean.postValue(listDataUiState)
+            articlesBean.postValue(listDataUiState)
         })
     }
 

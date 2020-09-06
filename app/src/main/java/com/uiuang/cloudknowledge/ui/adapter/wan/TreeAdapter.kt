@@ -23,36 +23,43 @@ import com.uiuang.cloudknowledge.utils.toast
  * @date 2020/9/5 20:25
  */
 class TreeAdapter : BaseQuickAdapter<TabBean, BaseViewHolder>(R.layout.item_tree) {
+    private var navigationAction: (item: ChildrenBean, view: View) -> Unit =
+        { _: ChildrenBean, _: View -> }
+
     private var isSelect: Boolean = false
     private var selectedPosition: Int = 0
 
 
     override fun convert(holder: BaseViewHolder, item: TabBean) {
-        val rvTree: RecyclerView = holder.getView<RecyclerView>(R.id.rlv_tree)
-        val flexBoxTreeAdapter: FlexBoxTreeAdapter = FlexBoxTreeAdapter()
-        val manager = FlexboxLayoutManager(context, FlexDirection.ROW, FlexWrap.WRAP)
-        rvTree.layoutManager = manager
-        rvTree.itemAnimator = DefaultItemAnimator()
-        rvTree.adapter = flexBoxTreeAdapter
+        val flexBoxTreeAdapter: FlexBoxTreeAdapter by lazy {
+            FlexBoxTreeAdapter()
+        }
         var name: String? = DataUtil.getHtmlString(item.name)
-        if (isSelect) {
-            rvTree.visibility = View.GONE
-            if (selectedPosition == holder.adapterPosition) {
-                name = "$name     ★★★"
-                holder.setTextColorRes(R.id.tv_tree_title, R.color.colorTheme)
+        holder.getView<RecyclerView>(R.id.rlv_tree).run {
+            val manager: FlexboxLayoutManager by lazy {
+                FlexboxLayoutManager(context, FlexDirection.ROW, FlexWrap.WRAP)
+            }
+            layoutManager = manager
+            adapter = flexBoxTreeAdapter
+            if (isSelect) {
+                visibility = View.GONE
+                if (selectedPosition == holder.adapterPosition) {
+                    name = "$name     ★★★"
+                    holder.setTextColorRes(R.id.tv_tree_title, R.color.colorTheme)
+                } else {
+                    holder.setTextColorRes(R.id.tv_tree_title, R.color.colorBlack333)
+                }
             } else {
                 holder.setTextColorRes(R.id.tv_tree_title, R.color.colorBlack333)
+                visibility = View.VISIBLE
+                flexBoxTreeAdapter.setNewInstance(item.children)
             }
-        } else {
-            holder.setTextColorRes(R.id.tv_tree_title, R.color.colorBlack333)
-            rvTree.visibility = View.VISIBLE
-            flexBoxTreeAdapter.setNewInstance(item.children)
         }
-        flexBoxTreeAdapter.setOnItemClickListener { _, _, position ->
+
+        flexBoxTreeAdapter.setOnItemClickListener { _, view, position ->
             val data: MutableList<ChildrenBean> = flexBoxTreeAdapter.data
             val childrenBean: ChildrenBean = data[position]
-            val id: Int = childrenBean.id
-            childrenBean.name?.toast()
+            navigationAction.invoke(childrenBean, view)
         }
         holder.setText(R.id.tv_tree_title, name)
     }
@@ -68,4 +75,8 @@ class TreeAdapter : BaseQuickAdapter<TabBean, BaseViewHolder>(R.layout.item_tree
     fun isSelect(): Boolean = isSelect
 
     fun getSelectedPosition() = selectedPosition.minus(1)
+
+    fun setNavigationAction(inputNavigationAction: (item: ChildrenBean, view: View) -> Unit) {
+        this.navigationAction = inputNavigationAction
+    }
 }

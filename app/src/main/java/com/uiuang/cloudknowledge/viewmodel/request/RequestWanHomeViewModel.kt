@@ -3,7 +3,7 @@ package com.uiuang.cloudknowledge.viewmodel.request
 import androidx.lifecycle.MutableLiveData
 import com.uiuang.cloudknowledge.app.http.getWanAndroidServer
 import com.uiuang.cloudknowledge.app.state.ListDataUiState
-import com.uiuang.cloudknowledge.bean.HomeListBean
+import com.uiuang.cloudknowledge.bean.ArticlesBean
 import com.uiuang.cloudknowledge.bean.WanAndroidBannerBean
 import com.uiuang.mvvm.base.viewmodel.BaseViewModel
 import com.uiuang.mvvm.ext.request
@@ -13,7 +13,7 @@ class RequestWanHomeViewModel : BaseViewModel() {
     private var countNo = 20
     var wanAndroidBannerBean: MutableLiveData<ListDataUiState<WanAndroidBannerBean>> =
         MutableLiveData()
-    var homeListBean: MutableLiveData<ListDataUiState<HomeListBean>> = MutableLiveData()
+    var articlesBean: MutableLiveData<ListDataUiState<ArticlesBean>> = MutableLiveData()
     fun getWanAndroidBanner() {
         request({ getWanAndroidServer.getWanAndroidBanner() }, {
             val listDataUiState =
@@ -42,7 +42,7 @@ class RequestWanHomeViewModel : BaseViewModel() {
                     isFirstEmpty = isRefresh && it.isEmpty(),
                     listData = it.datas
                 )
-            homeListBean.postValue(listDataUiState)
+            articlesBean.postValue(listDataUiState)
         }, {
             //请求失败
             val listDataUiState =
@@ -50,9 +50,9 @@ class RequestWanHomeViewModel : BaseViewModel() {
                     isSuccess = false,
                     errMessage = it.errorMsg,
                     isRefresh = isRefresh,
-                    listData = arrayListOf<HomeListBean>()
+                    listData = arrayListOf<ArticlesBean>()
                 )
-            homeListBean.postValue(listDataUiState)
+            articlesBean.postValue(listDataUiState)
         })
     }
 
@@ -71,7 +71,7 @@ class RequestWanHomeViewModel : BaseViewModel() {
                     isFirstEmpty = isRefresh && it.isEmpty(),
                     listData = it.datas
                 )
-            homeListBean.postValue(listDataUiState)
+            articlesBean.postValue(listDataUiState)
         }, {
             //请求失败
             val listDataUiState =
@@ -79,9 +79,9 @@ class RequestWanHomeViewModel : BaseViewModel() {
                     isSuccess = false,
                     errMessage = it.errorMsg,
                     isRefresh = isRefresh,
-                    listData = arrayListOf<HomeListBean>()
+                    listData = arrayListOf<ArticlesBean>()
                 )
-            homeListBean.postValue(listDataUiState)
+            articlesBean.postValue(listDataUiState)
         })
     }
 }

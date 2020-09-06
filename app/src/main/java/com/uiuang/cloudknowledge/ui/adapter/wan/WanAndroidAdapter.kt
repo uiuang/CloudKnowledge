@@ -10,11 +10,11 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.HomeListBean
+import com.uiuang.cloudknowledge.bean.ArticlesBean
 import com.uiuang.cloudknowledge.utils.DataUtil
 
-class WanAndroidAdapter(data: MutableList<HomeListBean>) :
-    BaseQuickAdapter<HomeListBean, BaseViewHolder>(R.layout.item_wan_android, data) {
+class WanAndroidAdapter(data: MutableList<ArticlesBean>) :
+    BaseQuickAdapter<ArticlesBean, BaseViewHolder>(R.layout.item_wan_android, data) {
     /**
      * 是我的收藏页进来的，全部是收藏状态。bean里面没有返回isCollect信息
      */
@@ -34,7 +34,7 @@ class WanAndroidAdapter(data: MutableList<HomeListBean>) :
      */
     private var isNoImage = false
 
-    override fun convert(holder: BaseViewHolder, item: HomeListBean) {
+    override fun convert(holder: BaseViewHolder, item: ArticlesBean) {
         val ivImage = holder.getView<ImageView>(R.id.iv_image)
         if (!TextUtils.isEmpty(item.envelopePic) && !isNoImage) {
             holder.setGone(R.id.iv_image,false)

@@ -26,7 +26,12 @@ interface ApiService {
     }
 
     @GET("v2/data/category/{category}/type/{type}/page/{page}/count/{count}")
-    suspend fun getGankIoData(@Path("category")  category:String, @Path("type")  type:String, @Path("page")  page:Int, @Path("count")  count:Int): GankApiResponse<ArrayList<GankIOResultBean>>
+    suspend fun getGankIoData(
+        @Path("category") category: String,
+        @Path("type") type: String,
+        @Path("page") page: Int,
+        @Path("count") count: Int
+    ): GankApiResponse<ArrayList<GankIOResultBean>>
 
     /**--------------------------------------------时光网--------------------------------------------*/
 
@@ -39,7 +44,7 @@ interface ApiService {
      * showing/movies.api?locationId=295
      */
     @GET("showing/movies.api?locationId=561")
-    suspend fun getHotFilm():FilmApiResponse<FilmApiPagerResponse<ArrayList<FilmItemBean>>>
+    suspend fun getHotFilm(): FilmApiResponse<FilmApiPagerResponse<ArrayList<FilmItemBean>>>
 
     /**
      * 时光网即将上映电影
@@ -110,7 +115,7 @@ interface ApiService {
     suspend fun getHomeList(
         @Path("page") page: Int,
         @Query("cid") cid: Int?
-    ): ApiResponse<ApiPagerResponse<ArrayList<HomeListBean>>>
+    ): ApiResponse<ApiPagerResponse<ArrayList<ArticlesBean>>>
 
 
     /**
@@ -121,7 +126,7 @@ interface ApiService {
     suspend fun searchWan(
         @Path("page") page: Int,
         @Field("k") k: String?
-    ): ApiResponse<ApiPagerResponse<HomeListBean>>
+    ): ApiResponse<ApiPagerResponse<ArticlesBean>>
 
     /**
      * 搜索热词
@@ -135,13 +140,13 @@ interface ApiService {
      * @param page 页码，从0开始
      */
     @GET("article/listproject/{page}/json")
-    suspend fun getProjectList(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<HomeListBean>>>
+    suspend fun getProjectList(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<ArticlesBean>>>
 
     /**
      *  体系数据
      */
     @GET("/tree/json")
-    suspend fun getTreeList():ApiResponse<MutableList<TabBean>>
+    suspend fun getTreeList(): ApiResponse<MutableList<TabBean>>
 
     /**
      * 获取项目tab
@@ -164,60 +169,75 @@ interface ApiService {
     suspend fun getAccountList(
         @Path("id") id: Int,
         @Path("page") page: Int
-    ): ApiResponse<ApiPagerResponse<ArrayList<HomeListBean>>>
+    ): ApiResponse<ApiPagerResponse<ArrayList<ArticlesBean>>>
+
+    /**
+     * 导航数据
+     */
+    @GET("navi/json")
+    suspend fun getNavJson(): ApiResponse<MutableList<NavJsonBean>>
+
     /**
      * 获取项目列表
      */
     @GET("/project/list/{pageNum}/json")
-    suspend fun getProjectList(@Path("pageNum")pageNum:Int,@Query("cid")cid:Int)
-            :ApiResponse<HomeListBean>
+    suspend fun getProjectList(@Path("pageNum") pageNum: Int, @Query("cid") cid: Int)
+            : ApiResponse<ArticlesBean>
 
 
     /**
      * 体系
      */
     @GET("/tree/json")
-    suspend fun getSystemList() : ApiResponse<MutableList<SystemBean>>
+    suspend fun getSystemList(): ApiResponse<MutableList<SystemBean>>
 
 
     /**
      * 获取体系文章列表
      */
     @GET("/article/list/{pageNum}/json")
-    suspend fun getSystemArticle(@Path("pageNum")pageNum:Int,@Query("cid")cid:Int)
-            : ApiResponse<HomeListBean>
+    suspend fun getSystemArticle(@Path("pageNum") pageNum: Int, @Query("cid") cid: Int)
+            : ApiResponse<ArticlesBean>
+
     /**
      * 获取项目tab
      */
     @POST("/article/query/{pageNum}/json")
-    suspend fun search(@Path("pageNum")pageNum:Int,@Query("k")k:String)
-            : ApiResponse<HomeListBean>
+    suspend fun search(@Path("pageNum") pageNum: Int, @Query("k") k: String)
+            : ApiResponse<ArticlesBean>
+
     /**
      * 收藏
      */
     @POST("/lg/collect/{id}/json")
-    suspend fun collect(@Path("id")id:Int):ApiResponse<Any>
+    suspend fun collect(@Path("id") id: Int): ApiResponse<Any>
 
     /**
      * 取消收藏
      */
     @POST("/lg/uncollect_originId/{id}/json")
     suspend fun unCollect(@Path("id") id: Int): ApiResponse<Any>
+
     /**
      * 登录
      */
     @FormUrlEncoded
     @POST("/user/login")
-    suspend fun login(@Field("username") username: String,
-                      @Field("password") password: String): ApiResponse<UserInfo>
+    suspend fun login(
+        @Field("username") username: String,
+        @Field("password") password: String
+    ): ApiResponse<UserInfo>
 
     @GET("/user/logout/json")
-    suspend fun logout():ApiResponse<Any>
+    suspend fun logout(): ApiResponse<Any>
+
     /**
      * 注册
      */
     @POST("/user/register")
-    suspend fun register(@Query("username")username: String,
-                         @Query("password")password: String,
-                         @Query("repassword")repassword: String) : ApiResponse<Any>
+    suspend fun register(
+        @Query("username") username: String,
+        @Query("password") password: String,
+        @Query("repassword") repassword: String
+    ): ApiResponse<Any>
 }

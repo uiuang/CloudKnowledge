@@ -1,7 +1,6 @@
 package com.uiuang.cloudknowledge.ui.fragment.home
 
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
@@ -74,7 +73,7 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
             false
         )
         val px = requireActivity().dp2px(100)
-        val screenWidth:Int = requireActivity().screenWidth
+        val screenWidth: Int = requireActivity().screenWidth
         val width: Int = screenWidth.minus(px)
         val height: Float = width / 1.8f
         val lp = ConstraintLayout.LayoutParams(screenWidth, height.toInt())
@@ -153,7 +152,7 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
                 headerWanAndroidBinding.banner.setDatas(listData)
             } else loadSir.showError()
         })
-        requestWanHomeViewModel.homeListBean.observe(viewLifecycleOwner, Observer {
+        requestWanHomeViewModel.articlesBean.observe(viewLifecycleOwner, Observer {
             loadListData(it, wanAndroidAdapter, loadSir, recyclerView, swipeRefresh)
         })
     }
@@ -171,7 +170,7 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
             wanAndroidAdapter.setNoImage(isArticle)
             if (isArticle)
                 requestWanHomeViewModel.getHomeArticleList(isRefresh, null)
-             else
+            else
                 requestWanHomeViewModel.getHomeProjectList(isRefresh)
 
         }

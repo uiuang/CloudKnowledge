@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
+import android.os.Bundle
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
@@ -14,6 +15,8 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -38,6 +41,8 @@ import com.uiuang.cloudknowledge.weight.loadCallBack.ErrorCallback
 import com.uiuang.cloudknowledge.weight.loadCallBack.LoadingCallback
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
 import com.uiuang.mvvm.base.appContext
+import com.uiuang.mvvm.ext.nav
+import com.uiuang.mvvm.ext.navigateAction
 import com.uiuang.mvvm.util.toHtml
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 
@@ -438,3 +443,42 @@ fun <T> loadListData(
         }
     }
 }
+
+fun <T> loadListData(
+    data: ListDataUiState<T>,
+    baseQuickAdapter: BaseQuickAdapter<T, *>,
+    loadService: LoadService<*>,
+    recyclerView: SwipeRecyclerView
+) {
+    recyclerView.loadMoreFinish(data.isEmpty, data.hasMore)
+    if (data.isSuccess) {
+        //成功
+        when {
+            //第一页并没有数据 显示空布局界面
+            data.isFirstEmpty -> {
+                loadService.showEmpty()
+            }
+            //是第一页
+            data.isRefresh -> {
+                baseQuickAdapter.setList(data.listData)
+                loadService.showSuccess()
+            }
+            //不是第一页
+            else -> {
+                baseQuickAdapter.addData(data.listData)
+                loadService.showSuccess()
+            }
+        }
+    } else {
+        //失败
+        if (data.isRefresh) {
+            //如果是第一页，则显示错误界面，并提示错误信息
+            loadService.showError(data.errMessage)
+        } else {
+            recyclerView.loadMoreError(0, data.errMessage)
+        }
+    }
+}
+
+
+

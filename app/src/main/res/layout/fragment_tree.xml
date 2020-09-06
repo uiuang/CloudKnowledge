@@ -22,7 +22,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.yanzhenjie.recyclerview.SwipeRecyclerView
-                android:id="@+id/recyclerView"
+                android:id="@+id/srv_tree"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"

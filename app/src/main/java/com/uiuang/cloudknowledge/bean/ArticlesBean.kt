@@ -1,6 +1,6 @@
 package com.uiuang.cloudknowledge.bean
 
-class HomeListBean(
+class ArticlesBean(
     var apkLink: String? = null,
     var author: String? = null,
     var chapterId: Int = 0,

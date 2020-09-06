@@ -27,4 +27,11 @@
 
     <!--首页分割线-->
     <color name="colorHomeLine">#D4D4D4</color>
+
+    <!--透明色-->
+    <color name="colorTransparent">#00000000</color>
+    <!--侧边栏分割线-->
+    <color name="colorNavLine">#E0E0E0</color>
+    <!--导航数据侧边栏背景色-->
+    <color name="colorNavBg">#f3f3f3</color>
 </resources>

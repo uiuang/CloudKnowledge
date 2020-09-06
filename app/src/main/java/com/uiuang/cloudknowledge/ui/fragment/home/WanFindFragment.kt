@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
+import com.uiuang.cloudknowledge.bean.ArticlesBean
 import com.uiuang.cloudknowledge.bean.TabBean
 import com.uiuang.cloudknowledge.databinding.FragmentWanFindBinding
 import com.uiuang.cloudknowledge.ext.*
@@ -23,7 +24,6 @@ import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.fragment_sister.*
 import kotlinx.android.synthetic.main.fragment_sister.swipeRefresh
 import kotlinx.android.synthetic.main.fragment_wan_find.*
 import kotlinx.android.synthetic.main.fragment_wan_find.recyclerView
@@ -55,6 +55,9 @@ class WanFindFragment : BaseFragment<WanFindViewModel, FragmentWanFindBinding>()
         WanAndroidAdapter(arrayListOf())
     }
 
+    private val layoutManager:LinearLayoutManager by lazy {
+        LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+    }
     companion object {
         @JvmStatic
         fun newInstance() = WanFindFragment()
@@ -66,7 +69,6 @@ class WanFindFragment : BaseFragment<WanFindViewModel, FragmentWanFindBinding>()
         //状态页配置
         loadSir = loadServiceInit(swipeRefresh) {
             //点击重试时触发的操作
-            loadSir.showLoading()
             lazyLoadData()
         }
         rv_wxarticle.init(
@@ -74,7 +76,7 @@ class WanFindFragment : BaseFragment<WanFindViewModel, FragmentWanFindBinding>()
             wxArticleAdapter
         )
         recyclerView.init(
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false),
+            layoutManager,
             wanAndroidAdapter
         ).let {
             it.addItemDecoration(
@@ -96,14 +98,15 @@ class WanFindFragment : BaseFragment<WanFindViewModel, FragmentWanFindBinding>()
             position.selectItem()
         }
         wanAndroidAdapter.run {
-            setOnItemChildClickListener { _, _, position ->
-                var homeListBean = data[position]
-                openDetail(homeListBean.link, homeListBean.title)
+            setOnItemClickListener { _, _, position ->
+                val articlesBean:ArticlesBean = data[position]
+                openDetail(articlesBean.link, articlesBean.title)
             }
         }
     }
 
     override fun lazyLoadData() {
+        loadSir.showLoading()
         isFirst = false
         val findPosition = SettingUtil.getFindPosition()
         if (findPosition == -1 ||
@@ -118,20 +121,21 @@ class WanFindFragment : BaseFragment<WanFindViewModel, FragmentWanFindBinding>()
 
     override fun createObserver() {
         requestWanFindViewModel.dataTitle.observe(viewLifecycleOwner, Observer {
-            wxArticleAdapter.setNewInstance(it)
+            wxArticleAdapter.setList(it)
             0.selectItem()
         })
-        requestWanFindViewModel.homeListBean.observe(viewLifecycleOwner, Observer {
+        requestWanFindViewModel.articlesBean.observe(viewLifecycleOwner, Observer {
             loadListData(it, wanAndroidAdapter, loadSir, recyclerView, swipeRefresh)
+            layoutManager.scrollToPosition(0)
         })
         appViewModel.findPosition.observe(viewLifecycleOwner, Observer {
             if (it != -1) {
                 if (!isFirst) {
-                val tabBeanList: MutableList<TabBean>? = DataUtil.getTreeData(activity)
-                if (requestWanFindViewModel.handleCustomData(tabBeanList, it)) {
-                    "发现页内容已改为\" ${tabBeanList?.get(it)?.name.toString()}\"".toast()
-                }
-                }else{
+                    val tabBeanList: MutableList<TabBean>? = DataUtil.getTreeData(activity)
+                    if (requestWanFindViewModel.handleCustomData(tabBeanList, it)) {
+                        "发现页内容已改为\" ${tabBeanList?.get(it)?.name.toString()}\"".toast()
+                    }
+                } else {
                     "发现页内容已更改，请打开查看~".showToastLong()
                 }
             }
@@ -140,20 +144,19 @@ class WanFindFragment : BaseFragment<WanFindViewModel, FragmentWanFindBinding>()
     }
 
     private fun Int.selectItem() {
-        if (currentPosition != this) {
+
+        if (this < wxArticleAdapter.data.size) {
             wxArticleId = wxArticleAdapter.data[this].id
             wxArticleAdapter.setId(wxArticleId)
             wxArticleAdapter.notifyItemChanged(currentPosition)
             wxArticleAdapter.notifyItemChanged(this)
             currentPosition = this
-            if (this < wxArticleAdapter.data.size) {
-                swipeRefresh.isRefreshing = true
-                requestWanFindViewModel.getWxArticleDetail(
-                    true,
-                    wxArticleId
-                )
-            }
+            requestWanFindViewModel.getWxArticleDetail(
+                true,
+                wxArticleId
+            )
         }
+
     }
 
     private fun openDetail(url: String?, title: String?, isTitleFix: Boolean = false) {

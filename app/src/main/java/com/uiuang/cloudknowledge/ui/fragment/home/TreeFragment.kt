@@ -19,6 +19,7 @@ import com.uiuang.cloudknowledge.ext.showLoading
 import com.uiuang.cloudknowledge.ui.adapter.wan.TreeAdapter
 import com.uiuang.cloudknowledge.utils.DataUtil
 import com.uiuang.cloudknowledge.utils.showToastLong
+import com.uiuang.cloudknowledge.utils.toast
 import com.uiuang.cloudknowledge.viewmodel.request.RequestTreeViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.WanFindViewModel
@@ -63,16 +64,16 @@ class TreeFragment : BaseFragment<WanFindViewModel, FragmentTreeBinding>() {
             null,
             false
         )
-        recyclerView.addHeaderView(headerItemTreeBinding.root)
+        srv_tree.addHeaderView(headerItemTreeBinding.root)
         val tvPosition: TextView = headerItemTreeBinding.tvPosition
         tvPosition.setOnClickListener {
             if (!treeAdapter.isSelect()) {
                 val layoutManager = GridLayoutManager(activity, 2)
-                recyclerView.layoutManager = layoutManager
+                srv_tree.layoutManager = layoutManager
                 tvPosition.text = "选择类别"
                 treeAdapter.setSelect(true)
                 treeAdapter.notifyDataSetChanged()
-                recyclerView.addItemDecoration(
+                srv_tree.addItemDecoration(
                     SpacesItemDecoration(requireActivity()).setNoShowDivider(
                         1,
                         0
@@ -80,45 +81,52 @@ class TreeFragment : BaseFragment<WanFindViewModel, FragmentTreeBinding>() {
                 )
             } else {
 //                val layoutManager = LinearLayoutManager(activity)
-                recyclerView.layoutManager = layoutManager
+                srv_tree.layoutManager = layoutManager
                 tvPosition.text = "发现页内容订制"
                 treeAdapter.setSelect(false)
                 treeAdapter.notifyDataSetChanged()
-                if (recyclerView.itemDecorationCount > 0) {
-                    recyclerView.removeItemDecorationAt(0)
+                if (srv_tree.itemDecorationCount > 0) {
+                    srv_tree.removeItemDecorationAt(0)
                 }
             }
         }
 
-        recyclerView.init(layoutManager, treeAdapter)
+        srv_tree.init(layoutManager, treeAdapter)
+        treeAdapter.run {
+            setNavigationAction { item, view ->
+                item.name?.toast()
+            }
+            setOnItemClickListener { adapter, view, position ->
+                if (treeAdapter.isSelect()) {
+                    if (treeAdapter.getSelectedPosition() == position.minus(srv_tree.headerCount)) {
+                        "当前已经是\"${treeAdapter.data[position.minus(srv_tree.headerCount)].name}\"".showToastLong();
+                        return@setOnItemClickListener
+                    }
+                    srv_tree.layoutManager = layoutManager
+                    tvPosition.text = "发现页内容订制"
+                    treeAdapter.setSelect(false)
+                    treeAdapter.notifyDataSetChanged()
+                    if (srv_tree.itemDecorationCount > 0) {
+                        srv_tree.removeItemDecorationAt(0)
+                    }
+                    layoutManager.scrollToPositionWithOffset(
+                        position,
+                        0
+                    )
+                    appViewModel.findPosition.value = position.minus(srv_tree.headerCount)
 
-        treeAdapter.setOnItemClickListener { adapter, view, position ->
-            if (treeAdapter.isSelect()) {
-                if (treeAdapter.getSelectedPosition() == position.minus(recyclerView.headerCount)) {
-                    "当前已经是\"${treeAdapter.data[position.minus(recyclerView.headerCount)].name}\"".showToastLong();
-                    return@setOnItemClickListener
                 }
-                recyclerView.layoutManager = layoutManager
-                tvPosition.text = "发现页内容订制"
-                treeAdapter.setSelect(false)
-                treeAdapter.notifyDataSetChanged()
-                if (recyclerView.itemDecorationCount > 0) {
-                    recyclerView.removeItemDecorationAt(0)
-                }
-                layoutManager.scrollToPositionWithOffset(
-                    position,
-                    0
-                )
-                appViewModel.findPosition.value = position.minus(recyclerView.headerCount)
-
             }
         }
+
 
         //初始化 SwipeRefreshLayout
         swipeRefresh.init {
             //触发刷新监听时请求数据
             requestTreeViewModel.getTree()
         }
+
+
     }
 
     override fun createObserver() {
@@ -126,7 +134,7 @@ class TreeFragment : BaseFragment<WanFindViewModel, FragmentTreeBinding>() {
             if (treeAdapter.data.size == 0) {
                 DataUtil.putTreeData(requireActivity(), it.listData)
             }
-            loadListData(it, treeAdapter, loadSir, recyclerView, swipeRefresh)
+            loadListData(it, treeAdapter, loadSir, srv_tree, swipeRefresh)
         })
     }
 
