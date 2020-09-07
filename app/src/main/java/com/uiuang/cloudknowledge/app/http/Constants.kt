@@ -21,5 +21,6 @@ object Constants {
     const val WEB_URL = "url"
     const val WEB_ISTITLEFIX = "isTitleFix"
     const val WEB_TITLE= "title"
+    const val TYPE= "type"
 
 }

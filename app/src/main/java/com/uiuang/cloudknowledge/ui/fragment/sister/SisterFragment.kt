@@ -57,7 +57,6 @@ class SisterFragment : BaseFragment<HomeViewModel, FragmentSisterBinding>() {
         toolbar.run {
             init("福利")
         }
-//        requestTreeViewModel.getPlazaData(true)
 
         //状态页配置
         loadsir = loadServiceInit(swipeRefresh) {
