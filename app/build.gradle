@@ -88,6 +88,7 @@ dependencies {
     api 'jp.wasabeef:glide-transformations:4.0.1'
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
-
+    implementation "org.permissionsdispatcher:permissionsdispatcher:4.8.0"
+    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:4.8.0"
 
 }

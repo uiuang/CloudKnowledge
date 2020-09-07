@@ -12,10 +12,7 @@ import com.uiuang.cloudknowledge.utils.ColorUtil
 import com.uiuang.cloudknowledge.utils.toast
 import com.uiuang.cloudknowledge.viewmodel.state.SplashViewModel
 import kotlinx.android.synthetic.main.activity_splash.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import permissions.dispatcher.NeedsPermission
 import permissions.dispatcher.OnNeverAskAgain
 import permissions.dispatcher.OnPermissionDenied
@@ -76,9 +73,15 @@ class SplashActivity : BaseActivity<SplashViewModel, ActivitySplashBinding>(),
 
     private fun toMain() = launch {
         delay(timeMillis = 2000L)
+
         startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         overridePendingTransition(R.anim.screen_zoom_in, R.anim.screen_zoom_out)
         finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cancel()
     }
 
 
