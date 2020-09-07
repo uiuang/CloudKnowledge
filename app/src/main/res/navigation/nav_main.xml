@@ -19,9 +19,10 @@
         <action
             android:id="@+id/action_mainFragment_to_filmDetailFragment"
             app:destination="@id/filmDetailFragment" />
+
         <action
-            android:id="@+id/action_mainFragment_to_webViewFragment"
-            app:destination="@id/webViewFragment" />
+            android:id="@+id/action_mainFragment_to_categoryDetailFragment"
+            app:destination="@id/categoryDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/bigImageFragment"
@@ -55,5 +56,13 @@
         android:id="@+id/webViewFragment"
         android:name="com.uiuang.cloudknowledge.ui.fragment.web.WebViewFragment"
         android:label="fragment_web_view"
-        tools:layout="@layout/fragment_web_view" />
+        tools:layout="@layout/fragment_web_view" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/categoryDetailFragment"
+        android:name="com.uiuang.cloudknowledge.ui.fragment.home.CategoryDetailFragment"
+        android:label="CategoryDetailFragment" />
+    <action android:id="@+id/action_global_webViewFragment"
+        app:destination="@id/webViewFragment"/>
 </navigation>

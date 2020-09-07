@@ -185,11 +185,7 @@ interface ApiService {
             : ApiResponse<ArticlesBean>
 
 
-    /**
-     * 体系
-     */
-    @GET("/tree/json")
-    suspend fun getSystemList(): ApiResponse<MutableList<SystemBean>>
+
 
 
     /**

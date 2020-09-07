@@ -109,7 +109,7 @@ class NavigationFragment : BaseFragment<HomeViewModel, FragmentNavigationBinding
 
     private fun openDetail(url: String?, title: String?, isTitleFix: Boolean = false) {
         if (!url.isNullOrEmpty()) {
-            nav().navigateAction(R.id.action_mainFragment_to_webViewFragment, Bundle().apply {
+            nav().navigateAction(R.id.action_global_webViewFragment, Bundle().apply {
                 putString("url", url)
                 putBoolean("isTitleFix", isTitleFix)
                 putString("title", if (title.isNullOrEmpty()) url else title)

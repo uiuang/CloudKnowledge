@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
+import com.uiuang.cloudknowledge.bean.TabBean
 import com.uiuang.cloudknowledge.databinding.FragmentTreeBinding
 import com.uiuang.cloudknowledge.databinding.HeaderItemTreeBinding
 import com.uiuang.cloudknowledge.ext.init
@@ -24,6 +25,8 @@ import com.uiuang.cloudknowledge.viewmodel.request.RequestTreeViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.WanFindViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.SpacesItemDecoration
+import com.uiuang.mvvm.ext.nav
+import com.uiuang.mvvm.ext.navigateAction
 import kotlinx.android.synthetic.main.fragment_tree.*
 
 
@@ -93,8 +96,8 @@ class TreeFragment : BaseFragment<WanFindViewModel, FragmentTreeBinding>() {
 
         srv_tree.init(layoutManager, treeAdapter)
         treeAdapter.run {
-            setNavigationAction { item, view ->
-                item.name?.toast()
+            setNavigationAction { item,id, view ->
+                startDetail(id, item)
             }
             setOnItemClickListener { adapter, view, position ->
                 if (treeAdapter.isSelect()) {
@@ -140,5 +143,12 @@ class TreeFragment : BaseFragment<WanFindViewModel, FragmentTreeBinding>() {
 
     override fun lazyLoadData() {
         requestTreeViewModel.getTree()
+    }
+
+    private fun startDetail(id: Int, tabBean: TabBean) {
+        nav().navigateAction(R.id.action_mainFragment_to_categoryDetailFragment, Bundle().apply {
+            putInt("id", id)
+            putParcelable("tabBean", tabBean)
+        })
     }
 }

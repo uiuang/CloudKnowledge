@@ -1,10 +1,8 @@
 package com.uiuang.cloudknowledge.ext
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
-import android.os.Bundle
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
@@ -15,8 +13,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -24,6 +21,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
@@ -41,11 +40,8 @@ import com.uiuang.cloudknowledge.weight.loadCallBack.ErrorCallback
 import com.uiuang.cloudknowledge.weight.loadCallBack.LoadingCallback
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
 import com.uiuang.mvvm.base.appContext
-import com.uiuang.mvvm.ext.nav
-import com.uiuang.mvvm.ext.navigateAction
 import com.uiuang.mvvm.util.toHtml
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-
 import net.lucode.hackware.magicindicator.MagicIndicator
 import net.lucode.hackware.magicindicator.buildins.UIUtil
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
@@ -369,6 +365,30 @@ fun ViewPager2.initMain(fragment: Fragment): ViewPager2 {
 
         override fun getItemCount() = 5
     }
+    return this
+}
+
+fun ViewPager2.initCategory(
+    fragment: Fragment,
+    fragments: ArrayList<Fragment>,
+    tabLayout: TabLayout,
+    titles: ArrayList<String> = arrayListOf(),
+    isUserInputEnabled: Boolean = true
+): ViewPager2 {
+    //是否可滑动
+    this.isUserInputEnabled = isUserInputEnabled
+    this.offscreenPageLimit = fragments.size
+    //设置适配器
+    adapter = object : FragmentStateAdapter(fragment) {
+        override fun createFragment(position: Int) = fragments[position]
+        override fun getItemCount() = fragments.size
+
+    }
+    TabLayoutMediator(tabLayout, this,
+        TabLayoutMediator.TabConfigurationStrategy { tab, position ->
+            tab.text = titles[position].toHtml()
+        }).attach()
+
     return this
 }
 

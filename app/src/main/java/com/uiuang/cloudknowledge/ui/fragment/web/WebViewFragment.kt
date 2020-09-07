@@ -78,7 +78,6 @@ class WebViewFragment : BaseFragment<WebViewModel, FragmentWebViewBinding>() {
 
 
     override fun lazyLoadData() {
-        super.lazyLoadData()
         //加载网页
         agentWeb = AgentWeb.with(this)
             .setAgentWebParent(webcontent, LinearLayout.LayoutParams(-1, -1))

@@ -23,8 +23,8 @@ import com.uiuang.cloudknowledge.utils.toast
  * @date 2020/9/5 20:25
  */
 class TreeAdapter : BaseQuickAdapter<TabBean, BaseViewHolder>(R.layout.item_tree) {
-    private var navigationAction: (item: ChildrenBean, view: View) -> Unit =
-        { _: ChildrenBean, _: View -> }
+    private var navigationAction: (item: TabBean, id: Int, view: View) -> Unit =
+        { _: TabBean, _: Int, _: View -> }
 
     private var isSelect: Boolean = false
     private var selectedPosition: Int = 0
@@ -59,7 +59,7 @@ class TreeAdapter : BaseQuickAdapter<TabBean, BaseViewHolder>(R.layout.item_tree
         flexBoxTreeAdapter.setOnItemClickListener { _, view, position ->
             val data: MutableList<ChildrenBean> = flexBoxTreeAdapter.data
             val childrenBean: ChildrenBean = data[position]
-            navigationAction.invoke(childrenBean, view)
+            navigationAction.invoke(item,childrenBean.id, view)
         }
         holder.setText(R.id.tv_tree_title, name)
     }
@@ -76,7 +76,7 @@ class TreeAdapter : BaseQuickAdapter<TabBean, BaseViewHolder>(R.layout.item_tree
 
     fun getSelectedPosition() = selectedPosition.minus(1)
 
-    fun setNavigationAction(inputNavigationAction: (item: ChildrenBean, view: View) -> Unit) {
+    fun setNavigationAction(inputNavigationAction: (item: TabBean, id: Int, view: View) -> Unit) {
         this.navigationAction = inputNavigationAction
     }
 }
