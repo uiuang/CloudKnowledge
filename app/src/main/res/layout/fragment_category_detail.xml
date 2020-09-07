@@ -72,7 +72,9 @@
                     app:title=""
                     app:titleMarginStart="0dp"
                     app:titleTextColor="@color/colorTabTextNormal"
-                    tools:title="基础知识" />
+                    tools:title="基础知识"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="?attr/actionBarSize" />
 
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>

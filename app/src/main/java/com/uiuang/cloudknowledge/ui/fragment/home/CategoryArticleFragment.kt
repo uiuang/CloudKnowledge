@@ -8,6 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
+import com.uiuang.cloudknowledge.app.http.Constants.ID
+import com.uiuang.cloudknowledge.app.http.Constants.IS_LOAD
+import com.uiuang.cloudknowledge.app.http.Constants.NAME
+import com.uiuang.cloudknowledge.app.http.Constants.WEB_ISTITLEFIX
+import com.uiuang.cloudknowledge.app.http.Constants.WEB_TITLE
+import com.uiuang.cloudknowledge.app.http.Constants.WEB_URL
 import com.uiuang.cloudknowledge.databinding.FragmentCategoryDetailBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.wan.WanAndroidAdapter
@@ -17,12 +23,8 @@ import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.fragment_category_article.recyclerView
-import kotlinx.android.synthetic.main.fragment_sister.*
+import kotlinx.android.synthetic.main.fragment_category_article.*
 
-private const val ID = "id"
-private const val NAME = "name"
-private const val IS_LOAD = "is_load"
 
 class CategoryArticleFragment : BaseFragment<HomeViewModel, FragmentCategoryDetailBinding>() {
     private var categoryId: Int = 0
@@ -100,9 +102,9 @@ class CategoryArticleFragment : BaseFragment<HomeViewModel, FragmentCategoryDeta
     private fun openDetail(url: String?, title: String?, isTitleFix: Boolean = false) {
         if (!url.isNullOrEmpty()) {
             nav().navigateAction(R.id.action_global_webViewFragment, Bundle().apply {
-                putString("url", url)
-                putBoolean("isTitleFix", isTitleFix)
-                putString("title", if (title.isNullOrEmpty()) url else title)
+                putString(WEB_URL, url)
+                putBoolean(WEB_ISTITLEFIX, isTitleFix)
+                putString(WEB_TITLE, if (title.isNullOrEmpty()) url else title)
             })
         }
     }

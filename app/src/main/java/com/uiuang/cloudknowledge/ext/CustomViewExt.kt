@@ -126,21 +126,21 @@ fun SwipeRecyclerView.init(
     return this
 }
 
-fun SwipeRecyclerView.initFooter(loadmoreListener: SwipeRecyclerView.LoadMoreListener): DefineLoadMoreView {
+fun SwipeRecyclerView.initFooter(loadMoreListener: SwipeRecyclerView.LoadMoreListener): DefineLoadMoreView {
     val footerView = DefineLoadMoreView(appContext)
     //给尾部设置颜色
     footerView.setLoadViewColor(SettingUtil.getOneColorStateList(appContext))
     //设置尾部点击回调
-    footerView.setmLoadMoreListener(SwipeRecyclerView.LoadMoreListener {
+    footerView.setOnLoadMoreListener(SwipeRecyclerView.LoadMoreListener {
         footerView.onLoading()
-        loadmoreListener.onLoadMore()
+        loadMoreListener.onLoadMore()
     })
     this.run {
         //添加加载更多尾部
         addFooterView(footerView)
         setLoadMoreView(footerView)
         //设置加载更多回调
-        setLoadMoreListener(loadmoreListener)
+        setLoadMoreListener(loadMoreListener)
     }
     return footerView
 }

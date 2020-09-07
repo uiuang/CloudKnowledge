@@ -27,7 +27,7 @@ class DefineLoadMoreView(context: Context) : LinearLayout(context), SwipeRecycle
 
     private var mLoadMoreListener: SwipeRecyclerView.LoadMoreListener? = null
 
-    fun setmLoadMoreListener(mLoadMoreListener: SwipeRecyclerView.LoadMoreListener) {
+    fun setOnLoadMoreListener(mLoadMoreListener: SwipeRecyclerView.LoadMoreListener) {
         this.mLoadMoreListener = mLoadMoreListener
     }
 

@@ -526,7 +526,7 @@ object StatusBarUtil {
 
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private fun clearPreviousSetting(activity: Activity) {
+    fun clearPreviousSetting(activity: Activity) {
         val decorView = activity.window.decorView as ViewGroup
         val fakeStatusBarView = decorView.findViewById<View>(FAKE_STATUS_BAR_VIEW_ID)
         if (fakeStatusBarView != null) {

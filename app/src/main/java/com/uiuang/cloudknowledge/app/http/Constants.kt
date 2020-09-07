@@ -15,4 +15,11 @@ object Constants {
 
     // 发现页内容角标
     var FIND_POSITION = "find_position"
+    const val ID = "id"
+    const val NAME = "name"
+    const val IS_LOAD = "is_load"
+    const val WEB_URL = "url"
+    const val WEB_ISTITLEFIX = "isTitleFix"
+    const val WEB_TITLE= "title"
+
 }
