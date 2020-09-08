@@ -34,4 +34,6 @@
     <color name="colorNavLine">#E0E0E0</color>
     <!--导航数据侧边栏背景色-->
     <color name="colorNavBg">#f3f3f3</color>
+
+    <color name="mine_line">#F5F5F5</color>
 </resources>

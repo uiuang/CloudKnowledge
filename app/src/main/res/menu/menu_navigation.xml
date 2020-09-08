@@ -17,10 +17,10 @@
         android:title="@string/bottom_name3" />
     <item
         android:id="@+id/menu_public"
-        android:icon="@drawable/menu_public"
+        android:icon="@drawable/menu_movie"
         android:title="@string/bottom_name4" />
     <item
-        android:id="@+id/menu_me"
-        android:icon="@drawable/menu_me"
+        android:id="@+id/menu_mine"
+        android:icon="@drawable/menu_mine"
         android:title="@string/bottom_name5" />
 </menu>

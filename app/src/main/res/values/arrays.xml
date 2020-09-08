@@ -10,4 +10,11 @@
         <item>热映榜</item>
         <item>即将上映</item>
     </string-array>
+
+    <string-array name="gank_title">
+        <item>干货首页</item>
+        <item>福利</item>
+        <item>定制</item>
+        <item>大安卓</item>
+    </string-array>
 </resources>
