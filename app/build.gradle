@@ -16,6 +16,15 @@ android {
         multiDexEnabled true
     }
 
+    signingConfigs {
+        release {
+            keyAlias ALIAS_NAME
+            keyPassword ALIAS_PASSWORD
+            storeFile file('./cloud.jks')
+            storePassword STORE_PASSWORD
+        }
+    }
+
     dataBinding {
         enabled = true
     }
@@ -28,6 +37,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

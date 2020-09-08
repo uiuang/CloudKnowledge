@@ -8,8 +8,7 @@ package com.uiuang.cloudknowledge.app.http
  * @date 2020/9/3 21:18
  */
 object Constants {
-    val DOWNLOAD_URL = "https://www.coolapk.com/apk/127875"
-
+    val DOWNLOAD_URL = "https://www.coolapk.com/apk/273587"
     // 知识体系里上一次选中的position
     var TREE_POSITION = "tree_position"
 
