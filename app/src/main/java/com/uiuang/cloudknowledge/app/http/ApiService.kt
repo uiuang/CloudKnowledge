@@ -25,13 +25,7 @@ interface ApiService {
 //        https://ticket-api-m.mtime.cn
     }
 
-    @GET("v2/data/category/{category}/type/{type}/page/{page}/count/{count}")
-    suspend fun getGankIoData(
-        @Path("category") category: String,
-        @Path("type") type: String,
-        @Path("page") page: Int,
-        @Path("count") count: Int
-    ): GankApiResponse<ArrayList<GankIOResultBean>>
+
 
     /**--------------------------------------------时光网--------------------------------------------*/
 
@@ -236,4 +230,65 @@ interface ApiService {
         @Query("password") password: String,
         @Query("repassword") repassword: String
     ): ApiResponse<Any>
+
+    /**--------------------------------------------干货集中营--------------------------------------------*/
+
+    /**--------------------------------------------干货集中营-------------------------------------------- */
+    /**
+     * 每日数据： http://gank.io/api/day/年/月/日
+     * eg:http://gank.io/api/day/2015/08/06
+     */
+    @GET("day/{year}/{month}/{day}")
+   suspend fun getGankIoDay(
+        @Path("year") year: String?,
+        @Path("month") month: String?,
+        @Path("day") day: String?
+    ): ApiResponse<ArrayList<GankIOResultBean>>
+
+    /**
+     * 干货集中营轮播图
+     */
+    @GET("v2/banners")
+    suspend fun getGankBanner(): ApiResponse<ArrayList<GankIOResultBean>>
+
+    /**
+     * 干货集中营本周最热
+     */
+    @GET("v2/hot/views/category/GanHuo/count/20")
+    suspend fun getGankHot(): ApiResponse<ArrayList<GankIOResultBean>>
+
+    /**
+     * 干货集中营 搜索
+     * // @GET("search/query/{keyWord}/category/{type}/count/20/page/{p}")
+     * https://gank.io/api/v2/search/<search>/category/<category>/type/<type>/page/<page>/count/<count>
+    </count></page></type></category></search> */
+    @GET("v2/search/{keyWord}/category/GanHuo/type/{type}/page/{p}/count/20")
+    fun searchGank(
+        @Path("p") p: Int,
+        @Path("type") type: String?,
+        @Path("keyWord") keyWord: String?
+    ): ApiResponse<ArrayList<GankIOResultBean>>
+
+
+    /**
+     * 分类数据: http://gank.io/api/data/数据类型/请求个数/第几页
+     * 数据类型： 福利 | Android | iOS | 休息视频 | 拓展资源 | 前端 | all
+     * 请求个数： 数字，大于0
+     * 第几页：数字，大于0
+     * eg: http://gank.io/api/data/Android/10/1
+     * // 分类api
+     * https://gank.io/api/v2/categories/<category_type>
+     * https://gank.io/api/v2/categories/Article
+     * // 分类数据api
+     * https://gank.io/api/v2/data/category/<category>/type/<type>/page/<page>/count/<count>
+     * // 旧：@GET("data/{type}/{pre_page}/{page}")
+    </count></page></type></category></category_type> */
+    @GET("v2/data/category/{category}/type/{type}/page/{page}/count/{count}")
+    suspend fun getGankIoData(
+        @Path("category") category: String,
+        @Path("type") type: String,
+        @Path("page") page: Int,
+        @Path("count") count: Int
+    ): GankApiResponse<ArrayList<GankIOResultBean>>
+
 }
