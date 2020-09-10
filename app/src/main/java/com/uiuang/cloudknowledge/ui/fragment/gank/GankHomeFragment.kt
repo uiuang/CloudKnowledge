@@ -19,7 +19,9 @@ import com.uiuang.cloudknowledge.ext.init
 import com.uiuang.cloudknowledge.ext.initFooter
 import com.uiuang.cloudknowledge.ext.loadServiceInit
 import com.uiuang.cloudknowledge.ext.showLoading
+import com.uiuang.cloudknowledge.ui.adapter.gank.GankBannerAdapter
 import com.uiuang.cloudknowledge.ui.adapter.wan.WanAndroidAdapter
+import com.uiuang.cloudknowledge.ui.adapter.wan.WanBannerAdapter
 import com.uiuang.cloudknowledge.viewmodel.request.RequestGankHomeViewModel
 import com.uiuang.cloudknowledge.viewmodel.request.RequestWanHomeViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
@@ -39,6 +41,10 @@ class GankHomeFragment : BaseFragment<HomeViewModel,FragmentGankHomeBinding>() {
 
     private val wanAndroidAdapter: WanAndroidAdapter by lazy {
         WanAndroidAdapter(arrayListOf())
+    }
+
+    private val gankBannerAdapter: GankBannerAdapter by lazy {
+        GankBannerAdapter(arrayListOf())
     }
 
     companion object {

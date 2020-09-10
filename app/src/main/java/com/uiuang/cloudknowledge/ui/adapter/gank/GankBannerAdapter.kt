@@ -1,15 +1,17 @@
-package com.uiuang.cloudknowledge.ui.adapter.wan
+package com.uiuang.cloudknowledge.ui.adapter.gank
 
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.uiuang.cloudknowledge.bean.WanAndroidBannerBean
+import com.uiuang.cloudknowledge.bean.GankIOResultBean
+import com.uiuang.cloudknowledge.ext.loadUrl
 import com.youth.banner.adapter.BannerAdapter
 
+class GankBannerAdapter(data: MutableList<GankIOResultBean>) : BannerAdapter<GankIOResultBean, GankBannerAdapter.BannerViewHolder>(
+    data
+) {
 
-class WanBannerAdapter(datas: MutableList<WanAndroidBannerBean>): BannerAdapter<WanAndroidBannerBean, WanBannerAdapter.BannerViewHolder>(datas) {
+    class BannerViewHolder(var imageView: ImageView) : RecyclerView.ViewHolder(imageView)
 
     override fun onCreateHolder(parent: ViewGroup?, viewType: Int): BannerViewHolder {
         var imageView = ImageView(parent!!.context)
@@ -20,18 +22,14 @@ class WanBannerAdapter(datas: MutableList<WanAndroidBannerBean>): BannerAdapter<
         return BannerViewHolder(imageView)
     }
 
-
-     class BannerViewHolder(var imageView: ImageView) : RecyclerView.ViewHolder(imageView)
-
     override fun onBindView(
         holder: BannerViewHolder?,
-        data: WanAndroidBannerBean?,
+        data: GankIOResultBean?,
         position: Int,
         size: Int
     ) {
-        Glide.with(holder!!.imageView.context)
-            .load(mDatas[position]!!.imagePath)
-            .transition(DrawableTransitionOptions.withCrossFade())
-            .into(holder!!.imageView)
+        holder!!.imageView.loadUrl(holder.imageView.context,data!!.image)
+
     }
+
 }
