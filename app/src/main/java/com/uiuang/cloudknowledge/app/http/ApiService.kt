@@ -286,7 +286,7 @@ interface ApiService {
     @GET("v2/data/category/{category}/type/{type}/page/{page}/count/{count}")
     suspend fun getGankIoData(
         @Path("category") category: String,
-        @Path("type") type: String,
+        @Path("type") type: String?,
         @Path("page") page: Int,
         @Path("count") count: Int
     ): GankApiResponse<ArrayList<GankIOResultBean>>

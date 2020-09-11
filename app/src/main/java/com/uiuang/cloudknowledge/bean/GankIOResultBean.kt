@@ -15,7 +15,7 @@ data class GankIOResultBean(
     var source: String? = null,
     var type: String? = null,
     var category: String? = null,
-    var url: String? = null,
+    var url: String = "",
     var used: Boolean = false,
     var author: String? = null,
     var images: List<String>? = null,

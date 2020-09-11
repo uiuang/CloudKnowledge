@@ -8,6 +8,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.RequestOptions
+import com.uiuang.cloudknowledge.R
+import com.uiuang.mvvm.util.dp2px
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 /**
@@ -26,6 +28,36 @@ fun ImageView.loadUrl(context: Context, url: String) {
         .transition(withCrossFade())
         .into(this)
 }
+
+fun ImageView.displayEspImage(context: Context, url: String,type: Int) {
+    Glide.with(context)
+        .load(url)
+        .transition(withCrossFade(500))
+        .placeholder(getDefaultPic(type))
+        .error(getDefaultPic(type))
+        .into(this)
+}
+
+fun getDefaultPic(type: Int): Int {
+    when (type) {
+        0 -> return R.drawable.img_default_movie
+        1 -> return R.drawable.img_default_meizi
+        2 -> return R.drawable.img_default_book
+        3 -> return R.drawable.shape_bg_loading
+        else -> {
+        }
+    }
+    return R.drawable.img_default_meizi
+}
+fun ImageView.displayGif(context: Context,url: String) {
+    Glide.with(context) //                .asBitmap()
+        .load(url)
+        .override(context.dp2px(60), context.dp2px( 80))
+        .placeholder(R.drawable.shape_bg_loading)
+        .error(R.drawable.shape_bg_loading)
+        .into(this)
+}
+
 
 /**
  * 通过uri加载

@@ -1,7 +1,12 @@
 package com.uiuang.mvvm.ext
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.uiuang.mvvm.base.activity.BaseVmActivity
 import com.uiuang.mvvm.base.activity.BaseVmDbActivity
 import com.uiuang.mvvm.base.fragment.BaseVmFragment
@@ -12,8 +17,10 @@ import com.uiuang.mvvm.network.ExceptionHandle
 import com.uiuang.mvvm.state.ResultState
 import com.uiuang.mvvm.state.paresException
 import com.uiuang.mvvm.state.paresResult
+import com.uiuang.mvvm.util.NetworkUtil.Companion.url
 import com.uiuang.mvvm.util.loge
 import kotlinx.coroutines.*
+import java.io.File
 
 
 /**
@@ -246,6 +253,63 @@ fun <T> BaseViewModel.requestNoCheck(
         }
     }
 }
+
+fun <T> BaseViewModel.saveImageToGallery(context: Context,mImageUrl: String, mImageTitle: String,
+                                         success: (String) -> Unit,
+                                         error: (String) -> Unit = {},
+                                         isShowDialog: Boolean = false,
+                                         loadingMessage: String = "请求网络中..."
+): Job {
+    if (isShowDialog) loadingChange.showDialog.postValue(loadingMessage)
+    return viewModelScope.launch {
+        runCatching {
+            // 检查路径
+            if (mImageUrl.isEmpty() || mImageTitle.isEmpty()) {
+               error("请检查图片路径")
+            }
+            // 检查图片是否已存在
+            // 检查图片是否已存在
+            val appDir = File(context.filesDir, "云阅相册")
+            if (appDir.exists()) {
+                val file = File(appDir, getFileName(mImageUrl, mImageTitle)
+                )
+                if (file.exists()) {
+                    error("图片已存在")
+                }
+            }
+            // 没有目录创建目录
+            // 没有目录创建目录
+            if (!appDir.exists()) {
+                appDir.mkdir()
+            }
+
+        }.onSuccess {
+            //网络请求成功 关闭弹窗
+            loadingChange.dismissDialog.postValue(false)
+            //成功回调
+            success("")
+        }.onFailure {
+            //网络请求异常 关闭弹窗
+            loadingChange.dismissDialog.postValue(false)
+            //打印错误消息
+            it.message?.loge("mvvm")
+            //失败回调
+            error("")
+        }
+    }
+}
+
+/**
+ * gif动态图以对应后缀结尾
+ */
+fun getFileName(mImageUrl: String, mImageTitle: String): String {
+    return if (mImageUrl.contains(".gif")) {
+        mImageTitle.replace("/", "-") + ".gif"
+    } else {
+        mImageTitle.replace("/", "-") + ".jpg"
+    }
+}
+
 
 /**
  * 请求结果过滤，判断请求服务器请求结果是否成功，不成功则会抛出异常

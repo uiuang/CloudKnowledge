@@ -3,16 +3,15 @@ package com.uiuang.cloudknowledge.viewmodel.request
 import androidx.lifecycle.MutableLiveData
 import com.uiuang.cloudknowledge.app.http.getGankIOServer
 import com.uiuang.cloudknowledge.app.state.ListDataUiState
-import com.uiuang.cloudknowledge.bean.ComingFilmBean
 import com.uiuang.cloudknowledge.bean.GankIOResultBean
-import com.uiuang.cloudknowledge.bean.GankIoDataBean
+import com.uiuang.cloudknowledge.utils.TimeUtil
 import com.uiuang.mvvm.base.viewmodel.BaseViewModel
 import com.uiuang.mvvm.ext.request
 
 class RequestGankHomeViewModel : BaseViewModel() {
     var isShowLoading = MutableLiveData<Boolean>()
     var contentData: MutableLiveData<ListDataUiState<GankIOResultBean>> = MutableLiveData()
-    var bannerData: MutableLiveData<ArrayList<GankIOResultBean>> = MutableLiveData()
+    var bannerData: MutableLiveData<ListDataUiState<GankIOResultBean>> = MutableLiveData()
 
     fun getData() {
         getBanner()
@@ -22,9 +21,14 @@ class RequestGankHomeViewModel : BaseViewModel() {
     private fun getBanner() {
         isShowLoading.postValue(true)
         request({ getGankIOServer.getGankBanner() }, {
-            bannerData.postValue(it)
+            val listDataUiState =
+                ListDataUiState(
+                    isSuccess = true,
+                    listData = it
+                )
+            bannerData.postValue(listDataUiState)
         }, {
-            bannerData.postValue(arrayListOf())
+//            bannerData.postValue(arrayListOf())
         })
 
     }
@@ -49,4 +53,21 @@ class RequestGankHomeViewModel : BaseViewModel() {
             isShowLoading.postValue(false)
         })
     }
+
+    /**
+     * 获取当天日期
+     */
+    fun getTodayTime(): ArrayList<String> {
+        val data: String = TimeUtil.getData()
+        val split = data.split("-").toTypedArray()
+        val year = split[0]
+        val month = split[1]
+        val day = split[2]
+        val list = ArrayList<String>()
+        list.add(year)
+        list.add(month)
+        list.add(day)
+        return list
+    }
+
 }

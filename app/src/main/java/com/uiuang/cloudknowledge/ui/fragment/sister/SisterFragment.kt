@@ -39,10 +39,6 @@ class SisterFragment : BaseFragment<HomeViewModel, FragmentSisterBinding>() {
         WelfareAdapter(arrayListOf())
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
 
     companion object {
