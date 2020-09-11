@@ -4,6 +4,7 @@ import android.text.TextUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tencent.mmkv.MMKV
+import com.uiuang.cloudknowledge.app.http.Constants
 import com.uiuang.cloudknowledge.bean.UserInfo
 
 object CacheUtil {
@@ -49,6 +50,16 @@ object CacheUtil {
     fun setIsLogin(isLogin: Boolean) {
         val kv = MMKV.mmkvWithID("app")
         kv.encode("login", isLogin)
+    }
+
+    fun getGankType(): String {
+        val mk = MMKV.mmkvWithID("app")
+        return mk.decodeString(Constants.GANK_TYPE,"全部")
+    }
+
+    fun setGankType(type: String) {
+        val kv = MMKV.mmkvWithID("app")
+        kv.encode(Constants.GANK_TYPE, type)
     }
 
     /**

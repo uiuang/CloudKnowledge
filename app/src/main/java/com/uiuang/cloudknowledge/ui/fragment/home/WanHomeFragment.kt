@@ -16,6 +16,7 @@ import com.uiuang.cloudknowledge.databinding.HeaderWanAndroidBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.wan.WanAndroidAdapter
 import com.uiuang.cloudknowledge.ui.adapter.wan.WanBannerAdapter
+import com.uiuang.cloudknowledge.ui.fragment.web.WebViewFragment
 import com.uiuang.cloudknowledge.utils.toast
 import com.uiuang.cloudknowledge.viewmodel.request.RequestWanHomeViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
@@ -129,9 +130,10 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
         }
         wanAndroidAdapter.run {
             addChildClickViewIds(R.id.tv_tag_name, R.id.cb_collect)
-            setOnItemClickListener { _, _, position ->
+            setOnItemClickListener { _, view, position ->
                 val item = getItem(position - 1)
-                openDetail(item.link, item.title)
+                WebViewFragment.openDetail(view, item.link, item.title)
+//                openDetail(item.link, item.title)
             }
             setOnItemChildClickListener { _, view, position ->
                 when (view.id) {

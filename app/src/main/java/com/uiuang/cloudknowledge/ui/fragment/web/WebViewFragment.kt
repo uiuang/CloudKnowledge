@@ -7,6 +7,7 @@ import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
 import android.webkit.WebView
 import android.webkit.WebView.HitTestResult
 import android.widget.LinearLayout
@@ -25,6 +26,7 @@ import com.uiuang.cloudknowledge.utils.*
 import com.uiuang.cloudknowledge.viewmodel.state.WebViewModel
 import com.uiuang.mvvm.base.appContext
 import com.uiuang.mvvm.ext.nav
+import com.uiuang.mvvm.ext.navigateAction
 import com.uiuang.mvvm.util.toHtml
 import kotlinx.android.synthetic.main.fragment_web_view.*
 
@@ -37,7 +39,19 @@ class WebViewFragment : BaseFragment<WebViewModel, FragmentWebViewBinding>() {
     private var url: String = ""
     private var mTitle: String = ""
     private var isTitleFix: Boolean = false
-    private var agentWeb: AgentWeb? =null
+    private var agentWeb: AgentWeb? = null
+
+    companion object {
+        fun openDetail(view: View, url: String?, title: String?, isTitleFix: Boolean = false) {
+            if (!url.isNullOrEmpty()) {
+                nav(view).navigateAction(R.id.action_global_webViewFragment, Bundle().apply {
+                    putString("url", url)
+                    putBoolean("isTitleFix", isTitleFix)
+                    putString("title", if (title.isNullOrEmpty()) url else title)
+                })
+            }
+        }
+    }
 
     override fun layoutId(): Int = R.layout.fragment_web_view
 
@@ -52,7 +66,7 @@ class WebViewFragment : BaseFragment<WebViewModel, FragmentWebViewBinding>() {
         title_tool_bar.run {
             mActivity.setSupportActionBar(this)
             setBackgroundColor(SettingUtil.getColor(appContext))
-            overflowIcon =ContextCompat.getDrawable(requireActivity(), R.drawable.actionbar_more)
+            overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.actionbar_more)
             tv_gun_title.text = mTitle.toHtml()
             setNavigationIcon(R.drawable.ic_back)
             setNavigationOnClickListener {
@@ -121,7 +135,8 @@ class WebViewFragment : BaseFragment<WebViewModel, FragmentWebViewBinding>() {
         when (item.itemId) {
             R.id.actionbar_share -> {
                 // 分享到
-                val shareText = "$mTitle " + agentWeb?.webCreator?.webView?.url+ " ( 分享自云知 " + Constants.DOWNLOAD_URL + " )"
+                val shareText =
+                    "$mTitle " + agentWeb?.webCreator?.webView?.url + " ( 分享自云知 " + Constants.DOWNLOAD_URL + " )"
                 ShareUtils.share(requireActivity(), shareText)
             }
             R.id.actionbar_cope -> {
@@ -135,7 +150,7 @@ class WebViewFragment : BaseFragment<WebViewModel, FragmentWebViewBinding>() {
             R.id.actionbar_webview_refresh ->                 // 刷新页面
                 //刷新网页
                 agentWeb?.urlLoader?.reload()
-            R.id.actionbar_collect ->   {
+            R.id.actionbar_collect -> {
                 //                if (UserUtil.isLogin(byWebView.getWebView().getContext())) {
 //                    if (SPUtils.getBoolean(Constants.IS_FIRST_COLLECTURL, true)) {
 //                        DialogBuild.show(byWebView.getWebView(),

@@ -102,5 +102,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
     implementation "org.permissionsdispatcher:permissionsdispatcher:4.8.0"
     kapt "org.permissionsdispatcher:permissionsdispatcher-processor:4.8.0"
-
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    // 高斯模糊和圆角等
+    api 'jp.wasabeef:glide-transformations:4.0.1'
 }

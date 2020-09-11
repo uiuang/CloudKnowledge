@@ -21,5 +21,6 @@ object Constants {
     const val WEB_ISTITLEFIX = "isTitleFix"
     const val WEB_TITLE= "title"
     const val TYPE= "type"
+    const val GANK_TYPE = "gank_type"
 
 }
