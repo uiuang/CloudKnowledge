@@ -3,6 +3,8 @@ package com.uiuang.cloudknowledge.ui.fragment.movie
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -14,14 +16,15 @@ import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.bean.FilmDetailBean
 import com.uiuang.cloudknowledge.databinding.FragmentFilmDetailBinding
-import com.uiuang.cloudknowledge.ext.init
-import com.uiuang.cloudknowledge.ext.initClose
-import com.uiuang.cloudknowledge.ext.loadServiceInit
-import com.uiuang.cloudknowledge.ext.showLoading
+import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.film.FilmActorsAdapter
+import com.uiuang.cloudknowledge.ui.adapter.film.FilmDetailImageAdapter
+import com.uiuang.cloudknowledge.utils.TimeUtil
 import com.uiuang.cloudknowledge.viewmodel.request.RequestFilmDetailViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.mvvm.ext.nav
+import com.uiuang.mvvm.util.dp2px
+import com.uiuang.mvvm.util.screenWidth
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.fragment_film_detail.*
 
@@ -38,6 +41,9 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
     private val filmActorsAdapter: FilmActorsAdapter by lazy {
         FilmActorsAdapter(arrayListOf())
     }
+    private val filmDetailImageAdapter: FilmDetailImageAdapter by lazy {
+        FilmDetailImageAdapter()
+    }
 
 
     //请求ViewModel
@@ -53,7 +59,21 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
         }
 
         xrv_cast.run {
-            init(LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false),filmActorsAdapter,true)
+            init(
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false),
+                filmActorsAdapter,
+                true
+            )
+        }
+        xrv_images.run {
+            init(
+                LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false),
+                filmDetailImageAdapter, true
+            )
+        }
+
+        filmDetailImageAdapter.setOnItemClickListener { adapter, view, position ->
+
         }
 
     }
@@ -78,12 +98,92 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
             showMovieImg(iv_one_photo, basic.img)
             tv_one_rating_rate.text = "评分：${basic.overallRating}"
             tv_one_rating_number.text = "${basic.personCount}人评分"
-            tv_one_directors.text = basic.director.name
-            tv_one_casts.text = ""
+            var director: FilmDetailBean.Basic.Actor? = basic.director
+            tv_one_directors.text = director?.name
+            tv_one_casts.text = getMovieActors(basic.actors)
+            tv_one_genres.text = "类型：${getMovieType(basic.type)}"
+            tv_one_time.text = "片长：${basic.mins}"
+            tv_one_date.text = "${TimeUtil.getReleaseDate(basic.releaseDate) + basic.releaseArea}上映"
+            //简介
             tv_story.text = basic.story
-            filmActorsAdapter.setNewInstance(basic.actors)
+            //演员表
+            if (basic.actors.isNotEmpty()) {
+                ll_actors.visibility = View.VISIBLE
+                if (director != null) {
+                    director.roleName = "导演"
+                    basic.actors.add(0, director)
+                }
+                filmActorsAdapter.setNewInstance(basic.actors)
+            } else {
+                ll_actors.visibility = View.GONE
+            }
+
+//票房
+            val boxOffice: FilmDetailBean.BoxOffice? = it.boxOffice
+            if (boxOffice != null) {
+                if (!boxOffice.todayBoxDes.isNullOrEmpty() && !boxOffice.totalBoxDes.isNullOrEmpty()) {
+                    ll_boxOffice_name.visibility = View.VISIBLE
+                    ll_boxOffice_content.visibility = View.VISIBLE
+                    tv_todayBoxDes.text = boxOffice.todayBoxDes
+                    tv_todayBoxDesUnit.text = boxOffice.todayBoxDesUnit
+                    tv_totalBoxDes.text = boxOffice.totalBoxDes
+                    tv_totalBoxUnit.text = boxOffice.totalBoxUnit
+                    tv_box_office_total.text = boxOffice.ranking.toString()
+                } else {
+                    ll_boxOffice_name.visibility = View.GONE
+                    ll_boxOffice_content.visibility = View.GONE
+                }
+            } else {
+                ll_boxOffice_name.visibility = View.GONE
+                ll_boxOffice_content.visibility = View.GONE
+            }
+
+            val video: FilmDetailBean.Basic.Video? = it.basic.video
+            if (video != null && video.url.isNotEmpty()) {
+                ll_trailer.visibility = View.VISIBLE
+                val params = iv_video.layoutParams
+                var width: Int = requireActivity().screenWidth - requireActivity().dp2px(40)
+                var bili: Float = 640f / 360
+                params.width = width
+                params.height = (width / bili).toInt()
+                iv_video.displayEspImage(iv_video.context, video.url, 3)
+            } else {
+                ll_trailer.visibility = View.GONE
+            }
+            if (basic.stageImg.list != null) {
+                filmDetailImageAdapter.setNewInstance(basic.stageImg.list)
+            }
+
 
         })
+    }
+
+
+    fun getMovieType(type: List<String>): String {
+        if (type.isEmpty()) {
+            return ""
+        }
+        val size = if (type.size >= 3) 3 else type.size
+        val stringBuilder = StringBuilder()
+        for (index in 0 until size) {
+            if (index == size - 1) stringBuilder.append(type[index]) else
+                stringBuilder.append("${type[index]} / ")
+
+        }
+        return stringBuilder.toString()
+    }
+
+    fun getMovieActors(actors: List<FilmDetailBean.Basic.Actor>): String {
+        if (actors.isEmpty()) {
+            return ""
+        }
+        val size = if (actors.size >= 4) 4 else actors.size
+        val stringBuilder = StringBuilder()
+        for (index in 0 until size) {
+            if (index == size - 1) stringBuilder.append(actors[index].name) else
+                stringBuilder.append("${actors[index].name} / ")
+        }
+        return stringBuilder.toString()
     }
 
     override fun lazyLoadData() {
@@ -107,7 +207,7 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
             .into(imageView)
     }
 
-    fun showMovieImg(imageView: ImageView, url: String?) {
+    private fun showMovieImg(imageView: ImageView, url: String?) {
         Glide.with(requireActivity())
             .load(url)
             .transition(DrawableTransitionOptions.withCrossFade(500))

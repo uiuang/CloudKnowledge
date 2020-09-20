@@ -29,7 +29,7 @@ fun ImageView.loadUrl(context: Context, url: String) {
         .into(this)
 }
 
-fun ImageView.displayEspImage(context: Context, url: String,type: Int) {
+fun ImageView.displayEspImage(context: Context, url: String, type: Int) {
     Glide.with(context)
         .load(url)
         .transition(withCrossFade(500))
@@ -49,10 +49,11 @@ fun getDefaultPic(type: Int): Int {
     }
     return R.drawable.img_default_meizi
 }
-fun ImageView.displayGif(context: Context,url: String) {
+
+fun ImageView.displayGif(context: Context, url: String) {
     Glide.with(context) //                .asBitmap()
         .load(url)
-        .override(context.dp2px(60), context.dp2px( 80))
+        .override(context.dp2px(60), context.dp2px(80))
         .placeholder(R.drawable.shape_bg_loading)
         .error(R.drawable.shape_bg_loading)
         .into(this)
@@ -103,6 +104,36 @@ fun ImageView.loadRadius(context: Context, url: String, radius: Int) {
         .transition(withCrossFade())
 //        .transform(GlideRoundTransform(context,radius))
         .into(this)
+}
+
+fun ImageView.imageUrl(
+    url: String?,
+    imageWidthDp: Int,
+    imageHeightDp: Int
+) {
+
+    Glide.with(this.context)
+        .load(url)
+        .override(
+            this.context.dp2px(imageWidthDp),
+            this.context.dp2px(imageHeightDp))
+                .transition(withCrossFade(500))
+                .placeholder(getMusicDefaultPic(4))
+                .centerCrop()
+                .error(getDefaultPic(0))
+                .into(this)
+}
+
+  fun getMusicDefaultPic(imgNumber: Int): Int {
+    when (imgNumber) {
+//        1 -> return R.drawable.img_two_bi_one
+//        2 -> return R.drawable.img_four_bi_three
+//        3 -> return R.drawable.img_one_bi_one
+        4 -> return R.drawable.shape_bg_loading
+        else -> {
+        }
+    }
+    return R.drawable.shape_bg_loading
 }
 
 

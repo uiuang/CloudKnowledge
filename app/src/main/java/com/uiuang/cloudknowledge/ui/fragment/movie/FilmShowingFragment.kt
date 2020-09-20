@@ -80,8 +80,6 @@ class FilmShowingFragment : BaseFragment<HomeViewModel, FragmentFilmShowingBindi
                 nav().navigateAction(R.id.action_mainFragment_to_filmDetailFragment, Bundle().apply {
                     putInt("movieId", item.movieId)
                 })
-                item.id.toString().logd()
-
             }
         }
     }

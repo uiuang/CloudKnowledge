@@ -341,25 +341,13 @@ fun ViewPager2.initMain(fragment: Fragment): ViewPager2 {
     //设置适配器
     adapter = object : FragmentStateAdapter(fragment) {
         override fun createFragment(position: Int): Fragment {
-            when (position) {
-                0 -> {
-                    return HomeFragment()
-                }
-                1 -> {
-                    return GankFragment()
-                }
-                2 -> {
-                    return SisterFragment()
-                }
-                3 -> {
-                    return MovieFragment()
-                }
-                4 -> {
-                    return MineFragment()
-                }
-                else -> {
-                    return HomeFragment()
-                }
+            return when (position) {
+                0 -> HomeFragment()
+                1 -> GankFragment()
+                2 -> MovieFragment()
+                3 -> MineFragment()
+                else -> HomeFragment()
+
             }
         }
 

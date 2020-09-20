@@ -3,11 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="80dp"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingLeft="5dp"
+    android:paddingTop="10dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="5dp">
     <ImageView
         android:id="@+id/iv_actor_img"
-        android:layout_width="50dp"
-        android:layout_height="80dp"/>
+        android:layout_width="70dp"
+        android:scaleType="centerCrop"
+        android:layout_height="100dp"/>
 
     <TextView
         android:id="@+id/tv_actor_name"
@@ -15,6 +20,9 @@
         android:layout_height="wrap_content"
         android:text="柯文龙"
         android:layout_gravity="center"
+        android:lines="1"
+        android:singleLine="true"
+        android:ellipsize="end"
         android:textColor="@color/colorBlack333"
         android:textSize="14sp"
         />

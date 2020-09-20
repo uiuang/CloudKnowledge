@@ -13,4 +13,11 @@ object TimeUtil {
         val sDateFormat = SimpleDateFormat("yyyy-MM-dd")
         return sDateFormat.format(Date())
     }
+
+    fun getReleaseDate(releaseDate: String): String {
+        val sDateFormat = SimpleDateFormat("yyyyMMdd", Locale.CHINA)
+        val dateFormat = SimpleDateFormat("yyyy年MM月dd日", Locale.CHINA)
+        var date:Date = sDateFormat.parse(releaseDate)
+        return dateFormat.format(date)
+    }
 }

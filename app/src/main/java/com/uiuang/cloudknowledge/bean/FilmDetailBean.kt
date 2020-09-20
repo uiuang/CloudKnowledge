@@ -3,12 +3,12 @@ package com.uiuang.cloudknowledge.bean
 data class FilmDetailBean(
     val advertisement: AdvertisementBean,
     val basic: Basic,
-    val boxOffice: BoxOffice,
+    var boxOffice: BoxOffice? = null,
     val live: Live,
     val playState: String,
     val playlist: List<PlayListBean>,//在线观影
     val related: Related
-){
+) {
 
     data class PlayListBean(
         val isOpenByBrowser: Boolean = false,
@@ -31,14 +31,14 @@ data class FilmDetailBean(
 
 
     data class Basic(
-        val actors: MutableList<Actor>,
+        var actors: MutableList<Actor>,
         val attitude: Int,
         val award: Award,
         val bigImage: String,
         val broadcastDes: String,
         val commentSpecial: String,
         val community: Community,
-        val director: Director,
+        val director: Actor?,
         val eggDesc: String,
         val episodeCnt: String,
         val festivals: List<Any>,
@@ -84,22 +84,23 @@ data class FilmDetailBean(
         val userImg: String,
         val userName: String,
         val userRating: Int,
-        val video: Video,
+        val video: Video? = null,
         val wantToSeeCount: Int,
         val wantToSeeCountShow: String,
         val wantToSeeNumberShow: String,
         val year: String
-    ){
+    ) {
         /**
          * 演员表
          */
         data class Actor(
-            val actorId: Int,
-            val img: String,
-            val name: String,
-            val nameEn: String,
-            val roleImg: String,
-            val roleName: String
+            var directorId: Int,
+            var actorId: Int,
+            var img: String,
+            var name: String,
+            var nameEn: String,
+            var roleImg: String,
+            var roleName: String
         )
 
         data class Award(
@@ -126,7 +127,7 @@ data class FilmDetailBean(
          */
         data class StageImg(
             val count: Int,
-            val list: List<Any>
+            var list: MutableList<ImageList>? = null
         )
 
         data class Style(
@@ -144,20 +145,25 @@ data class FilmDetailBean(
             val videoId: Int,
             val videoSourceType: Int
         )
+
+        data class ImageList(
+            var imgId: Int = 0,
+            var imgUrl: String
+        )
     }
 
     /**
      * 累计票房
      */
     data class BoxOffice(
-        val movieId: Int,
-        val ranking: Int,//今日票房排名
-        val todayBox: String,
-        val todayBoxDes: String,//今日实时
-        val todayBoxDesUnit: String,
-        val totalBox: String,//累计票房
-        val totalBoxDes: String,
-        val totalBoxUnit: String
+        var movieId: Int,
+        var ranking: Int,//今日票房排名
+        var todayBox: String = "",
+        var todayBoxDes: String = "",//今日实时
+        var todayBoxDesUnit: String = "",
+        var totalBox: String = "",//累计票房
+        var totalBoxDes: String = "",
+        var totalBoxUnit: String = ""
     )
 
     data class Live(

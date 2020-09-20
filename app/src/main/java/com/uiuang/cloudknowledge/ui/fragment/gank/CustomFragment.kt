@@ -18,10 +18,12 @@ import com.afollestad.materialdialogs.list.customListAdapter
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
+import com.uiuang.cloudknowledge.bean.GankIOResultBean
 import com.uiuang.cloudknowledge.databinding.FragmentAndroidBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.gank.GankAndroidAdapter
 import com.uiuang.cloudknowledge.ui.adapter.gank.ListIconDialogAdapter
+import com.uiuang.cloudknowledge.ui.fragment.web.WebViewFragment
 import com.uiuang.cloudknowledge.utils.CacheUtil
 import com.uiuang.cloudknowledge.utils.toast
 import com.uiuang.cloudknowledge.viewmodel.request.RequestGankViewModel
@@ -108,6 +110,10 @@ class CustomFragment : BaseFragment<HomeViewModel, FragmentAndroidBinding>() {
             //触发刷新监听时请求数据
             requestGankViewModel.loadGankData(true, gankType)
         }
+        gankAndroidAdapter.setOnItemClickListener { adapter, view, position ->
+            val item: GankIOResultBean = adapter.getItem(position - 1) as GankIOResultBean
+            WebViewFragment.openDetail(view, item.url, item.desc)
+         }
     }
 
     private fun initHeader(headerView: View) {
