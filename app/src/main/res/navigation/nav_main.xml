@@ -23,6 +23,21 @@
         <action
             android:id="@+id/action_mainFragment_to_categoryDetailFragment"
             app:destination="@id/categoryDetailFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_collectFragment"
+            app:destination="@id/collectFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_integralFragment"
+            app:destination="@id/integralFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_todoListFragment"
+            app:destination="@id/todoListFragment" />
     </fragment>
     <fragment
         android:id="@+id/bigImageFragment"
@@ -65,4 +80,43 @@
         android:label="CategoryDetailFragment" />
     <action android:id="@+id/action_global_webViewFragment"
         app:destination="@id/webViewFragment"/>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.uiuang.cloudknowledge.ui.fragment.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <action android:id="@+id/action_global_loginFragment" app:destination="@id/loginFragment" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.uiuang.cloudknowledge.ui.fragment.login.RegisterFragment"
+        android:label="RegisterFragment" />
+    <fragment
+        android:id="@+id/collectFragment"
+        android:name="com.uiuang.cloudknowledge.ui.fragment.mine.CollectFragment"
+        android:label="fragment_collect"
+        tools:layout="@layout/fragment_collect" />
+    <fragment
+        android:id="@+id/integralFragment"
+        android:name="com.uiuang.cloudknowledge.ui.fragment.mine.IntegralFragment"
+        android:label="fragment_integral"
+        tools:layout="@layout/fragment_integral" />
+    <fragment
+        android:id="@+id/articleFragment"
+        android:name="com.uiuang.cloudknowledge.ui.fragment.mine.ArticleFragment"
+        android:label="fragment_article"
+        tools:layout="@layout/fragment_article" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.uiuang.cloudknowledge.ui.fragment.mine.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/todoListFragment"
+        android:name="com.uiuang.cloudknowledge.ui.fragment.mine.TodoListFragment"
+        android:label="fragment_todo_list"
+        tools:layout="@layout/fragment_todo_list" />
 </navigation>

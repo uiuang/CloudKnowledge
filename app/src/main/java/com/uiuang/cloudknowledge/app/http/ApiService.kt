@@ -2,6 +2,7 @@ package com.uiuang.cloudknowledge.app.http
 
 import com.uiuang.cloudknowledge.bean.*
 import retrofit2.http.*
+import com.uiuang.cloudknowledge.bean.IntegralBean as IntegralBean
 
 
 /**
@@ -207,6 +208,13 @@ interface ApiService {
      */
     @POST("/lg/uncollect_originId/{id}/json")
     suspend fun unCollect(@Path("id") id: Int): ApiResponse<Any>
+
+    /**
+     * 获取当前账户的个人积分
+     */
+    @GET("lg/coin/userinfo/json")
+    suspend fun getIntegral(): ApiResponse<IntegralBean>
+
 
     /**
      * 登录
