@@ -2,21 +2,25 @@ package com.uiuang.cloudknowledge.ui.fragment.mine
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
+import com.uiuang.cloudknowledge.bean.IntegralBean
 import com.uiuang.cloudknowledge.databinding.FragmentMineBinding
 import com.uiuang.cloudknowledge.ext.init
 import com.uiuang.cloudknowledge.ext.jumpByLogin
 import com.uiuang.cloudknowledge.utils.joinQQGroup
+import com.uiuang.cloudknowledge.utils.toast
 import com.uiuang.cloudknowledge.viewmodel.request.RequestMineViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.MineViewModel
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
+import com.uiuang.mvvm.ext.parseState
 import kotlinx.android.synthetic.main.fragment_mine.*
 
 
 class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
-
+    private var rank: IntegralBean? = null
     private val requestMineViewModel: RequestMineViewModel by viewModels()
     override fun layoutId(): Int = R.layout.fragment_mine
 
@@ -24,10 +28,22 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
         mDatabind.click = ProxyClick()
         mDatabind.vm = mViewModel
 
-        mine_swipe. init {
+        mine_swipe.init {
             requestMineViewModel.getIntegral()
         }
+    }
 
+    override fun createObserver() {
+        requestMineViewModel.integralBean.observe(viewLifecycleOwner, Observer { resultState ->
+            mine_swipe.isRefreshing = false
+            parseState(resultState, {
+                rank = it
+                mViewModel.info.set("id：${it.userId}　排名：${it.rank}")
+                mViewModel.integral.set(it.coinCount)
+            }, {
+                it.errorMsg.toast()
+            })
+        })
     }
 
     inner class ProxyClick {
@@ -46,7 +62,8 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
         /** 积分 */
         fun integral() {
             nav().jumpByLogin {
-                it.navigateAction(R.id.action_mainFragment_to_integralFragment
+                it.navigateAction(
+                    R.id.action_mainFragment_to_integralFragment
                 )
             }
         }
@@ -68,6 +85,7 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
         fun about() {
 
         }
+
         fun home() {
             nav().navigateAction(R.id.action_global_webViewFragment, Bundle())
         }

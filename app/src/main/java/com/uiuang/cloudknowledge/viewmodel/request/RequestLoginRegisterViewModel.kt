@@ -36,7 +36,7 @@ class RequestLoginRegisterViewModel : BaseViewModel() {
     /**
      * 注册并登陆
      */
-    suspend fun register(username: String, password: String): ApiResponse<UserInfo> {
+    private suspend fun register(username: String, password: String): ApiResponse<UserInfo> {
         val registerData = getWanAndroidServer.register(username, password, password)
         //判断注册结果 注册成功，调用登录接口
         if (registerData.isSuccess()) {

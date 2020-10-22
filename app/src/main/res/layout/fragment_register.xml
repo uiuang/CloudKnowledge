@@ -117,7 +117,7 @@
             android:ems="10"
             android:hint="请输入确认密码"
             android:inputType="textPassword"
-            android:text="@={viewModel.password2}"
+            android:text="@={viewModel.repassword}"
             app:layout_constraintBottom_toTopOf="@+id/btnLogin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"

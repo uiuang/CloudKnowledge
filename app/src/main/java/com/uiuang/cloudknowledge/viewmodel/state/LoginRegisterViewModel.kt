@@ -12,7 +12,7 @@ class LoginRegisterViewModel : BaseViewModel() {
     //密码(登录注册界面)
     var password = StringObservableField()
 
-    var password2 = StringObservableField()
+    var repassword = StringObservableField()
 
     //是否显示明文密码（登录注册界面）
     var isShowPwd = BooleanObservableField()

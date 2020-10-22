@@ -93,7 +93,11 @@
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.uiuang.cloudknowledge.ui.fragment.login.RegisterFragment"
-        android:label="RegisterFragment" />
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/collectFragment"
         android:name="com.uiuang.cloudknowledge.ui.fragment.mine.CollectFragment"
