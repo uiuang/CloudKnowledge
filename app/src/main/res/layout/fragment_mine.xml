@@ -72,7 +72,7 @@
                             app:layout_constraintStart_toEndOf="@+id/imageView"
                             app:layout_constraintTop_toTopOf="@+id/imageView"
                             app:layout_constraintVertical_chainStyle="packed"
-                            tools:text="我是菜虚鲲" />
+                            tools:text="我是阿闯学长" />
 
                         <TextView
                             android:id="@+id/mine_info"
@@ -143,7 +143,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginRight="8dp"
-                                    android:text=""
+                                    android:text="@{vm.integral.toString()}"
                                     android:textColor="@color/colorPrimary"
                                     android:textSize="15dp"
                                     android:textStyle="bold"

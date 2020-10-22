@@ -214,7 +214,17 @@ interface ApiService {
      */
     @GET("lg/coin/userinfo/json")
     suspend fun getIntegral(): ApiResponse<IntegralBean>
+    /**
+     * 获取积分排行榜
+     */
+    @GET("coin/rank/{page}/json")
+    suspend fun getIntegralRank(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<IntegralBean>>>
 
+    /**
+     * 获取积分历史
+     */
+    @GET("lg/coin/list/{page}/json")
+    suspend fun getIntegralHistory(@Path("page") page: Int): ApiResponse<ApiPagerResponse<ArrayList<IntegralHistoryBean>>>
 
     /**
      * 登录

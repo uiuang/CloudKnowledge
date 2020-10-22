@@ -16,6 +16,7 @@ import com.uiuang.cloudknowledge.viewmodel.state.MineViewModel
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
 import com.uiuang.mvvm.ext.parseState
+import com.uiuang.mvvm.ext.view.notNull
 import kotlinx.android.synthetic.main.fragment_mine.*
 
 
@@ -39,11 +40,28 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
             parseState(resultState, {
                 rank = it
                 mViewModel.info.set("id：${it.userId}　排名：${it.rank}")
+                mViewModel.name.set(it.username)
                 mViewModel.integral.set(it.coinCount)
             }, {
                 it.errorMsg.toast()
             })
         })
+        appViewModel.run {
+            appColor.observe(viewLifecycleOwner, Observer {
+
+            })
+            userinfo.observe(viewLifecycleOwner, Observer { userInfo ->
+                userInfo.notNull({
+                    mine_swipe.isRefreshing = true
+                    mViewModel.name.set(if (it.nickname.isEmpty()) it.username else it.nickname)
+                    requestMineViewModel.getIntegral()
+                }, {
+                    mViewModel.name.set("请先登录~")
+                    mViewModel.info.set("id：--　排名：--")
+                    mViewModel.integral.set(0)
+                })
+            })
+        }
     }
 
     inner class ProxyClick {
@@ -63,7 +81,9 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
         fun integral() {
             nav().jumpByLogin {
                 it.navigateAction(
-                    R.id.action_mainFragment_to_integralFragment
+                    R.id.action_mainFragment_to_integralFragment,Bundle().apply {
+                        putParcelable("integral", rank)
+                    }
                 )
             }
         }

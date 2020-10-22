@@ -112,7 +112,7 @@ fun View.clickNoRepeat(interval: Long = 500, action: (view: View) -> Unit) {
 }
 
 
-fun Any?.notNull(notNullAction:(value:Any) ->Unit,nullAction1:() ->Unit){
+inline fun <reified T> T?.notNull(notNullAction:(T) ->Unit,nullAction1:() ->Unit ={}){
     if(this!=null){
         notNullAction.invoke(this)
     }else{

@@ -12,24 +12,27 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
  * 自定义Behavior  FAB 上滑显示 下滑隐藏
  */
 class FatScrollAwareFabBehavior(context: Context?, attrs: AttributeSet?) : FloatingActionButton.Behavior(context, attrs) {
+
+
     override fun onStartNestedScroll(
         coordinatorLayout: CoordinatorLayout,
         child: FloatingActionButton,
         directTargetChild: View,
         target: View,
-        nestedScrollAxes: Int
+        axes: Int,
+        type: Int
     ): Boolean {
-        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL ||
-                super.onStartNestedScroll(
-                    coordinatorLayout,
-                    child,
-                    directTargetChild,
-                    target,
-                    nestedScrollAxes
-                )
+        return  axes == ViewCompat.SCROLL_AXIS_VERTICAL ||super.onStartNestedScroll(
+            coordinatorLayout,
+            child,
+            directTargetChild,
+            target,
+            axes,
+            type
+        )
     }
 
-    @SuppressLint("RestrictedApi")
+
     override fun onNestedScroll(
         coordinatorLayout: CoordinatorLayout,
         child: FloatingActionButton,
@@ -37,12 +40,22 @@ class FatScrollAwareFabBehavior(context: Context?, attrs: AttributeSet?) : Float
         dxConsumed: Int,
         dyConsumed: Int,
         dxUnconsumed: Int,
-        dyUnconsumed: Int
+        dyUnconsumed: Int,
+        type: Int,
+        consumed: IntArray
     ) {
         super.onNestedScroll(
-            coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed,
-            dyUnconsumed
+            coordinatorLayout,
+            child,
+            target,
+            dxConsumed,
+            dyConsumed,
+            dxUnconsumed,
+            dyUnconsumed,
+            type,
+            consumed
         )
+
         if (dyConsumed > 0 && child.visibility == View.VISIBLE) {
             child.visibility = View.INVISIBLE
         } else if (dyConsumed < 0 && child.visibility != View.VISIBLE) {
