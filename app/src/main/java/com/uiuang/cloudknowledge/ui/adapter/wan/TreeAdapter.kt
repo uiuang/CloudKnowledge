@@ -1,7 +1,6 @@
 package com.uiuang.cloudknowledge.ui.adapter.wan
 
 import android.view.View
-import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
@@ -13,7 +12,6 @@ import com.uiuang.cloudknowledge.bean.ChildrenBean
 import com.uiuang.cloudknowledge.bean.TabBean
 import com.uiuang.cloudknowledge.utils.DataUtil
 import com.uiuang.cloudknowledge.utils.SettingUtil
-import com.uiuang.cloudknowledge.utils.toast
 
 
 /**

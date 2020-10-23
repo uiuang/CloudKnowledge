@@ -21,6 +21,10 @@
     <string name="actionbar_share">分享给朋友\(^o^)/~</string>
     <string name="picture_has_save_to">已保存至 %s</string>
     <string name="action_share">分享</string>
+    <string name="choose_theme_color">主题颜色</string>
+    <string name="cancel">取消</string>
+    <string name="done">完成</string>
+    <string name="confirm">确定</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fat_scroll_aware_fab_behavior" translatable="false">com.uiuang.cloudknowledge.weight.recyclerview.FatScrollAwareFabBehavior</string>

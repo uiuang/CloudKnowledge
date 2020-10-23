@@ -71,8 +71,7 @@ fun Fragment.showMessage(
     negativeButtonText: String = "",
     negativeAction: () -> Unit = {}
 ) {
-    activity?.let {
-        MaterialDialog(it)
+        MaterialDialog(requireActivity())
             .cancelable(false)
             .lifecycleOwner(viewLifecycleOwner)
             .show {
@@ -86,10 +85,9 @@ fun Fragment.showMessage(
                         negativeAction.invoke()
                     }
                 }
-                getActionButton(WhichButton.POSITIVE).updateTextColor(SettingUtil.getColor(it))
-                getActionButton(WhichButton.NEGATIVE).updateTextColor(SettingUtil.getColor(it))
+                getActionButton(WhichButton.POSITIVE).updateTextColor(SettingUtil.getColor(requireActivity()))
+                getActionButton(WhichButton.NEGATIVE).updateTextColor(SettingUtil.getColor(requireActivity()))
             }
-    }
 }
 
 /**

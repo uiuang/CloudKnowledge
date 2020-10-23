@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
+import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.ViewCompat;
 
@@ -25,23 +26,31 @@ public class FabScrollBehavior extends FloatingActionButton.Behavior {
         super(context, attrs);
     }
 
-    @Override
-    public boolean onStartNestedScroll(final CoordinatorLayout coordinatorLayout, final FloatingActionButton child,
-                                       final View directTargetChild, final View target, final int nestedScrollAxes) {
-        // 确保滚动方向为垂直方向
-        return nestedScrollAxes == ViewCompat.SCROLL_AXIS_VERTICAL;
-    }
+
 
     @Override
-    public void onNestedScroll(final CoordinatorLayout coordinatorLayout, final FloatingActionButton child,
-                               final View target, final int dxConsumed, final int dyConsumed,
-                               final int dxUnconsumed, final int dyUnconsumed) {
-        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
-        if (dyConsumed > 0) { // 向下滑动
+    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull FloatingActionButton child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
+
+        return axes == ViewCompat.SCROLL_AXIS_VERTICAL||super.onStartNestedScroll(coordinatorLayout, child, directTargetChild, target, axes, type);
+    }
+
+
+
+    @Override
+    public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull FloatingActionButton child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type, @NonNull int[] consumed) {
+        super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type, consumed);
+//        if (dyConsumed > 0) { // 向下滑动
+//            animateOut(child);
+//        } else if (dyConsumed < 0) { // 向上滑动
+//            animateIn(child);
+//        }
+        if (dyConsumed > 0 && child.getVisibility() == View.VISIBLE) {
             animateOut(child);
-        } else if (dyConsumed < 0) { // 向上滑动
+        } else if (dyConsumed < 0 && child.getVisibility() != View.VISIBLE) {
+//            child.show();
             animateIn(child);
         }
+
     }
 
     // FAB移出屏幕动画（隐藏动画）

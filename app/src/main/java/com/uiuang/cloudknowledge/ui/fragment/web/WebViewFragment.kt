@@ -1,6 +1,5 @@
 package com.uiuang.cloudknowledge.ui.fragment.web
 
-import android.Manifest
 import android.content.DialogInterface
 import android.os.Bundle
 import android.text.TextUtils
@@ -27,6 +26,8 @@ import com.uiuang.cloudknowledge.viewmodel.state.WebViewModel
 import com.uiuang.mvvm.base.appContext
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
+import com.uiuang.cloudknowledge.utils.SettingUtil
+import com.uiuang.mvvm.util.ShareUtils
 import com.uiuang.mvvm.util.toHtml
 import kotlinx.android.synthetic.main.fragment_web_view.*
 

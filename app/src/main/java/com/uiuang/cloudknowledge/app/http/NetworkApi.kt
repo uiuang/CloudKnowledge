@@ -4,9 +4,11 @@ import android.content.Context
 import android.text.TextUtils
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.google.gson.GsonBuilder
 import com.uiuang.cloudknowledge.BuildConfig
 import com.uiuang.cloudknowledge.app.App
+import com.uiuang.mvvm.base.appContext
 import com.uiuang.mvvm.network.BaseNetworkApi
 import com.uiuang.mvvm.network.CoroutineCallAdapterFactory
 import com.uiuang.mvvm.network.interceptor.CacheInterceptor
@@ -125,9 +127,9 @@ class NetworkApi : BaseNetworkApi() {
         }
     }
 
-//    val cookieJar: PersistentCookieJar by lazy {
-//        PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(appContext))
-//    }
+    val cookieJar: PersistentCookieJar by lazy {
+        PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(appContext))
+    }
 
 
     var trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {

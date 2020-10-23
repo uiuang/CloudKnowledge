@@ -21,8 +21,10 @@ class IntegralAdapter(data: ArrayList<IntegralBean>) :
         item.run {
             if(rankNum==holder.adapterPosition+1){
                 holder.setTextColor(R.id.item_integral_rank, SettingUtil.getColor(context))
-                holder.setTextColor(R.id.item_integral_name,SettingUtil.getColor(context))
-                holder.setTextColor(R.id.item_integral_count,SettingUtil.getColor(context))
+                holder.setTextColor(R.id.item_integral_name,
+                    SettingUtil.getColor(context))
+                holder.setTextColor(R.id.item_integral_count,
+                    SettingUtil.getColor(context))
             }else{
                 holder.setTextColor(R.id.item_integral_rank, ContextCompat.getColor(context,R.color.colorBlack333))
                 holder.setTextColor(R.id.item_integral_name, ContextCompat.getColor(context,R.color.colorBlack666))

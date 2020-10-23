@@ -19,6 +19,7 @@ import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
 import com.uiuang.mvvm.ext.view.gone
 import com.uiuang.mvvm.ext.view.notNull
+import com.uiuang.mvvm.util.dp2px
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.fragment_integral.*
 import kotlinx.android.synthetic.main.include_list.*
@@ -28,7 +29,7 @@ import kotlinx.android.synthetic.main.include_toolbar.*
 /**
  *
  */
-class IntegralFragment : BaseFragment<IntegralViewModel,FragmentIntegralBinding>() {
+class IntegralFragment : BaseFragment<IntegralViewModel, FragmentIntegralBinding>() {
 
     private var rank: IntegralBean? = null
 
@@ -37,17 +38,18 @@ class IntegralFragment : BaseFragment<IntegralViewModel,FragmentIntegralBinding>
 
     //界面状态管理者
     private lateinit var loadSir: LoadService<Any>
-    //请求的ViewModel /** */
+
+    //请求的ViewModel
     private val requestIntegralViewModel: RequestIntegralViewModel by viewModels()
 
-    override fun layoutId(): Int =R.layout.fragment_integral
+    override fun layoutId(): Int = R.layout.fragment_integral
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.vm = mViewModel
         rank = arguments?.getParcelable("integral")
         rank.notNull({
             mViewModel.integralBean.set(rank)
-        },{
+        }, {
             integral_cardview.gone()
         })
         integralAdapter = IntegralAdapter(arrayListOf(), rank?.rank ?: -1)
@@ -67,7 +69,7 @@ class IntegralFragment : BaseFragment<IntegralViewModel,FragmentIntegralBinding>
                     }
 
                     R.id.integral_history -> {
-//                        nav().navigateAction(R.id.action_integralFragment_to_integralHistoryFragment)
+                        nav().navigateAction(R.id.action_integralFragment_to_integralHistoryFragment)
                     }
                 }
                 true
@@ -84,7 +86,7 @@ class IntegralFragment : BaseFragment<IntegralViewModel,FragmentIntegralBinding>
         }
         //初始化recyclerView
         recyclerView.init(LinearLayoutManager(context), integralAdapter).let {
-            it.addItemDecoration(SpaceItemDecoration(0, 8))
+            it.addItemDecoration(SpaceItemDecoration(0, requireContext().dp2px(8)))
             it.initFooter(SwipeRecyclerView.LoadMoreListener {
                 //触发加载更多时请求数据
                 requestIntegralViewModel.getIntegralData(false)
@@ -98,7 +100,8 @@ class IntegralFragment : BaseFragment<IntegralViewModel,FragmentIntegralBinding>
             requestIntegralViewModel.getIntegralData(true)
         }
         appViewModel.appColor.value?.let {
-            setUiTheme(it,
+            setUiTheme(
+                it,
                 integral_merank, integral_mename, integral_mecount
             )
         }
@@ -113,7 +116,7 @@ class IntegralFragment : BaseFragment<IntegralViewModel,FragmentIntegralBinding>
     override fun createObserver() {
         requestIntegralViewModel.integralDataState.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            loadListData(it, integralAdapter, loadSir, recyclerView,swipeRefresh)
+            loadListData(it, integralAdapter, loadSir, recyclerView, swipeRefresh)
         })
     }
 

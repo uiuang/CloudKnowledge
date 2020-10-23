@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import com.uiuang.cloudknowledge.app.http.getGankIOServer
 import com.uiuang.cloudknowledge.app.state.ListDataUiState
 import com.uiuang.cloudknowledge.bean.GankIOResultBean
-import com.uiuang.cloudknowledge.utils.TimeUtil
 import com.uiuang.mvvm.base.viewmodel.BaseViewModel
 import com.uiuang.mvvm.ext.request
+import com.uiuang.mvvm.util.DatetimeUtil
 
 class RequestGankHomeViewModel : BaseViewModel() {
     var isShowLoading = MutableLiveData<Boolean>()
@@ -58,7 +58,7 @@ class RequestGankHomeViewModel : BaseViewModel() {
      * 获取当天日期
      */
     fun getTodayTime(): ArrayList<String> {
-        val data: String = TimeUtil.getData()
+        val data: String = DatetimeUtil.getData()
         val split = data.split("-").toTypedArray()
         val year = split[0]
         val month = split[1]

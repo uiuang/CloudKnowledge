@@ -1,4 +1,4 @@
-package com.uiuang.cloudknowledge.utils
+package com.uiuang.mvvm.util
 
 import android.app.Activity
 import android.content.Context
@@ -11,7 +11,7 @@ import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
-import com.uiuang.cloudknowledge.R
+import com.uiuang.mvvm.R
 import java.io.File
 
 
@@ -23,7 +23,10 @@ import java.io.File
  */
 object ShareUtils {
     fun share(context: Context, stringRes: Int) {
-        share(context, context.getString(stringRes))
+        share(
+            context,
+            context.getString(stringRes)
+        )
     }
 
     fun shareImage(context: Context, uri: Uri?, title: String?) {

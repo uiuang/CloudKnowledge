@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -33,7 +32,6 @@ import com.uiuang.cloudknowledge.ui.fragment.gank.GankFragment
 import com.uiuang.cloudknowledge.ui.fragment.home.HomeFragment
 import com.uiuang.cloudknowledge.ui.fragment.mine.MineFragment
 import com.uiuang.cloudknowledge.ui.fragment.movie.MovieFragment
-import com.uiuang.cloudknowledge.ui.fragment.sister.SisterFragment
 import com.uiuang.cloudknowledge.utils.SettingUtil
 import com.uiuang.cloudknowledge.weight.loadCallBack.EmptyCallback
 import com.uiuang.cloudknowledge.weight.loadCallBack.ErrorCallback
@@ -384,7 +382,8 @@ fun BottomNavigationViewEx.init(navigationItemSelectedAction: (Int) -> Unit): Bo
     enableAnimation(true)
     enableShiftingMode(false)
     enableItemShiftingMode(true)
-    itemIconTintList = SettingUtil.getColorStateList(SettingUtil.getColor(appContext))
+    itemIconTintList = SettingUtil.getColorStateList(
+        SettingUtil.getColor(appContext))
     itemTextColor = SettingUtil.getColorStateList(appContext)
     setTextSize(12F)
     setOnNavigationItemSelectedListener {

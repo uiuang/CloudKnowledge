@@ -4,7 +4,11 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.res.TypedArray
+import android.graphics.drawable.Drawable
 import android.net.Uri
+import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import com.uiuang.cloudknowledge.app.App
 
 
@@ -67,4 +71,11 @@ fun String.joinQQChat(context: Context?) {
         // 未安装手Q或安装的版本不支持
         ("未安装手Q或安装的版本不支持~").showToastLong()
     }
+}
+
+fun Context.getSupportDrawable(@DrawableRes resId: Int) = if (resId != 0) AppCompatResources.getDrawable(this, resId) else null
+
+fun TypedArray.getSupportDrawable(context: Context, index: Int): Drawable? {
+    val resId = getResourceId(index, 0)
+    return if (resId != 0) AppCompatResources.getDrawable(context, resId) else null
 }

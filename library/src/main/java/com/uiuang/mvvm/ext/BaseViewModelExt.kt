@@ -17,7 +17,6 @@ import com.uiuang.mvvm.network.ExceptionHandle
 import com.uiuang.mvvm.state.ResultState
 import com.uiuang.mvvm.state.paresException
 import com.uiuang.mvvm.state.paresResult
-import com.uiuang.mvvm.util.NetworkUtil.Companion.url
 import com.uiuang.mvvm.util.loge
 import kotlinx.coroutines.*
 import java.io.File

@@ -107,7 +107,11 @@
         android:id="@+id/integralFragment"
         android:name="com.uiuang.cloudknowledge.ui.fragment.mine.IntegralFragment"
         android:label="fragment_integral"
-        tools:layout="@layout/fragment_integral" />
+        tools:layout="@layout/fragment_integral" >
+        <action
+            android:id="@+id/action_integralFragment_to_integralHistoryFragment"
+            app:destination="@id/integralHistoryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/articleFragment"
         android:name="com.uiuang.cloudknowledge.ui.fragment.mine.ArticleFragment"
@@ -123,4 +127,8 @@
         android:name="com.uiuang.cloudknowledge.ui.fragment.mine.TodoListFragment"
         android:label="fragment_todo_list"
         tools:layout="@layout/fragment_todo_list" />
+    <fragment
+        android:id="@+id/integralHistoryFragment"
+        android:name="com.uiuang.cloudknowledge.ui.fragment.mine.IntegralHistoryFragment"
+        android:label="IntegralHistoryFragment" />
 </navigation>

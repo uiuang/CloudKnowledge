@@ -4,7 +4,6 @@ package com.uiuang.cloudknowledge.ui.fragment.movie
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -19,10 +18,10 @@ import com.uiuang.cloudknowledge.databinding.FragmentFilmDetailBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.film.FilmActorsAdapter
 import com.uiuang.cloudknowledge.ui.adapter.film.FilmDetailImageAdapter
-import com.uiuang.cloudknowledge.utils.TimeUtil
 import com.uiuang.cloudknowledge.viewmodel.request.RequestFilmDetailViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.mvvm.ext.nav
+import com.uiuang.mvvm.util.DatetimeUtil
 import com.uiuang.mvvm.util.dp2px
 import com.uiuang.mvvm.util.screenWidth
 import jp.wasabeef.glide.transformations.BlurTransformation
@@ -103,7 +102,7 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
             tv_one_casts.text = getMovieActors(basic.actors)
             tv_one_genres.text = "类型：${getMovieType(basic.type)}"
             tv_one_time.text = "片长：${basic.mins}"
-            tv_one_date.text = "${TimeUtil.getReleaseDate(basic.releaseDate) + basic.releaseArea}上映"
+            tv_one_date.text = "${DatetimeUtil.getReleaseDate(basic.releaseDate) + basic.releaseArea}上映"
             //简介
             tv_story.text = basic.story
             //演员表
