@@ -209,6 +209,33 @@ interface ApiService {
     @POST("/lg/uncollect_originId/{id}/json")
     suspend fun unCollect(@Path("id") id: Int): ApiResponse<Any>
 
+
+    /**
+     * 收藏网址
+     */
+    @POST("lg/collect/addtool/json")
+    suspend fun collectUrl(
+        @Query("name") name: String,
+        @Query("link") link: String
+    ): ApiResponse<ArticlesBean>
+
+    /**
+     * 取消收藏网址
+     */
+    @POST("lg/collect/deletetool/json")
+    suspend fun deletetool(@Query("id") id: Int): ApiResponse<Any?>
+
+    /**
+     * 获取收藏文章数据
+     */
+    @GET("lg/collect/list/{page}/json")
+    suspend fun getCollectData(@Path("page") pageNo: Int): ApiResponse<ApiPagerResponse<ArrayList<ArticlesBean>>>
+
+    /**
+     * 获取收藏网址数据
+     */
+    @GET("lg/collect/usertools/json")
+    suspend fun getCollectUrlData(): ApiResponse<ArrayList<ArticlesBean>>
     /**
      * 获取当前账户的个人积分
      */
