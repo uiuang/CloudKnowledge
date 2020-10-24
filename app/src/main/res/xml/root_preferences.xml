@@ -11,7 +11,10 @@
         <Preference
             android:key="clearCache"
             android:title="清楚缓存" />
-
+        <Preference
+            android:key="exit"
+            android:summary="退出登录"
+            android:title="退出" />
 
     </com.uiuang.cloudknowledge.weight.preference.PreferenceCategory>
 

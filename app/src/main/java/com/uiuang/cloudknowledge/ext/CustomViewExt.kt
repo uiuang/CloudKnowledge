@@ -37,6 +37,7 @@ import com.uiuang.cloudknowledge.weight.loadCallBack.EmptyCallback
 import com.uiuang.cloudknowledge.weight.loadCallBack.ErrorCallback
 import com.uiuang.cloudknowledge.weight.loadCallBack.LoadingCallback
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
+import com.uiuang.cloudknowledge.weight.viewpager.ScaleTransitionPagerTitleView
 import com.uiuang.mvvm.base.appContext
 import com.uiuang.mvvm.util.toHtml
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
@@ -316,6 +317,77 @@ fun MagicIndicator.bindViewPager2(
         }
     })
 }
+
+fun MagicIndicator.bindViewPager2Collect(
+    viewPager: ViewPager2,
+    mDataList: ArrayList<ClassifyResponse> = arrayListOf(),
+    mStringList: ArrayList<String> = arrayListOf(),
+    action: (index: Int) -> Unit = {}) {
+    val commonNavigator = CommonNavigator(appContext)
+    commonNavigator.adapter = object : CommonNavigatorAdapter() {
+        override fun getCount(): Int {
+            return if (mDataList.size != 0) {
+                mDataList.size
+            } else {
+                mStringList.size
+            }
+        }
+        override fun getTitleView(context: Context, index: Int): IPagerTitleView {
+            return ScaleTransitionPagerTitleView(appContext).apply {
+                text = if (mDataList.size != 0) {
+                    mDataList[index].name.toHtml()
+                } else {
+                    mStringList[index].toHtml()
+                }
+                textSize = 17f
+                normalColor = Color.WHITE
+                selectedColor = Color.WHITE
+                setOnClickListener {
+                    viewPager.currentItem = index
+                    action.invoke(index)
+                }
+            }
+        }
+        override fun getIndicator(context: Context): IPagerIndicator {
+            return LinePagerIndicator(context).apply {
+                mode = LinePagerIndicator.MODE_EXACTLY
+                //线条的宽高度
+                lineHeight = UIUtil.dip2px(appContext, 3.0).toFloat()
+                lineWidth = UIUtil.dip2px(appContext, 30.0).toFloat()
+                //线条的圆角
+                roundRadius = UIUtil.dip2px(appContext, 6.0).toFloat()
+                startInterpolator = AccelerateInterpolator()
+                endInterpolator = DecelerateInterpolator(2.0f)
+                //线条的颜色
+                setColors(Color.WHITE)
+            }
+        }
+    }
+    this.navigator = commonNavigator
+
+    viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+            this@bindViewPager2Collect.onPageSelected(position)
+            action.invoke(position)
+        }
+
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {
+            super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            this@bindViewPager2Collect.onPageScrolled(position, positionOffset, positionOffsetPixels)
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            super.onPageScrollStateChanged(state)
+            this@bindViewPager2Collect.onPageScrollStateChanged(state)
+        }
+    })
+}
+
 
 fun ViewPager2.init(
     fragment: Fragment,

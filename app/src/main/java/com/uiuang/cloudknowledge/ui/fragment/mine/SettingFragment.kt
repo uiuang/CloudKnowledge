@@ -19,20 +19,29 @@ import com.afollestad.materialdialogs.color.colorChooser
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.uiuang.cloudknowledge.R
+import com.uiuang.cloudknowledge.app.event.AppViewModel
 import com.uiuang.cloudknowledge.app.http.NetworkApi
 import com.uiuang.cloudknowledge.ext.initClose
 import com.uiuang.cloudknowledge.ext.showMessage
 import com.uiuang.cloudknowledge.utils.*
 import com.uiuang.cloudknowledge.weight.preference.CheckBoxPreference
 import com.uiuang.cloudknowledge.weight.preference.IconPreference
+import com.uiuang.cloudknowledge.weight.preference.PrefKey
 import com.uiuang.cloudknowledge.weight.preference.PreferenceCategory
+import com.uiuang.mvvm.ext.getAppViewModel
 import com.uiuang.mvvm.ext.nav
 
 
 class SettingFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
+
+    //这里不能继承BaseFragment了，所以手动获取一下 AppViewModel
+    private val shareViewModel: AppViewModel by lazy { getAppViewModel<AppViewModel>() }
+
     var toolBarView: View? = null
+
     private var colorPreview: IconPreference? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //这里重写根据PreferenceFragmentCompat 的布局 ，往他的根布局插入了一个toolbar
@@ -48,7 +57,6 @@ class SettingFragment : PreferenceFragmentCompat(),
                     }
                     //添加到第一个
                     addView(toolBarView, 0)
-
                 }
 
             }
@@ -57,11 +65,11 @@ class SettingFragment : PreferenceFragmentCompat(),
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.root_preferences)
-        colorPreview = findPreference("color")
+        colorPreview = findPreference(PrefKey.COLOR)
         initPreferences()
-        findPreference<Preference>("exit")?.isVisible = CacheUtil.isLogin()//未登录时，退出登录需要隐藏
+        findPreference<Preference>(PrefKey.EXIT)?.isVisible = CacheUtil.isLogin()//未登录时，退出登录需要隐藏
 
-        findPreference<Preference>("exit")?.setOnPreferenceClickListener {
+        findPreference<Preference>(PrefKey.EXIT)?.setOnPreferenceClickListener {
             showMessage(
                 "确定退出登录吗",
                 positiveButtonText = "退出",
@@ -70,13 +78,13 @@ class SettingFragment : PreferenceFragmentCompat(),
                     //清空cookie
                     NetworkApi.INSTANCE.cookieJar.clear()
                     CacheUtil.setUser(null)
-//                    shareViewModel.userinfo.value = null
+                    shareViewModel.userinfo.value = null
                     nav().navigateUp()
                 })
             false
         }
 
-        findPreference<Preference>("clearCache")?.setOnPreferenceClickListener {
+        findPreference<Preference>(PrefKey.CLEAR_CACHE)?.setOnPreferenceClickListener {
             showMessage(
                 "确定清理缓存吗",
                 positiveButtonText = "清理",
@@ -90,7 +98,7 @@ class SettingFragment : PreferenceFragmentCompat(),
             false
         }
 
-        findPreference<Preference>("mode")?.setOnPreferenceClickListener {
+        findPreference<Preference>(PrefKey.MODE)?.setOnPreferenceClickListener {
             activity?.let { activity ->
                 MaterialDialog(activity).show {
                     cancelable(false)
@@ -102,7 +110,7 @@ class SettingFragment : PreferenceFragmentCompat(),
                         SettingUtil.setListMode(index)
                         it.summary = text
                         //通知其他界面立马修改配置
-//                        shareViewModel.appAnimation.value = index
+                        shareViewModel.appAnimation.value = index
                     }
                     title(text = "设置列表动画")
                     positiveButton(R.string.confirm)
@@ -122,7 +130,7 @@ class SettingFragment : PreferenceFragmentCompat(),
 
             false
         }
-        findPreference<IconPreference>("color")?.setOnPreferenceClickListener {
+        findPreference<IconPreference>(PrefKey.COLOR)?.setOnPreferenceClickListener {
             activity?.let { activity ->
                 MaterialDialog(activity).show {
                     title(R.string.choose_theme_color)
@@ -136,15 +144,15 @@ class SettingFragment : PreferenceFragmentCompat(),
                     ) { _, color ->
                         ///修改颜色
                         SettingUtil.setColor(color)
-                        findPreference<PreferenceCategory>("base")?.setTitleColor(color)
-                        findPreference<PreferenceCategory>("other")?.setTitleColor(color)
-                        findPreference<PreferenceCategory>("about")?.setTitleColor(color)
+                        findPreference<PreferenceCategory>(PrefKey.BASE)?.setTitleColor(color)
+                        findPreference<PreferenceCategory>(PrefKey.OTHER)?.setTitleColor(color)
+                        findPreference<PreferenceCategory>(PrefKey.ABOUT)?.setTitleColor(color)
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            findPreference<CheckBoxPreference>("top")?.setButtonColor()
+                            findPreference<CheckBoxPreference>(PrefKey.TOP)?.setButtonColor()
                         }
                         toolBarView?.setBackgroundColor(color)
                         //通知其他界面立马修改配置
-//                        shareViewModel.appColor.value = color
+                        shareViewModel.appColor.value = color
                     }
                     getActionButton(WhichButton.POSITIVE).updateTextColor(
                         SettingUtil.getColor(
@@ -162,20 +170,50 @@ class SettingFragment : PreferenceFragmentCompat(),
             }
             false
         }
+
+        findPreference<Preference>(PrefKey.VERSION)?.setOnPreferenceClickListener {
+//            Beta.checkUpgrade(true, false)
+            false
+        }
+        findPreference<Preference>(PrefKey.COPY_RIGHT)?.setOnPreferenceClickListener {
+//            activity?.let {
+//                showMessage(it.getString(R.string.copyright_tip))
+//            }
+            false
+        }
+        findPreference<Preference>(PrefKey.AUTHOR)?.setOnPreferenceClickListener {
+            showMessage(
+                title = "联系作者",
+                message = "扣　扣：824868922\n\n微　信：hgj840\n\n邮　箱：824868922@qq.com"
+            )
+            false
+        }
+        findPreference<Preference>(PrefKey.PROJECT)?.setOnPreferenceClickListener {
+//            val data = BannerResponse(
+//                title = "一位练习时长两年半的菜虚鲲制作的玩安卓App",
+//                url = findPreference<Preference>("project")?.summary.toString()
+//            )
+//            view?.let {
+//                nav().navigateAction(R.id.action_to_webFragment, Bundle()
+//                    .apply { putParcelable("bannerdata", data) })
+//            }
+            false
+        }
     }
 
     private fun initPreferences() {
         requireActivity().let {
 
-            findPreference<CheckBoxPreference>("top")?.isChecked = SettingUtil.isNeedTop()
+            findPreference<CheckBoxPreference>(PrefKey.TOP)?.isChecked = SettingUtil.isNeedTop()
 
-            findPreference<Preference>("clearCache")?.summary =
+            findPreference<Preference>(PrefKey.CLEAR_CACHE)?.summary =
                 CacheDataManager.getTotalCacheSize(it)
 
-            findPreference<Preference>("version")?.summary = "当前版本 " + AppUtils.getAppVersionName(requireActivity().packageName)
+            findPreference<Preference>(PrefKey.VERSION)?.summary =
+                "当前版本 " + AppUtils.getAppVersionName(requireActivity().packageName)
 
             val modes = it.resources.getStringArray(R.array.setting_modes)
-            findPreference<Preference>("mode")?.summary =
+            findPreference<Preference>(PrefKey.MODE)?.summary =
                 modes[SettingUtil.getListMode()]
         }
     }
@@ -191,11 +229,14 @@ class SettingFragment : PreferenceFragmentCompat(),
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == "color") {
-            colorPreview?.setView()
-        }
-        if (key == "top") {
-            SettingUtil.setIsNeedTop(sharedPreferences!!.getBoolean("top", true))
+        when (key) {
+            PrefKey.COLOR -> colorPreview?.setView()
+            PrefKey.TOP -> SettingUtil.setIsNeedTop(
+                sharedPreferences!!.getBoolean(
+                    PrefKey.TOP,
+                    true
+                )
+            )
         }
     }
 

@@ -130,7 +130,7 @@ object SettingUtil {
      * @param view
      * @param color
      */
-    fun setShapColor(view: View, color: Int) {
+    fun setShapeColor(view: View, color: Int) {
         val drawable = view.background as GradientDrawable
         drawable.setColor(color)
     }

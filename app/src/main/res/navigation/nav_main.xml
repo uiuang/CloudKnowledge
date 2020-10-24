@@ -116,7 +116,11 @@
         android:id="@+id/articleFragment"
         android:name="com.uiuang.cloudknowledge.ui.fragment.mine.ArticleFragment"
         android:label="fragment_article"
-        tools:layout="@layout/fragment_article" />
+        tools:layout="@layout/fragment_article" >
+        <action
+            android:id="@+id/action_articleFragment_to_shareArticleFragment"
+            app:destination="@id/shareArticleFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.uiuang.cloudknowledge.ui.fragment.mine.SettingFragment"
@@ -131,4 +135,9 @@
         android:id="@+id/integralHistoryFragment"
         android:name="com.uiuang.cloudknowledge.ui.fragment.mine.IntegralHistoryFragment"
         android:label="IntegralHistoryFragment" />
+    <fragment
+        android:id="@+id/shareArticleFragment"
+        android:name="com.uiuang.cloudknowledge.ui.fragment.mine.ShareArticleFragment"
+        android:label="fragment_share_article"
+        tools:layout="@layout/fragment_share_article" />
 </navigation>
