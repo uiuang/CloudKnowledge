@@ -29,6 +29,7 @@ class WanAndroidAdapter(data: MutableList<ArticlesBean>) :
      * 不显示作者名字
      */
     var isNoShowAuthorName = false
+
     /**
      * 列表中是否显示图片
      */
@@ -37,7 +38,7 @@ class WanAndroidAdapter(data: MutableList<ArticlesBean>) :
     override fun convert(holder: BaseViewHolder, item: ArticlesBean) {
         val ivImage = holder.getView<ImageView>(R.id.iv_image)
         if (!TextUtils.isEmpty(item.envelopePic) && !isNoImage) {
-            holder.setGone(R.id.iv_image,false)
+            holder.setGone(R.id.iv_image, false)
             Glide.with(ivImage.context)
                 .load(item.envelopePic)
                 .transition(DrawableTransitionOptions.withCrossFade(500))
@@ -49,7 +50,7 @@ class WanAndroidAdapter(data: MutableList<ArticlesBean>) :
                 .into(ivImage)
 
         } else {
-            holder.setGone(R.id.iv_image,true)
+            holder.setGone(R.id.iv_image, true)
         }
         holder.setGone(R.id.iv_new, !item.fresh)
         holder.setText(

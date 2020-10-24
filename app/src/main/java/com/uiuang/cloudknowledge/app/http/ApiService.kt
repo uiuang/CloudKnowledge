@@ -2,7 +2,6 @@ package com.uiuang.cloudknowledge.app.http
 
 import com.uiuang.cloudknowledge.bean.*
 import retrofit2.http.*
-import com.uiuang.cloudknowledge.bean.IntegralBean as IntegralBean
 
 
 /**
@@ -25,7 +24,6 @@ interface ApiService {
         const val API_MTIME_TICKET = "https://ticket-api-m.mtime.cn/"
 //        https://ticket-api-m.mtime.cn
     }
-
 
 
     /**--------------------------------------------时光网--------------------------------------------*/
@@ -180,9 +178,6 @@ interface ApiService {
             : ApiResponse<ArticlesBean>
 
 
-
-
-
     /**
      * 获取体系文章列表
      */
@@ -236,11 +231,13 @@ interface ApiService {
      */
     @GET("lg/collect/usertools/json")
     suspend fun getCollectUrlData(): ApiResponse<ArrayList<ArticlesBean>>
+
     /**
      * 获取当前账户的个人积分
      */
     @GET("lg/coin/userinfo/json")
     suspend fun getIntegral(): ApiResponse<IntegralBean>
+
     /**
      * 获取积分排行榜
      */
@@ -308,7 +305,7 @@ interface ApiService {
      * eg:http://gank.io/api/day/2015/08/06
      */
     @GET("day/{year}/{month}/{day}")
-   suspend fun getGankIoDay(
+    suspend fun getGankIoDay(
         @Path("year") year: String?,
         @Path("month") month: String?,
         @Path("day") day: String?

@@ -1,6 +1,11 @@
 package com.uiuang.cloudknowledge.bean
 
-data class WanAndroidBannerBean(val desc: String,val imagePath: String,val title: String,val url: String) {
+data class WanAndroidBannerBean(
+    val desc: String,
+    val imagePath: String,
+    val title: String,
+    val url: String
+) {
 
     /**
      * desc : 区块链养狗领取 百度莱茨狗

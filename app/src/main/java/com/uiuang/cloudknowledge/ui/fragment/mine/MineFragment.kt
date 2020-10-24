@@ -81,7 +81,7 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
         fun integral() {
             nav().jumpByLogin {
                 it.navigateAction(
-                    R.id.action_mainFragment_to_integralFragment,Bundle().apply {
+                    R.id.action_mainFragment_to_integralFragment, Bundle().apply {
                         putParcelable("integral", rank)
                     }
                 )

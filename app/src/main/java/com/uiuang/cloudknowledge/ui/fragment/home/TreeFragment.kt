@@ -20,9 +20,7 @@ import com.uiuang.cloudknowledge.ext.showLoading
 import com.uiuang.cloudknowledge.ui.adapter.wan.TreeAdapter
 import com.uiuang.cloudknowledge.utils.DataUtil
 import com.uiuang.cloudknowledge.utils.showToastLong
-import com.uiuang.cloudknowledge.utils.toast
 import com.uiuang.cloudknowledge.viewmodel.request.RequestTreeViewModel
-import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.WanFindViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.SpacesItemDecoration
 import com.uiuang.mvvm.ext.nav
@@ -96,7 +94,7 @@ class TreeFragment : BaseFragment<WanFindViewModel, FragmentTreeBinding>() {
 
         srv_tree.init(layoutManager, treeAdapter)
         treeAdapter.run {
-            setNavigationAction { item,id, view ->
+            setNavigationAction { item, id, view ->
                 startDetail(id, item)
             }
             setOnItemClickListener { adapter, view, position ->

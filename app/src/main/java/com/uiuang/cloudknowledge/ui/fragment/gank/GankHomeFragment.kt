@@ -10,14 +10,16 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.databinding.FragmentGankHomeBinding
 import com.uiuang.cloudknowledge.databinding.HeaderItemEverydayBinding
-import com.uiuang.cloudknowledge.ext.*
+import com.uiuang.cloudknowledge.ext.init
+import com.uiuang.cloudknowledge.ext.initFooter
+import com.uiuang.cloudknowledge.ext.loadServiceInit
+import com.uiuang.cloudknowledge.ext.showLoading
 import com.uiuang.cloudknowledge.ui.adapter.gank.GankAndroidAdapter
 import com.uiuang.cloudknowledge.ui.adapter.gank.GankBannerAdapter
 import com.uiuang.cloudknowledge.viewmodel.request.RequestGankHomeViewModel
@@ -25,7 +27,6 @@ import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
-import com.uiuang.mvvm.util.dp2px
 import com.uiuang.mvvm.util.screenWidth
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import com.youth.banner.indicator.CircleIndicator

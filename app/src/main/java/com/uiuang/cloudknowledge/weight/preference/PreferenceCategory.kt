@@ -22,7 +22,6 @@ import android.os.Build.VERSION_CODES
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.TypedArrayUtils
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
@@ -42,7 +41,7 @@ class PreferenceCategory @JvmOverloads constructor(
     defStyleAttr: Int,
     defStyleRes: Int = 0
 ) : PreferenceGroup(context, attrs, defStyleAttr, defStyleRes) {
-     var titleView: TextView? = null
+    var titleView: TextView? = null
 
     @SuppressLint("RestrictedApi")
     constructor(context: Context?, attrs: AttributeSet?) : this(

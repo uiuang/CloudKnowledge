@@ -4,13 +4,14 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.bean.ArticlesBean
 import com.uiuang.cloudknowledge.databinding.FragmentNavigationBinding
-import com.uiuang.cloudknowledge.ext.*
+import com.uiuang.cloudknowledge.ext.init
+import com.uiuang.cloudknowledge.ext.loadServiceInit
+import com.uiuang.cloudknowledge.ext.showError
+import com.uiuang.cloudknowledge.ext.showLoading
 import com.uiuang.cloudknowledge.ui.adapter.wan.NavigationAdapter
 import com.uiuang.cloudknowledge.ui.adapter.wan.NavigationContentAdapter
 import com.uiuang.cloudknowledge.viewmodel.request.RequestNavigationViewModel

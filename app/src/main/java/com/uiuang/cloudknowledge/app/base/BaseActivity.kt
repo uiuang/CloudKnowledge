@@ -22,7 +22,7 @@ import com.uiuang.mvvm.ext.getAppViewModel
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDbActivity<VM, DB>() {
 
     //Application全局的ViewModel，里面存放了一些账户信息，基本配置信息等
-    val appViewModel: AppViewModel by lazy { getAppViewModel<AppViewModel>()}
+    val appViewModel: AppViewModel by lazy { getAppViewModel<AppViewModel>() }
 
     //Application全局的ViewModel，用于发送全局通知操作
     val eventViewModel: EventViewModel by lazy { getAppViewModel<EventViewModel>() }

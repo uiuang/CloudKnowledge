@@ -10,7 +10,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 /**
  * 自定义Behavior  FAB 上滑显示 下滑隐藏
  */
-class FatScrollAwareFabBehavior(context: Context?, attrs: AttributeSet?) : FloatingActionButton.Behavior(context, attrs) {
+class FatScrollAwareFabBehavior(context: Context?, attrs: AttributeSet?) :
+    FloatingActionButton.Behavior(context, attrs) {
 
 
     override fun onStartNestedScroll(
@@ -21,7 +22,7 @@ class FatScrollAwareFabBehavior(context: Context?, attrs: AttributeSet?) : Float
         axes: Int,
         type: Int
     ): Boolean {
-        return  axes == ViewCompat.SCROLL_AXIS_VERTICAL ||super.onStartNestedScroll(
+        return axes == ViewCompat.SCROLL_AXIS_VERTICAL || super.onStartNestedScroll(
             coordinatorLayout,
             child,
             directTargetChild,

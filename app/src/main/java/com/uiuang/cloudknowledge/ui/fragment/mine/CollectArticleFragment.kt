@@ -1,10 +1,6 @@
 package com.uiuang.cloudknowledge.ui.fragment.mine
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,13 +11,10 @@ import com.uiuang.cloudknowledge.bean.CollectBus
 import com.uiuang.cloudknowledge.databinding.IncludeListBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.wan.CollectAdapter
-import com.uiuang.cloudknowledge.viewmodel.request.RequestArticleViewModel
 import com.uiuang.cloudknowledge.viewmodel.request.RequestCollectViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.CollectViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.SpaceItemDecoration
 import com.uiuang.mvvm.base.appContext
-import com.uiuang.mvvm.ext.nav
-import com.uiuang.mvvm.ext.navigateAction
 import com.uiuang.mvvm.util.dp2px
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.include_list.*
@@ -77,6 +70,7 @@ class CollectArticleFragment : BaseFragment<CollectViewModel, IncludeListBinding
             }
         }
     }
+
     override fun lazyLoadData() {
         loadSir.showLoading()
         requestCollectViewModel.getCollectArticleData(true)
@@ -85,7 +79,7 @@ class CollectArticleFragment : BaseFragment<CollectViewModel, IncludeListBinding
     override fun createObserver() {
         requestCollectViewModel.articleDataState.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            loadListData(it, articleAdapter, loadSir, recyclerView,swipeRefresh)
+            loadListData(it, articleAdapter, loadSir, recyclerView, swipeRefresh)
         })
         requestCollectViewModel.collectUiState.observe(viewLifecycleOwner, Observer {
             if (it.isSuccess) {

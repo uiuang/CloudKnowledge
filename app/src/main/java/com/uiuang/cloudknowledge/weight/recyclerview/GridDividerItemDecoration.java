@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 /**
-  * @Author:         hegaojian
-  * @CreateDate:     2019/10/11 14:29
+ * @Author: hegaojian
+ * @CreateDate: 2019/10/11 14:29
  */
 public class GridDividerItemDecoration extends RecyclerView.ItemDecoration {
     private Paint mPaint;

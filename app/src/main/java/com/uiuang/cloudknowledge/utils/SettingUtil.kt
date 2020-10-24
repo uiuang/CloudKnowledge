@@ -91,7 +91,8 @@ object SettingUtil {
             intArrayOf(
                 getColor(
                     context
-                ), ContextCompat.getColor(context, R.color.colorGray))
+                ), ContextCompat.getColor(context, R.color.colorGray)
+            )
         val states = arrayOfNulls<IntArray>(2)
         states[0] = intArrayOf(android.R.attr.state_checked, android.R.attr.state_checked)
         states[1] = intArrayOf()

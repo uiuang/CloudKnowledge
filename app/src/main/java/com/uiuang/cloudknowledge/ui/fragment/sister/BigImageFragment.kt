@@ -2,9 +2,7 @@ package com.uiuang.cloudknowledge.ui.fragment.sister
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import androidx.viewpager.widget.ViewPager
-import com.github.chrisbanes.photoview.OnPhotoTapListener
 import com.google.gson.Gson
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment

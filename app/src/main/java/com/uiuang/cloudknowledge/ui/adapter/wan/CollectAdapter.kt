@@ -16,6 +16,7 @@ class CollectAdapter(data: ArrayList<ArticlesBean>) :
     BaseDelegateMultiAdapter<ArticlesBean, BaseViewHolder>(data) {
     //文章类型
     private val article = 1
+
     //项目类型 本来打算不区分文章和项目布局用统一布局的，但是布局完以后发现差异化蛮大的，所以还是分开吧
     private val project = 2
     private var collectAction: (item: ArticlesBean, v: CollectView, position: Int) -> Unit =
@@ -44,7 +45,10 @@ class CollectAdapter(data: ArrayList<ArticlesBean>) :
             article -> {
                 //文章布局的赋值
                 item.run {
-                    holder.setText(R.id.item_home_author, if (author!!.isEmpty()) "匿名用户" else author)
+                    holder.setText(
+                        R.id.item_home_author,
+                        if (author!!.isEmpty()) "匿名用户" else author
+                    )
                     holder.setText(R.id.item_home_content, title!!.toHtml())
                     holder.setText(R.id.item_home_type2, chapterName!!.toHtml())
                     holder.setText(R.id.item_home_date, niceDate)

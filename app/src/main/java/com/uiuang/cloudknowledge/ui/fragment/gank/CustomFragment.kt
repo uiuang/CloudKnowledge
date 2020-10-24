@@ -113,7 +113,7 @@ class CustomFragment : BaseFragment<HomeViewModel, FragmentAndroidBinding>() {
         gankAndroidAdapter.setOnItemClickListener { adapter, view, position ->
             val item: GankIOResultBean = adapter.getItem(position - 1) as GankIOResultBean
             WebViewFragment.openDetail(view, item.url, item.desc)
-         }
+        }
     }
 
     private fun initHeader(headerView: View) {
@@ -157,7 +157,7 @@ class CustomFragment : BaseFragment<HomeViewModel, FragmentAndroidBinding>() {
 //        viewModel.setPage(1)
         CacheUtil.setGankType(content)
         loadsir.showLoading()
-        requestGankViewModel.loadGankData(true,mType = gankType)
+        requestGankViewModel.loadGankData(true, mType = gankType)
 //        loadCustomData()
     }
 

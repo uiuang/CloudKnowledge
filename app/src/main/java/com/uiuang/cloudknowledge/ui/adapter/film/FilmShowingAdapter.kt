@@ -27,7 +27,8 @@ class FilmShowingAdapter(data: MutableList<FilmItemBean>?) :
         holder.setText(R.id.tv_one_casts, item.actors)
         holder.setText(
             R.id.tv_one_genres,
-            "${context.resources.getString(R.string.string_type)}${item.movieType}")
+            "${context.resources.getString(R.string.string_type)}${item.movieType}"
+        )
         holder.setText(
             R.id.tv_one_rating_rate,
             context.resources.getString(R.string.string_rating) + item.r

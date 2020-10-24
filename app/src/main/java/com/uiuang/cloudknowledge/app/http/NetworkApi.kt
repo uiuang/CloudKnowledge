@@ -11,7 +11,6 @@ import com.uiuang.cloudknowledge.app.App
 import com.uiuang.mvvm.base.appContext
 import com.uiuang.mvvm.network.BaseNetworkApi
 import com.uiuang.mvvm.network.CoroutineCallAdapterFactory
-import com.uiuang.mvvm.network.interceptor.CacheInterceptor
 import com.uiuang.mvvm.util.NetworkUtil
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
@@ -133,20 +132,21 @@ class NetworkApi : BaseNetworkApi() {
 
 
     var trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
-            @Throws(CertificateException::class)
-            override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
-            }
+        @Throws(CertificateException::class)
+        override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
+        }
 
-            @Throws(CertificateException::class)
-            override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
-            }
+        @Throws(CertificateException::class)
+        override fun checkServerTrusted(chain: Array<X509Certificate>, authType: String) {
+        }
 
-            override fun getAcceptedIssuers(): Array<X509Certificate> {
-                return arrayOf()
-            }
-        })
+        override fun getAcceptedIssuers(): Array<X509Certificate> {
+            return arrayOf()
+        }
+    })
 
-    private class AddCookiesInterceptor internal constructor(private val context: Context) : Interceptor {
+    private class AddCookiesInterceptor internal constructor(private val context: Context) :
+        Interceptor {
         @Throws(IOException::class)
         override fun intercept(chain: Interceptor.Chain): Response {
             val builder = chain.request().newBuilder()

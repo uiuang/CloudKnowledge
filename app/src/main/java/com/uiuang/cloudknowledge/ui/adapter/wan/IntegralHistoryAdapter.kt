@@ -7,7 +7,7 @@ import com.uiuang.cloudknowledge.bean.IntegralHistoryBean
 import com.uiuang.cloudknowledge.utils.SettingUtil
 import com.uiuang.mvvm.util.DatetimeUtil
 
-class IntegralHistoryAdapter (data: ArrayList<IntegralHistoryBean>) :
+class IntegralHistoryAdapter(data: ArrayList<IntegralHistoryBean>) :
     BaseQuickAdapter<IntegralHistoryBean, BaseViewHolder>(
         R.layout.item_integral_history, data
     ) {

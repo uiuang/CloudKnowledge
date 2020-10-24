@@ -15,7 +15,7 @@ object CacheUtil {
         val kv = MMKV.mmkvWithID("app")
         val userStr = kv.decodeString("user")
         return if (TextUtils.isEmpty(userStr)) {
-           null
+            null
         } else {
             Gson().fromJson(userStr, UserInfo::class.java)
         }
@@ -54,7 +54,7 @@ object CacheUtil {
 
     fun getGankType(): String {
         val mk = MMKV.mmkvWithID("app")
-        return mk.decodeString(Constants.GANK_TYPE,"全部")
+        return mk.decodeString(Constants.GANK_TYPE, "全部")
     }
 
     fun setGankType(type: String) {
@@ -69,10 +69,11 @@ object CacheUtil {
         val kv = MMKV.mmkvWithID("app")
         return kv.decodeBool("first", true)
     }
+
     /**
      * 是否是第一次登陆
      */
-    fun setFirst(first:Boolean): Boolean {
+    fun setFirst(first: Boolean): Boolean {
         val kv = MMKV.mmkvWithID("app")
         return kv.encode("first", first)
     }
@@ -82,16 +83,17 @@ object CacheUtil {
      */
     fun getSearchHistoryData(): ArrayList<String> {
         val kv = MMKV.mmkvWithID("cache")
-        val searchCacheStr =  kv.decodeString("history")
+        val searchCacheStr = kv.decodeString("history")
         if (!TextUtils.isEmpty(searchCacheStr)) {
             return Gson().fromJson(searchCacheStr
-                , object : TypeToken<ArrayList<String>>() {}.type)
+                , object : TypeToken<ArrayList<String>>() {}.type
+            )
         }
         return arrayListOf()
     }
 
     fun setSearchHistoryData(searchResponseStr: String) {
         val kv = MMKV.mmkvWithID("cache")
-        kv.encode("history",searchResponseStr)
+        kv.encode("history", searchResponseStr)
     }
 }

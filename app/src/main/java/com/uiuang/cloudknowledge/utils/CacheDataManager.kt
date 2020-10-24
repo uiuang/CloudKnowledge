@@ -29,7 +29,7 @@ object CacheDataManager {
                 return
             }
             it.externalCacheDir?.let { file ->
-                if(deleteDir(file)){
+                if (deleteDir(file)) {
                     "清理缓存成功".toast()
                 }
             }

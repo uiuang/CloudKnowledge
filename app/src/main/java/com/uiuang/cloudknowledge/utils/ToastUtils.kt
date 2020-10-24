@@ -1,7 +1,6 @@
 package com.uiuang.cloudknowledge.utils
 
 import android.widget.Toast
-import com.uiuang.cloudknowledge.app.App
 import com.uiuang.mvvm.base.appContext
 
 

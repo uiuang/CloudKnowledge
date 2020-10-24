@@ -13,20 +13,21 @@ data class ApiPagerResponse<T>(
     var pageCount: Int,
     var size: Int,
     var total: Int
-) :Serializable{
+) : Serializable {
     /**
      * 数据是否为空
      */
     fun isEmpty(): Boolean {
 
-        return (datas as List<*>).size==0
+        return (datas as List<*>).size == 0
     }
+
     /**
      * 是否为刷新
      */
     fun isRefresh(): Boolean {
         //wanandroid 第一页该字段都为0
-        return offset==0
+        return offset == 0
     }
 
     /**

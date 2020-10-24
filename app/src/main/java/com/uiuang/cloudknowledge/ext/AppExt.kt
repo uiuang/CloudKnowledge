@@ -11,9 +11,9 @@ import com.afollestad.materialdialogs.WhichButton
 import com.afollestad.materialdialogs.actions.getActionButton
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
 import com.uiuang.cloudknowledge.R
+import com.uiuang.cloudknowledge.utils.CacheUtil
 import com.uiuang.cloudknowledge.utils.SettingUtil
 import com.uiuang.cloudknowledge.utils.toast
-import com.uiuang.cloudknowledge.utils.CacheUtil
 import com.uiuang.mvvm.ext.navigateAction
 import java.io.BufferedReader
 import java.io.FileReader
@@ -71,23 +71,31 @@ fun Fragment.showMessage(
     negativeButtonText: String = "",
     negativeAction: () -> Unit = {}
 ) {
-        MaterialDialog(requireActivity())
-            .cancelable(false)
-            .lifecycleOwner(viewLifecycleOwner)
-            .show {
-                title(text = title)
-                message(text = message)
-                positiveButton(text = positiveButtonText) {
-                    positiveAction.invoke()
-                }
-                if (negativeButtonText.isNotEmpty()) {
-                    negativeButton(text = negativeButtonText) {
-                        negativeAction.invoke()
-                    }
-                }
-                getActionButton(WhichButton.POSITIVE).updateTextColor(SettingUtil.getColor(requireActivity()))
-                getActionButton(WhichButton.NEGATIVE).updateTextColor(SettingUtil.getColor(requireActivity()))
+    MaterialDialog(requireActivity())
+        .cancelable(false)
+        .lifecycleOwner(viewLifecycleOwner)
+        .show {
+            title(text = title)
+            message(text = message)
+            positiveButton(text = positiveButtonText) {
+                positiveAction.invoke()
             }
+            if (negativeButtonText.isNotEmpty()) {
+                negativeButton(text = negativeButtonText) {
+                    negativeAction.invoke()
+                }
+            }
+            getActionButton(WhichButton.POSITIVE).updateTextColor(
+                SettingUtil.getColor(
+                    requireActivity()
+                )
+            )
+            getActionButton(WhichButton.NEGATIVE).updateTextColor(
+                SettingUtil.getColor(
+                    requireActivity()
+                )
+            )
+        }
 }
 
 /**

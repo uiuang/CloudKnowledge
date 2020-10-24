@@ -40,7 +40,6 @@ class SisterFragment : BaseFragment<HomeViewModel, FragmentSisterBinding>() {
     }
 
 
-
     companion object {
         @JvmStatic
         fun newInstance() = SisterFragment()
@@ -79,11 +78,12 @@ class SisterFragment : BaseFragment<HomeViewModel, FragmentSisterBinding>() {
         }
         welfareAdapter.run {
             setOnItemClickListener { adapter, view, position ->
-               var data:MutableList<GankIOResultBean> = welfareAdapter.data
+                var data: MutableList<GankIOResultBean> = welfareAdapter.data
                 nav().navigateAction(R.id.action_mainFragment_to_bigImageFragment, Bundle().apply {
                     putInt("position", position)
                 })
-                val gson = GsonBuilder().addSerializationExclusionStrategy(object : ExclusionStrategy {
+                val gson =
+                    GsonBuilder().addSerializationExclusionStrategy(object : ExclusionStrategy {
                         override fun shouldSkipField(f: FieldAttributes): Boolean {
                             if (f.name == null) {
                                 return true
@@ -91,7 +91,6 @@ class SisterFragment : BaseFragment<HomeViewModel, FragmentSisterBinding>() {
                             val name = f.name
                             return !(name == "url" || name == "desc")
                         }
-
 
 
                         override fun shouldSkipClass(clazz: Class<*>?): Boolean = false

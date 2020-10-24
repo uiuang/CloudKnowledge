@@ -6,8 +6,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.bean.ChildrenBean
-import com.uiuang.cloudknowledge.bean.TabBean
-import com.uiuang.cloudknowledge.bean.WanAndroidBannerBean
 
 class WxArticleAdapter(datas: MutableList<ChildrenBean>) :
     BaseQuickAdapter<ChildrenBean, BaseViewHolder>(R.layout.item_wxarticle) {

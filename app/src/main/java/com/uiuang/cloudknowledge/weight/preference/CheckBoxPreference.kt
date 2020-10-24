@@ -30,6 +30,7 @@ import androidx.preference.PreferenceViewHolder
 import androidx.preference.TwoStatePreference
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.utils.SettingUtil.getColorStateList
+
 /**
  * A [Preference] that provides checkbox widget functionality.
  *
@@ -49,7 +50,7 @@ import com.uiuang.cloudknowledge.utils.SettingUtil.getColorStateList
 class CheckBoxPreference @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-     defStyleAttr: Int = TypedArrayUtils.getAttr(
+    defStyleAttr: Int = TypedArrayUtils.getAttr(
         context, R.attr.checkBoxPreferenceStyle,
         android.R.attr.checkBoxPreferenceStyle
     ),
@@ -107,6 +108,7 @@ class CheckBoxPreference @JvmOverloads constructor(
             checkBoxView!!.buttonTintList = getColorStateList(context)
         }
     }
+
     private val listener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
         if (!callChangeListener(isChecked)) {
             // Listener didn't like it, change it back.

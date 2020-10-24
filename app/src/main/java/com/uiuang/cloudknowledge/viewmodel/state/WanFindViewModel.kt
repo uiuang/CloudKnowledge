@@ -1,6 +1,5 @@
 package com.uiuang.cloudknowledge.viewmodel.state
 
-import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import com.uiuang.mvvm.base.viewmodel.BaseViewModel
 

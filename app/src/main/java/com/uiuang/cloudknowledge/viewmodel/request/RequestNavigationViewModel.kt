@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import com.uiuang.cloudknowledge.app.http.getWanAndroidServer
 import com.uiuang.cloudknowledge.app.state.ListDataUiState
 import com.uiuang.cloudknowledge.bean.NavJsonBean
-import com.uiuang.cloudknowledge.bean.TabBean
 import com.uiuang.mvvm.base.viewmodel.BaseViewModel
 import com.uiuang.mvvm.ext.request
 
@@ -21,7 +20,7 @@ class RequestNavigationViewModel : BaseViewModel() {
     var navJsonBean: MutableLiveData<ListDataUiState<NavJsonBean>> = MutableLiveData()
 
     fun getNavigationJson() {
-        request({ getWanAndroidServer.getNavJson()},{
+        request({ getWanAndroidServer.getNavJson() }, {
             navJsonBeanList.postValue(it)
             val listDataUiState =
                 ListDataUiState(
@@ -29,7 +28,7 @@ class RequestNavigationViewModel : BaseViewModel() {
                     listData = it
                 )
             navJsonBean.postValue(listDataUiState)
-        },{
+        }, {
             navJsonBeanList.postValue(arrayListOf<NavJsonBean>())
             val listDataUiState =
                 ListDataUiState(

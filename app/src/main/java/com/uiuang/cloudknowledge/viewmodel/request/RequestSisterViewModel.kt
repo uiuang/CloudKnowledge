@@ -18,6 +18,7 @@ class RequestSisterViewModel : BaseViewModel() {
     //页码，是从1开始的 GankIO的妹子福利
     private var pageNo = 1
     private var countNo = 20
+
     //妹子福利数据
     var sisterDataState: MutableLiveData<ListDataUiState<GankIOResultBean>> = MutableLiveData()
 
@@ -28,11 +29,11 @@ class RequestSisterViewModel : BaseViewModel() {
         if (isRefresh) {
             pageNo = 1
         }
-        request({ getGankIOServer.getGankIoData("Girl", "Girl",pageNo, countNo) }, {
+        request({ getGankIOServer.getGankIoData("Girl", "Girl", pageNo, countNo) }, {
             //请求成功
             pageNo++
             var size = it.size
-            var over: Boolean= size == countNo
+            var over: Boolean = size == countNo
             val listDataUiState =
                 ListDataUiState(
                     isSuccess = true,

@@ -19,14 +19,14 @@ import com.uiuang.mvvm.util.screenWidth
  * @author zsc
  * @date 2020/8/5 22:42
  */
-class FilmComingAdapter(context: Context,data: MutableList<ComingFilmBean.MoviesBean>?) :
+class FilmComingAdapter(context: Context, data: MutableList<ComingFilmBean.MoviesBean>?) :
     BaseQuickAdapter<ComingFilmBean.MoviesBean, BaseViewHolder>(
         R.layout.item_film_coming, data
     ) {
     private var width: Int = 0
 
     init {
-        val px =context.dp2px(36)
+        val px = context.dp2px(36)
         width = (context.screenWidth - px) / 3
     }
 

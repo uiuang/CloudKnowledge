@@ -3,11 +3,11 @@ package com.uiuang.cloudknowledge.ui.fragment
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.databinding.FragmentMainBinding
-import com.uiuang.cloudknowledge.viewmodel.state.MainViewModel
 import com.uiuang.cloudknowledge.app.base.BaseFragment
+import com.uiuang.cloudknowledge.databinding.FragmentMainBinding
 import com.uiuang.cloudknowledge.ext.init
 import com.uiuang.cloudknowledge.ext.initMain
+import com.uiuang.cloudknowledge.viewmodel.state.MainViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
@@ -19,7 +19,7 @@ class MainFragment : BaseFragment<MainViewModel, FragmentMainBinding>() {
         //初始化viewpager2
         mainViewpager.initMain(this)
 //        //初始化 bottombar
-        mainBottom.init{
+        mainBottom.init {
             when (it) {
                 R.id.menu_main -> mainViewpager.setCurrentItem(0, false)
                 R.id.menu_project -> mainViewpager.setCurrentItem(1, false)

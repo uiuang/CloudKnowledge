@@ -14,7 +14,7 @@ import com.uiuang.mvvm.util.toHtml
  * @author zsc
  * @date 2020/9/6 11:26
  */
-class NavigationAdapter:BaseQuickAdapter<NavJsonBean,BaseViewHolder>(R.layout.item_navigation) {
+class NavigationAdapter : BaseQuickAdapter<NavJsonBean, BaseViewHolder>(R.layout.item_navigation) {
     override fun convert(holder: BaseViewHolder, item: NavJsonBean) {
         val tvTitle: TextView = holder.getView<TextView>(R.id.tv_title)
         tvTitle.isSelected = item.selected

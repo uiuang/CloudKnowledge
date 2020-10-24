@@ -7,27 +7,28 @@ import java.io.Serializable
  */
 data class FilmApiPagerResponse<T>(
     var ms: T,
-    var lid:Int,
+    var lid: Int,
     var curPage: Int,
     var offset: Int,
     var over: Boolean,
     var pageCount: Int,
     var size: Int,
     var totalComingMovie: Int
-) :Serializable{
+) : Serializable {
     /**
      * 数据是否为空
      */
     fun isEmpty(): Boolean {
 
-        return (ms as List<*>).size==0
+        return (ms as List<*>).size == 0
     }
+
     /**
      * 是否为刷新
      */
     fun isRefresh(): Boolean {
         //wanandroid 第一页该字段都为0
-        return offset==0
+        return offset == 0
     }
 
     /**

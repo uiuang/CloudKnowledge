@@ -17,7 +17,7 @@ data class ListDataUiState<T>(
     //是否还有更多
     val hasMore: Boolean = false,
     //是第一页且没有数据
-    val isFirstEmpty:Boolean = false,
+    val isFirstEmpty: Boolean = false,
     //列表数据
     val listData: List<T> = arrayListOf()
-    )
+)

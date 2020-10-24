@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
@@ -12,20 +11,18 @@ import com.uiuang.cloudknowledge.app.http.Constants.TYPE
 import com.uiuang.cloudknowledge.databinding.FragmentAndroidBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.gank.GankAndroidAdapter
-import com.uiuang.cloudknowledge.ui.adapter.gank.WelfareAdapter
 import com.uiuang.cloudknowledge.viewmodel.request.RequestGankViewModel
-import com.uiuang.cloudknowledge.viewmodel.request.RequestSisterViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
-import com.uiuang.cloudknowledge.weight.recyclerview.GridSpaceItemDecoration
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.fragment_sister.*
 
 
-class AndroidFragment : BaseFragment<HomeViewModel,FragmentAndroidBinding>() {
+class AndroidFragment : BaseFragment<HomeViewModel, FragmentAndroidBinding>() {
     private var type: String? = null
+
     //界面状态管理者
     private lateinit var loadsir: LoadService<Any>
 
@@ -42,13 +39,13 @@ class AndroidFragment : BaseFragment<HomeViewModel,FragmentAndroidBinding>() {
     companion object {
         @JvmStatic
         fun newInstance(type: String) = AndroidFragment().apply {
-                arguments = Bundle().apply {
-                    putString(TYPE, type)
-                }
+            arguments = Bundle().apply {
+                putString(TYPE, type)
             }
+        }
     }
 
-    override fun layoutId(): Int =R.layout.fragment_android
+    override fun layoutId(): Int = R.layout.fragment_android
 
     override fun initView(savedInstanceState: Bundle?) {
         arguments?.let {
@@ -59,7 +56,7 @@ class AndroidFragment : BaseFragment<HomeViewModel,FragmentAndroidBinding>() {
         loadsir = loadServiceInit(swipeRefresh) {
             //点击重试时触发的操作
             loadsir.showLoading()
-            requestGankViewModel.loadGankData(true,type)
+            requestGankViewModel.loadGankData(true, type)
         }
         //初始化recyclerView
         recyclerView.init(
@@ -68,7 +65,7 @@ class AndroidFragment : BaseFragment<HomeViewModel,FragmentAndroidBinding>() {
         ).let {
 //            it.addItemDecoration(GridSpaceItemDecoration(12))
             footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
-                requestGankViewModel.loadGankData(false,type)
+                requestGankViewModel.loadGankData(false, type)
             })
             //初始化FloatingActionButton
 //            it.initFloatBtn(floatBtn)
@@ -76,7 +73,7 @@ class AndroidFragment : BaseFragment<HomeViewModel,FragmentAndroidBinding>() {
         //初始化 SwipeRefreshLayout
         swipeRefresh.init {
             //触发刷新监听时请求数据
-            requestGankViewModel.loadGankData(true,type)
+            requestGankViewModel.loadGankData(true, type)
         }
         gankAndroidAdapter.setOnItemClickListener { _, _, position ->
             val item = gankAndroidAdapter.getItem(position)
@@ -94,7 +91,7 @@ class AndroidFragment : BaseFragment<HomeViewModel,FragmentAndroidBinding>() {
     override fun lazyLoadData() {
         //设置界面 加载中
         loadsir.showLoading()
-        requestGankViewModel.loadGankData(true,type)
+        requestGankViewModel.loadGankData(true, type)
     }
 
 

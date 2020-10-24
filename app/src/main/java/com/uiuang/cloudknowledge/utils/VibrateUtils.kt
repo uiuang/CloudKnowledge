@@ -8,6 +8,7 @@ import com.uiuang.mvvm.base.appContext
 
 object VibrateUtils {
     private var vibrator: Vibrator? = null
+
     /**
      * Vibrate.
      *
@@ -45,6 +46,7 @@ object VibrateUtils {
         val vibrator = getVibrator() ?: return
         vibrator.cancel()
     }
+
     private fun getVibrator(): Vibrator? {
         if (vibrator == null) {
             vibrator = appContext.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator

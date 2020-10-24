@@ -9,6 +9,7 @@ package com.uiuang.cloudknowledge.app.http
  */
 object Constants {
     val DOWNLOAD_URL = "https://www.coolapk.com/apk/273587"
+
     // 知识体系里上一次选中的position
     var TREE_POSITION = "tree_position"
 
@@ -19,8 +20,8 @@ object Constants {
     const val IS_LOAD = "is_load"
     const val WEB_URL = "url"
     const val WEB_ISTITLEFIX = "isTitleFix"
-    const val WEB_TITLE= "title"
-    const val TYPE= "type"
+    const val WEB_TITLE = "title"
+    const val TYPE = "type"
     const val GANK_TYPE = "gank_type"
 
 }

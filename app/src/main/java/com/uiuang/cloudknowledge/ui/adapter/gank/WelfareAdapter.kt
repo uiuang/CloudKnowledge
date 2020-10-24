@@ -19,7 +19,8 @@ import com.uiuang.mvvm.util.screenWidth
  */
 class WelfareAdapter(data: MutableList<GankIOResultBean>?) :
     BaseQuickAdapter<GankIOResultBean, BaseViewHolder>(
-        R.layout.item_welfare, data) {
+        R.layout.item_welfare, data
+    ) {
     override fun convert(holder: BaseViewHolder, item: GankIOResultBean) {
         var width: Int = (context.screenWidth - 36) / 2
         var ivWelfare = holder.getView<ImageView>(R.id.iv_welfare)

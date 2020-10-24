@@ -18,10 +18,10 @@ import com.uiuang.mvvm.ext.parseState
 import kotlinx.android.synthetic.main.fragment_register.*
 
 
-class RegisterFragment : BaseFragment<LoginRegisterViewModel,FragmentRegisterBinding>() {
+class RegisterFragment : BaseFragment<LoginRegisterViewModel, FragmentRegisterBinding>() {
 
     private val requestLoginRegisterViewModel: RequestLoginRegisterViewModel by viewModels()
-    override fun layoutId(): Int =R.layout.fragment_register
+    override fun layoutId(): Int = R.layout.fragment_register
 
     override fun initView(savedInstanceState: Bundle?) {
         mDatabind.viewModel = mViewModel
@@ -48,7 +48,7 @@ class RegisterFragment : BaseFragment<LoginRegisterViewModel,FragmentRegisterBin
     inner class ProxyClick {
         /**清空*/
         fun clear() {
-            mViewModel.username.value=""
+            mViewModel.username.value = ""
         }
 
         /**注册*/

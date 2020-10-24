@@ -17,7 +17,7 @@ import com.uiuang.mvvm.ext.request
 class RequestTreeViewModel : BaseViewModel() {
     var tabBean: MutableLiveData<ListDataUiState<TabBean>> = MutableLiveData()
     fun getTree() {
-        request({ getWanAndroidServer.getTreeList()},{
+        request({ getWanAndroidServer.getTreeList() }, {
             val listDataUiState =
                 ListDataUiState(
                     isSuccess = true,
@@ -28,7 +28,7 @@ class RequestTreeViewModel : BaseViewModel() {
                     listData = it
                 )
             tabBean.postValue(listDataUiState)
-        },{
+        }, {
             val listDataUiState =
                 ListDataUiState(
                     isSuccess = false,

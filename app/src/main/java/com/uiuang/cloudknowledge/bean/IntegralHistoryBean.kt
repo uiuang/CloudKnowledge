@@ -13,4 +13,5 @@ data class IntegralHistoryBean(
     var type: Int,
     var reason: String,
     var userId: Int,
-    var userName: String) : Parcelable
+    var userName: String
+) : Parcelable

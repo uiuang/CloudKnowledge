@@ -116,15 +116,16 @@ fun ImageView.imageUrl(
         .load(url)
         .override(
             this.context.dp2px(imageWidthDp),
-            this.context.dp2px(imageHeightDp))
-                .transition(withCrossFade(500))
-                .placeholder(getMusicDefaultPic(4))
-                .centerCrop()
-                .error(getDefaultPic(0))
-                .into(this)
+            this.context.dp2px(imageHeightDp)
+        )
+        .transition(withCrossFade(500))
+        .placeholder(getMusicDefaultPic(4))
+        .centerCrop()
+        .error(getDefaultPic(0))
+        .into(this)
 }
 
-  fun getMusicDefaultPic(imgNumber: Int): Int {
+fun getMusicDefaultPic(imgNumber: Int): Int {
     when (imgNumber) {
 //        1 -> return R.drawable.img_two_bi_one
 //        2 -> return R.drawable.img_four_bi_three

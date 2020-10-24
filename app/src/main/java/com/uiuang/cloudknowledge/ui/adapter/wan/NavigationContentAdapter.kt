@@ -33,7 +33,7 @@ class NavigationContentAdapter :
         rvContent.adapter = navigationChildAdapter
         navigationChildAdapter.setOnItemClickListener { _, view, position ->
             val articlesBean: ArticlesBean = navigationChildAdapter.data[position]
-            navigationAction.invoke(articlesBean,view)
+            navigationAction.invoke(articlesBean, view)
         }
     }
 

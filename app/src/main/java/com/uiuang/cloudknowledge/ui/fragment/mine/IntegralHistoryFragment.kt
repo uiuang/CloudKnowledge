@@ -1,10 +1,6 @@
 package com.uiuang.cloudknowledge.ui.fragment.mine
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,6 +62,7 @@ class IntegralHistoryFragment : BaseFragment<IntegralViewModel, FragmentIntegral
             requestIntegralViewModel.getIntegralHistoryData(true)
         }
     }
+
     override fun lazyLoadData() {
         //设置界面 加载中
         loadSir.showLoading()
@@ -75,7 +72,7 @@ class IntegralHistoryFragment : BaseFragment<IntegralViewModel, FragmentIntegral
     override fun createObserver() {
         requestIntegralViewModel.integralHistoryDataState.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            loadListData(it, integralAdapter, loadSir, recyclerView,swipeRefresh)
+            loadListData(it, integralAdapter, loadSir, recyclerView, swipeRefresh)
         })
     }
 

@@ -1,10 +1,6 @@
 package com.uiuang.cloudknowledge.ui.fragment.login
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -12,7 +8,6 @@ import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.databinding.FragmentLoginBinding
 import com.uiuang.cloudknowledge.ext.hideSoftKeyboard
-import com.uiuang.cloudknowledge.ext.init
 import com.uiuang.cloudknowledge.ext.initClose
 import com.uiuang.cloudknowledge.ext.showMessage
 import com.uiuang.cloudknowledge.utils.CacheUtil
@@ -34,25 +29,28 @@ class LoginFragment : BaseFragment<LoginRegisterViewModel, FragmentLoginBinding>
         mDatabind.viewModel = mViewModel
         mDatabind.click = ProxyClick()
 
-        toolbar.initClose("云知登录"){
+        toolbar.initClose("云知登录") {
             nav().navigateUp()
         }
     }
 
 
     override fun createObserver() {
-        requestLoginRegisterViewModel.loginResult.observe(viewLifecycleOwner, Observer { resultState ->
-            parseState(resultState, {
-                //登录成功 通知账户数据发生改变鸟
-                CacheUtil.setUser(it)
-                appViewModel.userinfo.postValue(it)
-                nav().navigateUp()
-            }, {
-                //登录失败
-                showMessage(it.errorMsg)
+        requestLoginRegisterViewModel.loginResult.observe(
+            viewLifecycleOwner,
+            Observer { resultState ->
+                parseState(resultState, {
+                    //登录成功 通知账户数据发生改变鸟
+                    CacheUtil.setUser(it)
+                    appViewModel.userinfo.postValue(it)
+                    nav().navigateUp()
+                }, {
+                    //登录失败
+                    showMessage(it.errorMsg)
+                })
             })
-        })
     }
+
     inner class ProxyClick {
 
         fun clear() {

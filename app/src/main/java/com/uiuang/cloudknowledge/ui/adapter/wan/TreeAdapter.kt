@@ -57,7 +57,7 @@ class TreeAdapter : BaseQuickAdapter<TabBean, BaseViewHolder>(R.layout.item_tree
         flexBoxTreeAdapter.setOnItemClickListener { _, view, position ->
             val data: MutableList<ChildrenBean> = flexBoxTreeAdapter.data
             val childrenBean: ChildrenBean = data[position]
-            navigationAction.invoke(item,childrenBean.id, view)
+            navigationAction.invoke(item, childrenBean.id, view)
         }
         holder.setText(R.id.tv_tree_title, name)
     }

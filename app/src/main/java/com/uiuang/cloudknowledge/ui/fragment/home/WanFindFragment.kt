@@ -55,9 +55,10 @@ class WanFindFragment : BaseFragment<WanFindViewModel, FragmentWanFindBinding>()
         WanAndroidAdapter(arrayListOf())
     }
 
-    private val layoutManager:LinearLayoutManager by lazy {
+    private val layoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
     }
+
     companion object {
         @JvmStatic
         fun newInstance() = WanFindFragment()
@@ -100,7 +101,7 @@ class WanFindFragment : BaseFragment<WanFindViewModel, FragmentWanFindBinding>()
         }
         wanAndroidAdapter.run {
             setOnItemClickListener { _, _, position ->
-                val articlesBean:ArticlesBean = data[position]
+                val articlesBean: ArticlesBean = data[position]
                 openDetail(articlesBean.link, articlesBean.title)
             }
         }

@@ -7,10 +7,6 @@ import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.databinding.FragmentMovieBinding
 import com.uiuang.cloudknowledge.ext.bindViewPager2
 import com.uiuang.cloudknowledge.ext.init
-import com.uiuang.cloudknowledge.ui.fragment.home.NavigationFragment
-import com.uiuang.cloudknowledge.ui.fragment.home.TreeFragment
-import com.uiuang.cloudknowledge.ui.fragment.home.WanFindFragment
-import com.uiuang.cloudknowledge.ui.fragment.home.WanHomeFragment
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
 

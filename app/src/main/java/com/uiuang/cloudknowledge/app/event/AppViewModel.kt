@@ -1,11 +1,11 @@
 package com.uiuang.cloudknowledge.app.event
 
 import com.uiuang.cloudknowledge.bean.UserInfo
+import com.uiuang.cloudknowledge.utils.CacheUtil
 import com.uiuang.cloudknowledge.utils.SettingUtil
+import com.uiuang.mvvm.base.appContext
 import com.uiuang.mvvm.base.viewmodel.BaseViewModel
 import com.uiuang.mvvm.callback.livedata.UnPeekLiveData
-import com.uiuang.cloudknowledge.utils.CacheUtil
-import com.uiuang.mvvm.base.appContext
 
 
 /**
@@ -14,7 +14,7 @@ import com.uiuang.mvvm.base.appContext
  * @author zsc
  * @date 2020/8/1 22:57
  */
-class AppViewModel:BaseViewModel() {
+class AppViewModel : BaseViewModel() {
     //App的账户信息
     var userinfo = UnPeekLiveData<UserInfo>()
 

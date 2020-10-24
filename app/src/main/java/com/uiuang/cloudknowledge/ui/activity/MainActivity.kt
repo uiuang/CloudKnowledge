@@ -3,17 +3,16 @@ package com.uiuang.cloudknowledge.ui.activity
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseActivity
 import com.uiuang.cloudknowledge.databinding.ActivityMainBinding
-import com.uiuang.cloudknowledge.viewmodel.state.MainViewModel
-import com.uiuang.mvvm.network.manager.NetState
 import com.uiuang.cloudknowledge.utils.StatusBarUtil
 import com.uiuang.cloudknowledge.utils.toast
+import com.uiuang.cloudknowledge.viewmodel.state.MainViewModel
+import com.uiuang.mvvm.network.manager.NetState
 
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
@@ -23,12 +22,12 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun layoutId(): Int = R.layout.activity_main
     override fun initView(savedInstanceState: Bundle?) {
 
-        onBackPressedDispatcher.addCallback(this,object :OnBackPressedCallback(true){
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 var nav = Navigation.findNavController(this@MainActivity, R.id.host_fragment)
                 if (nav.currentDestination != null && nav.currentDestination!!.id != R.id.mainFragment) {
                     nav.navigateUp()
-                }else{
+                } else {
                     //是主页
                     if (System.currentTimeMillis() - exitTime > 2000) {
                         "再按一次退出程序".toast()
@@ -61,7 +60,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun onNetworkStateChanged(netState: NetState) {
         super.onNetworkStateChanged(netState)
         if (netState.isSuccess) {
-           "我特么终于有网了啊!".toast()
+            "我特么终于有网了啊!".toast()
         } else {
             "我特么怎么断网了!".toast()
         }

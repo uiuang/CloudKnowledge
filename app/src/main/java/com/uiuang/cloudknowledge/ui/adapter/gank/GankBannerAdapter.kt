@@ -7,9 +7,10 @@ import com.uiuang.cloudknowledge.bean.GankIOResultBean
 import com.uiuang.cloudknowledge.ext.loadUrl
 import com.youth.banner.adapter.BannerAdapter
 
-class GankBannerAdapter(data: MutableList<GankIOResultBean>) : BannerAdapter<GankIOResultBean, GankBannerAdapter.BannerViewHolder>(
-    data
-) {
+class GankBannerAdapter(data: MutableList<GankIOResultBean>) :
+    BannerAdapter<GankIOResultBean, GankBannerAdapter.BannerViewHolder>(
+        data
+    ) {
 
     class BannerViewHolder(var imageView: ImageView) : RecyclerView.ViewHolder(imageView)
 
@@ -17,8 +18,11 @@ class GankBannerAdapter(data: MutableList<GankIOResultBean>) : BannerAdapter<Gan
         var imageView = ImageView(parent!!.context)
         //注意，必须设置为match_parent，这个是viewpager2强制要求的
         //注意，必须设置为match_parent，这个是viewpager2强制要求的
-        imageView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        imageView.scaleType =ImageView.ScaleType.CENTER_CROP
+        imageView.layoutParams = ViewGroup.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         return BannerViewHolder(imageView)
     }
 
@@ -28,7 +32,7 @@ class GankBannerAdapter(data: MutableList<GankIOResultBean>) : BannerAdapter<Gan
         position: Int,
         size: Int
     ) {
-        holder!!.imageView.loadUrl(holder.imageView.context,data!!.image)
+        holder!!.imageView.loadUrl(holder.imageView.context, data!!.image)
 
     }
 

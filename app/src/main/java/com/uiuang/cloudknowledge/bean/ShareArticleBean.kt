@@ -7,4 +7,4 @@ import kotlinx.android.parcel.Parcelize
 data class ShareArticleBean(
     var coinInfo: CoinInfoBean,
     var shareArticles: ApiPagerResponse<ArrayList<ArticlesBean>>
-) :Parcelable
+) : Parcelable

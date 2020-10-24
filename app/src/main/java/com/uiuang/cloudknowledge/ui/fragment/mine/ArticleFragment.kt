@@ -1,10 +1,6 @@
 package com.uiuang.cloudknowledge.ui.fragment.mine
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +23,7 @@ import kotlinx.android.synthetic.main.include_recyclerview.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 
 
-class ArticleFragment : BaseFragment<ArticleViewModel,FragmentListBinding>() {
+class ArticleFragment : BaseFragment<ArticleViewModel, FragmentListBinding>() {
     //适配器
     private val articleAdapter: ShareArticleAdapter by lazy { ShareArticleAdapter(arrayListOf()) }
 
@@ -38,9 +34,7 @@ class ArticleFragment : BaseFragment<ArticleViewModel,FragmentListBinding>() {
     private val requestViewModel: RequestArticleViewModel by viewModels()
 
 
-
-
-    override fun layoutId(): Int =R.layout.fragment_list
+    override fun layoutId(): Int = R.layout.fragment_list
 
     override fun initView(savedInstanceState: Bundle?) {
         toolbar.run {
@@ -83,7 +77,7 @@ class ArticleFragment : BaseFragment<ArticleViewModel,FragmentListBinding>() {
         articleAdapter.run {
             setOnItemClickListener { _, view, position ->
                 var articlesBean = articleAdapter.data[position]
-                WebViewFragment.openDetail(view,articlesBean.link,articlesBean.title)
+                WebViewFragment.openDetail(view, articlesBean.link, articlesBean.title)
 //                nav().navigateAction(R.id.action_global_webViewFragment, Bundle().apply {
 //                    putParcelable("ariticleData", articleAdapter.data[position])
 //                })
@@ -114,7 +108,7 @@ class ArticleFragment : BaseFragment<ArticleViewModel,FragmentListBinding>() {
     override fun createObserver() {
         requestViewModel.shareDataState.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            loadListData(it, articleAdapter, loadSir, recyclerView,swipeRefresh)
+            loadListData(it, articleAdapter, loadSir, recyclerView, swipeRefresh)
         })
         requestViewModel.delDataState.observe(viewLifecycleOwner, Observer {
             if (it.isSuccess) {

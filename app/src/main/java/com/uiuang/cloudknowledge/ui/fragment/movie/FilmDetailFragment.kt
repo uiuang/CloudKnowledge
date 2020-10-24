@@ -102,7 +102,8 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
             tv_one_casts.text = getMovieActors(basic.actors)
             tv_one_genres.text = "类型：${getMovieType(basic.type)}"
             tv_one_time.text = "片长：${basic.mins}"
-            tv_one_date.text = "${DatetimeUtil.getReleaseDate(basic.releaseDate) + basic.releaseArea}上映"
+            tv_one_date.text =
+                "${DatetimeUtil.getReleaseDate(basic.releaseDate) + basic.releaseArea}上映"
             //简介
             tv_story.text = basic.story
             //演员表

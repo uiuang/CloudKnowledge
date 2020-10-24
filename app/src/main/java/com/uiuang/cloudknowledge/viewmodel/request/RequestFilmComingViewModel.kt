@@ -8,7 +8,8 @@ import com.uiuang.mvvm.base.viewmodel.BaseViewModel
 import com.uiuang.mvvm.ext.request
 
 class RequestFilmComingViewModel : BaseViewModel() {
-    var filmComingDataState: MutableLiveData<ListDataUiState<ComingFilmBean.MoviesBean>> = MutableLiveData()
+    var filmComingDataState: MutableLiveData<ListDataUiState<ComingFilmBean.MoviesBean>> =
+        MutableLiveData()
 
     fun getComingFilm() {
         request({ getMtimeTicketServer.getComingFilm() }, {

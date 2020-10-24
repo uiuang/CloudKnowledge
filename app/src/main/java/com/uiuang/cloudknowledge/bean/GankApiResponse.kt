@@ -25,5 +25,4 @@ data class GankApiResponse<T>(var status: Int, var errorMsg: String, var data: T
     override fun getResponseMsg() = errorMsg
 
 
-
 }

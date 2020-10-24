@@ -28,7 +28,8 @@ object DataUtil {
     fun getAuthor(author: String, shareName: String): String? {
         var name = author
         if (TextUtils.isEmpty(name)) name = shareName
-        return if (TextUtils.isEmpty(name)) { ""
+        return if (TextUtils.isEmpty(name)) {
+            ""
         } else " · $name"
     }
 

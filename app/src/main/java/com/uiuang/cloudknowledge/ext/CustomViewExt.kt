@@ -322,7 +322,8 @@ fun MagicIndicator.bindViewPager2Collect(
     viewPager: ViewPager2,
     mDataList: ArrayList<ClassifyResponse> = arrayListOf(),
     mStringList: ArrayList<String> = arrayListOf(),
-    action: (index: Int) -> Unit = {}) {
+    action: (index: Int) -> Unit = {}
+) {
     val commonNavigator = CommonNavigator(appContext)
     commonNavigator.adapter = object : CommonNavigatorAdapter() {
         override fun getCount(): Int {
@@ -332,6 +333,7 @@ fun MagicIndicator.bindViewPager2Collect(
                 mStringList.size
             }
         }
+
         override fun getTitleView(context: Context, index: Int): IPagerTitleView {
             return ScaleTransitionPagerTitleView(appContext).apply {
                 text = if (mDataList.size != 0) {
@@ -348,6 +350,7 @@ fun MagicIndicator.bindViewPager2Collect(
                 }
             }
         }
+
         override fun getIndicator(context: Context): IPagerIndicator {
             return LinePagerIndicator(context).apply {
                 mode = LinePagerIndicator.MODE_EXACTLY
@@ -378,7 +381,11 @@ fun MagicIndicator.bindViewPager2Collect(
             positionOffsetPixels: Int
         ) {
             super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-            this@bindViewPager2Collect.onPageScrolled(position, positionOffset, positionOffsetPixels)
+            this@bindViewPager2Collect.onPageScrolled(
+                position,
+                positionOffset,
+                positionOffsetPixels
+            )
         }
 
         override fun onPageScrollStateChanged(state: Int) {
@@ -455,7 +462,8 @@ fun BottomNavigationViewEx.init(navigationItemSelectedAction: (Int) -> Unit): Bo
     enableShiftingMode(false)
     enableItemShiftingMode(true)
     itemIconTintList = SettingUtil.getColorStateList(
-        SettingUtil.getColor(appContext))
+        SettingUtil.getColor(appContext)
+    )
     itemTextColor = SettingUtil.getColorStateList(appContext)
     setTextSize(12F)
     setOnNavigationItemSelectedListener {

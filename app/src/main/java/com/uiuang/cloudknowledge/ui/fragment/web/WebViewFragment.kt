@@ -21,12 +21,14 @@ import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.app.http.Constants
 import com.uiuang.cloudknowledge.databinding.FragmentWebViewBinding
 import com.uiuang.cloudknowledge.ext.hideSoftKeyboard
-import com.uiuang.cloudknowledge.utils.*
+import com.uiuang.cloudknowledge.utils.SettingUtil
+import com.uiuang.cloudknowledge.utils.copy
+import com.uiuang.cloudknowledge.utils.openLink
+import com.uiuang.cloudknowledge.utils.toast
 import com.uiuang.cloudknowledge.viewmodel.state.WebViewModel
 import com.uiuang.mvvm.base.appContext
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
-import com.uiuang.cloudknowledge.utils.SettingUtil
 import com.uiuang.mvvm.util.ShareUtils
 import com.uiuang.mvvm.util.toHtml
 import kotlinx.android.synthetic.main.fragment_web_view.*

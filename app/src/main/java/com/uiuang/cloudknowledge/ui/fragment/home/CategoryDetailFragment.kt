@@ -3,7 +3,6 @@ package com.uiuang.cloudknowledge.ui.fragment.home
 import android.content.Context
 import android.os.Bundle
 import android.util.TypedValue
-import android.view.Window
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -14,11 +13,9 @@ import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.bean.TabBean
 import com.uiuang.cloudknowledge.databinding.FragmentCategoryDetailBinding
 import com.uiuang.cloudknowledge.ext.initCategory
-import com.uiuang.cloudknowledge.utils.StatusBarUtil
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.util.dp2px
-import com.uiuang.mvvm.util.screenHeight
 import com.uiuang.mvvm.util.toHtml
 import jp.wasabeef.glide.transformations.BlurTransformation
 import kotlinx.android.synthetic.main.fragment_category_detail.*
@@ -68,7 +65,7 @@ class CategoryDetailFragment : BaseFragment<HomeViewModel, FragmentCategoryDetai
             this, fragments, tabLayout,
             titles, true
         )
-        viewPager.setCurrentItem(initIndex,false)
+        viewPager.setCurrentItem(initIndex, false)
     }
 
     private fun String.loadImage() {
@@ -107,7 +104,7 @@ class CategoryDetailFragment : BaseFragment<HomeViewModel, FragmentCategoryDetai
                 context.resources.displayMetrics
             )
         } else {
-            context.dp2px( 48)
+            context.dp2px(48)
         }
     }
 

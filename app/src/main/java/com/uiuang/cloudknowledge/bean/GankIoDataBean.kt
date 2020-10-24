@@ -13,8 +13,10 @@ import kotlinx.android.parcel.Parcelize
  */
 @SuppressLint("ParcelCreator")
 @Parcelize
-data class GankIoDataBean( var coinCount: Int,//当前积分
-                           var rank: Int,
-                           var userId: Int,
-                           var username: String):Parcelable
+data class GankIoDataBean(
+    var coinCount: Int,//当前积分
+    var rank: Int,
+    var userId: Int,
+    var username: String
+) : Parcelable
 

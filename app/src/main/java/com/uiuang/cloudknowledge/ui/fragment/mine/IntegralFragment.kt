@@ -11,7 +11,6 @@ import com.uiuang.cloudknowledge.bean.IntegralBean
 import com.uiuang.cloudknowledge.databinding.FragmentIntegralBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.wan.IntegralAdapter
-import com.uiuang.cloudknowledge.ui.fragment.web.WebViewFragment
 import com.uiuang.cloudknowledge.viewmodel.request.RequestIntegralViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.IntegralViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.SpaceItemDecoration

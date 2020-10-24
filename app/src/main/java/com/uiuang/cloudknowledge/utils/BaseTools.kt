@@ -32,11 +32,12 @@ fun Any.copy() {
     }
 }
 
-fun String.openLink(context:Context?) {
+fun String.openLink(context: Context?) {
     val issuesUrl = Uri.parse(this)
     val intent = Intent(Intent.ACTION_VIEW, issuesUrl)
     context?.startActivity(intent)
 }
+
 /****************
  *
  * 发起添加群流程。群号：Android 云知交流群(429648305) 的 key 为： UHs4rILhZQvKTKzb-14CQ7qi2_dSZT1i
@@ -73,7 +74,8 @@ fun String.joinQQChat(context: Context?) {
     }
 }
 
-fun Context.getSupportDrawable(@DrawableRes resId: Int) = if (resId != 0) AppCompatResources.getDrawable(this, resId) else null
+fun Context.getSupportDrawable(@DrawableRes resId: Int) =
+    if (resId != 0) AppCompatResources.getDrawable(this, resId) else null
 
 fun TypedArray.getSupportDrawable(context: Context, index: Int): Drawable? {
     val resId = getResourceId(index, 0)
