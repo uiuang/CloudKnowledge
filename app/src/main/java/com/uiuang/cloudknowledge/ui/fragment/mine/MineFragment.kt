@@ -9,6 +9,7 @@ import com.uiuang.cloudknowledge.bean.IntegralBean
 import com.uiuang.cloudknowledge.databinding.FragmentMineBinding
 import com.uiuang.cloudknowledge.ext.init
 import com.uiuang.cloudknowledge.ext.jumpByLogin
+import com.uiuang.cloudknowledge.ext.setUiTheme
 import com.uiuang.cloudknowledge.utils.joinQQGroup
 import com.uiuang.cloudknowledge.utils.toast
 import com.uiuang.cloudknowledge.viewmodel.request.RequestMineViewModel
@@ -48,7 +49,7 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
         })
         appViewModel.run {
             appColor.observe(viewLifecycleOwner, Observer {
-
+                setUiTheme(it, mine_linear, mine_swipe, mine_integral)
             })
             userinfo.observe(viewLifecycleOwner, Observer { userInfo ->
                 userInfo.notNull({

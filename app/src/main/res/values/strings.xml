@@ -18,6 +18,7 @@
     <string name="actionbar_webview_open">浏览器打开</string>
     <string name="actionbar_webview_refresh">刷新</string>
     <string name="actionbar_webview_collect">添加到收藏</string>
+    <string name="actionbar_webview_collected">已添加到收藏</string>
     <string name="actionbar_share">分享给朋友\(^o^)/~</string>
     <string name="picture_has_save_to">已保存至 %s</string>
     <string name="action_share">分享</string>

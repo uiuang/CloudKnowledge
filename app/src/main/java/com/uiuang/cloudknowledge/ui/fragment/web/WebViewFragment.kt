@@ -3,10 +3,7 @@ package com.uiuang.cloudknowledge.ui.fragment.web
 import android.content.DialogInterface
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.webkit.WebView
 import android.webkit.WebView.HitTestResult
 import android.widget.LinearLayout
@@ -14,17 +11,22 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.just.agentweb.AgentWeb
 import com.just.agentweb.WebChromeClient
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.app.http.Constants
+import com.uiuang.cloudknowledge.bean.CollectBus
+import com.uiuang.cloudknowledge.bean.wan.WebBean
+import com.uiuang.cloudknowledge.data.enums.CollectType
 import com.uiuang.cloudknowledge.databinding.FragmentWebViewBinding
 import com.uiuang.cloudknowledge.ext.hideSoftKeyboard
-import com.uiuang.cloudknowledge.utils.SettingUtil
-import com.uiuang.cloudknowledge.utils.copy
-import com.uiuang.cloudknowledge.utils.openLink
-import com.uiuang.cloudknowledge.utils.toast
+import com.uiuang.cloudknowledge.ext.initClose
+import com.uiuang.cloudknowledge.ext.jumpByLogin
+import com.uiuang.cloudknowledge.utils.*
+import com.uiuang.cloudknowledge.viewmodel.request.RequestCollectViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.WebViewModel
 import com.uiuang.mvvm.base.appContext
 import com.uiuang.mvvm.ext.nav
@@ -32,6 +34,7 @@ import com.uiuang.mvvm.ext.navigateAction
 import com.uiuang.mvvm.util.ShareUtils
 import com.uiuang.mvvm.util.toHtml
 import kotlinx.android.synthetic.main.fragment_web_view.*
+import kotlinx.android.synthetic.main.include_toolbar.*
 
 
 /**
@@ -39,10 +42,10 @@ import kotlinx.android.synthetic.main.fragment_web_view.*
  */
 class WebViewFragment : BaseFragment<WebViewModel, FragmentWebViewBinding>() {
 
-    private var url: String = ""
-    private var mTitle: String = ""
-    private var isTitleFix: Boolean = false
+
     private var agentWeb: AgentWeb? = null
+    private var preWeb: AgentWeb.PreAgentWeb? = null
+    private val requestCollectViewModel: RequestCollectViewModel by viewModels()
 
     companion object {
         fun openDetail(view: View, url: String?, title: String?, isTitleFix: Boolean = false) {
@@ -61,48 +64,49 @@ class WebViewFragment : BaseFragment<WebViewModel, FragmentWebViewBinding>() {
     override fun initView(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
         arguments?.run {
-            url = getString("url").toString()
-            mTitle = getString("title").toString()
-            isTitleFix = getBoolean("isTitleFix")
+            val webBean = getParcelable<WebBean>("webBean")
+            webBean?.let {
+                mViewModel.articleId = it.id
+                mViewModel.showTitle = it.title
+                mViewModel.collect = it.collect
+                mViewModel.url = it.url
+                mViewModel.collectType = it.collectType
+            }
         }
 
-        title_tool_bar.run {
+        toolbar.run {
             mActivity.setSupportActionBar(this)
-            setBackgroundColor(SettingUtil.getColor(appContext))
-            overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.actionbar_more)
-            tv_gun_title.text = mTitle.toHtml()
-            setNavigationIcon(R.drawable.ic_back)
-            setNavigationOnClickListener {
+            initClose(mViewModel.showTitle) {
+                hideSoftKeyboard(activity)
                 if (agentWeb!!.webCreator.webView.canGoBack()) {
                     agentWeb!!.webCreator.webView.goBack()
                 } else {
                     nav().navigateUp()
                 }
             }
-            hideSoftKeyboard(activity)
-            agentWeb?.let { web ->
-                if (web.webCreator.webView.canGoBack()) {
-                    web.webCreator.webView.goBack()
-                } else {
-                    nav().navigateUp()
-                }
-            }
-
-
+            overflowIcon = ContextCompat.getDrawable(requireActivity(), R.drawable.actionbar_more)
         }
+        agentWeb?.let { web ->
+            if (web.webCreator.webView.canGoBack()) {
+                web.webCreator.webView.goBack()
+            } else {
+                nav().navigateUp()
+            }
+        }
+        //加载网页
+        preWeb = AgentWeb.with(this)
+            .setAgentWebParent(webcontent, LinearLayout.LayoutParams(-1, -1))
+            .useDefaultIndicator()
+            .createAgentWeb()
+            .ready()
 
     }
 
 
     override fun lazyLoadData() {
-        //加载网页
-        agentWeb = AgentWeb.with(this)
-            .setAgentWebParent(webcontent, LinearLayout.LayoutParams(-1, -1))
-            .useDefaultIndicator()
-            .createAgentWeb()
-            .ready()
-            .go(url)
 
+//加载网页
+        agentWeb = preWeb?.go(mViewModel.url)
         requireActivity().onBackPressedDispatcher.addCallback(this,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
@@ -115,15 +119,15 @@ class WebViewFragment : BaseFragment<WebViewModel, FragmentWebViewBinding>() {
                     }
                 }
             })
-        agentWeb!!.webCreator.webView.webChromeClient = object : WebChromeClient() {
-            override fun onReceivedTitle(view: WebView?, title: String) {
-                if (!TextUtils.isEmpty(title)) {
-                    mTitle = title
-                    tv_gun_title.text = title
-                }
-                super.onReceivedTitle(view, title)
-            }
-        }
+//        agentWeb!!.webCreator.webView.webChromeClient = object : WebChromeClient() {
+//            override fun onReceivedTitle(view: WebView?, title: String) {
+//                if (!TextUtils.isEmpty(title)) {
+//                    mTitle = title
+//                    tv_gun_title.text = title
+//                }
+//                super.onReceivedTitle(view, title)
+//            }
+//        }
         agentWeb!!.webCreator.webView.setOnLongClickListener {
             handleLongImage()
         }
@@ -139,7 +143,7 @@ class WebViewFragment : BaseFragment<WebViewModel, FragmentWebViewBinding>() {
             R.id.actionbar_share -> {
                 // 分享到
                 val shareText =
-                    "$mTitle " + agentWeb?.webCreator?.webView?.url + " ( 分享自云知 " + Constants.DOWNLOAD_URL + " )"
+                    "${mViewModel.showTitle} " + agentWeb?.webCreator?.webView?.url + " ( 分享自云知 " + Constants.DOWNLOAD_URL + " )"
                 ShareUtils.share(requireActivity(), shareText)
             }
             R.id.actionbar_cope -> {
@@ -154,26 +158,69 @@ class WebViewFragment : BaseFragment<WebViewModel, FragmentWebViewBinding>() {
                 //刷新网页
                 agentWeb?.urlLoader?.reload()
             R.id.actionbar_collect -> {
-                //                if (UserUtil.isLogin(byWebView.getWebView().getContext())) {
-//                    if (SPUtils.getBoolean(Constants.IS_FIRST_COLLECTURL, true)) {
-//                        DialogBuild.show(byWebView.getWebView(),
-//                            "网址不同于文章，相同网址可多次进行收藏，且不会显示收藏状态。",
-//                            "知道了",
-//                            DialogInterface.OnClickListener { dialog: DialogInterface?, which: Int ->
-//                                SPUtils.putBoolean(Constants.IS_FIRST_COLLECTURL, false)
-//                                collectUrl()
-//                            } as DialogInterface.OnClickListener
-//                        )
-//                    } else {
-//                        collectUrl()
-//                    }
-//                }
+                if (CacheUtil.isLogin()) {
+                    if (mViewModel.collect) {
+                        if (mViewModel.collectType == CollectType.Url.type) {
+                            //取消收藏网址
+                            requestCollectViewModel.unCollectUrl(mViewModel.articleId)
+                        } else {
+                            requestCollectViewModel.unCollect(mViewModel.articleId)
+                        }
+                    } else {
+                        if (mViewModel.collectType == CollectType.Url.type) {
+                            //收藏网址
+                            requestCollectViewModel.collectUrl(mViewModel.showTitle, mViewModel.url)
+                        } else {
+                            //收藏文章
+                            requestCollectViewModel.collect(mViewModel.articleId)
+                        }
+                    }
+                } else {
+                    nav().navigateAction(R.id.action_global_loginFragment)
+                }
             }              // 添加到收藏
 
             else -> {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        //如果收藏了，右上角的图标相对应改变
+        context?.let {
+            if (mViewModel.collect) {
+                menu.findItem(R.id.actionbar_collect).title =
+                    resources.getString(R.string.actionbar_webview_collected)
+            } else {
+                menu.findItem(R.id.actionbar_collect).title =
+                    resources.getString(R.string.actionbar_webview_collect)
+            }
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    override fun createObserver() {
+        requestCollectViewModel.collectUiState.observe(viewLifecycleOwner, Observer {
+            if (it.isSuccess) {
+                mViewModel.collect = it.collect
+                eventViewModel.collectEvent.value = CollectBus(it.id, it.collect)
+                //刷新一下menu
+                mActivity.window?.invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL)
+                mActivity.invalidateOptionsMenu()
+                if (it.collect) "文章收藏成功".toast() else "文章取消收藏成功".toast()
+            } else it.errorMsg.toast()
+        })
+        requestCollectViewModel.collectUrlUiState.observe(viewLifecycleOwner, Observer {
+            if (it.isSuccess) {
+                eventViewModel.collectEvent.value = CollectBus(it.id, it.collect)
+                mViewModel.collect = it.collect
+                //刷新一下menu
+                mActivity.window?.invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL)
+                mActivity.invalidateOptionsMenu()
+                if (it.collect) "Url收藏成功".toast() else "url取消收藏成功".toast()
+            } else it.errorMsg.toast()
+        })
     }
 
     /**

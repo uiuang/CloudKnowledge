@@ -11,10 +11,11 @@ import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.bean.GankIOResultBean
-import com.uiuang.cloudknowledge.databinding.FragmentWelfareBinding
+import com.uiuang.cloudknowledge.databinding.IncludeListBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.gank.WelfareAdapter
 import com.uiuang.cloudknowledge.utils.ACache
+import com.uiuang.cloudknowledge.utils.GsonExclusionStrategy
 import com.uiuang.cloudknowledge.viewmodel.request.RequestSisterViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
@@ -22,12 +23,13 @@ import com.uiuang.cloudknowledge.weight.recyclerview.GridSpaceItemDecoration
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.fragment_welfare.*
+import kotlinx.android.synthetic.main.include_list.*
+import kotlinx.android.synthetic.main.include_recyclerview.*
 
 
-class WelfareFragment : BaseFragment<HomeViewModel, FragmentWelfareBinding>() {
+class WelfareFragment : BaseFragment<HomeViewModel, IncludeListBinding>() {
     //界面状态管理者
-    private lateinit var loadsir: LoadService<Any>
+    private lateinit var loadSir: LoadService<Any>
 
     //请求ViewModel
     private val requestSisterViewModel: RequestSisterViewModel by viewModels()
@@ -44,13 +46,13 @@ class WelfareFragment : BaseFragment<HomeViewModel, FragmentWelfareBinding>() {
         fun newInstance() = WelfareFragment()
     }
 
-    override fun layoutId(): Int = R.layout.fragment_welfare
+    override fun layoutId(): Int = R.layout.include_list
 
     override fun initView(savedInstanceState: Bundle?) {
         //状态页配置
-        loadsir = loadServiceInit(swipeRefresh) {
+        loadSir = loadServiceInit(swipeRefresh) {
             //点击重试时触发的操作
-            loadsir.showLoading()
+            loadSir.showLoading()
             requestSisterViewModel.getPlazaData(true)
         }
         //初始化recyclerView
@@ -76,19 +78,7 @@ class WelfareFragment : BaseFragment<HomeViewModel, FragmentWelfareBinding>() {
                 nav().navigateAction(R.id.action_mainFragment_to_bigImageFragment, Bundle().apply {
                     putInt("position", position)
                 })
-                val gson = GsonBuilder().addSerializationExclusionStrategy(object :
-                    ExclusionStrategy {
-                    override fun shouldSkipField(f: FieldAttributes): Boolean {
-                        if (f.name == null) {
-                            return true
-                        }
-                        val name = f.name
-                        return !(name == "url" || name == "desc")
-                    }
-
-                    override fun shouldSkipClass(clazz: Class<*>?): Boolean = false
-
-                }).create()
+                val gson = GsonBuilder().addSerializationExclusionStrategy(GsonExclusionStrategy()).create()
                 ACache[mActivity].put("ImageItemsBean", gson.toJson(data))
 
             }
@@ -100,13 +90,17 @@ class WelfareFragment : BaseFragment<HomeViewModel, FragmentWelfareBinding>() {
         super.createObserver()
         requestSisterViewModel.sisterDataState.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            loadListData(it, welfareAdapter, loadsir, recyclerView, swipeRefresh)
+            loadListData(it, welfareAdapter, loadSir, recyclerView, swipeRefresh)
+        })
+        appViewModel.appColor.observe(viewLifecycleOwner, Observer {
+            //监听全局的主题颜色改变
+            setUiTheme(it, floatBtn, swipeRefresh, loadSir, footView)
         })
     }
 
     override fun lazyLoadData() {
         //设置界面 加载中
-        loadsir.showLoading()
+        loadSir.showLoading()
         requestSisterViewModel.getPlazaData(true)
     }
 }

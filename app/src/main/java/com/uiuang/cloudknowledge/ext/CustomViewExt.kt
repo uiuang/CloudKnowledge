@@ -2,16 +2,22 @@ package com.uiuang.cloudknowledge.ext
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
+import android.widget.CompoundButton
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +25,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -26,6 +34,7 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.uiuang.cloudknowledge.R
+import com.uiuang.cloudknowledge.app.App
 import com.uiuang.cloudknowledge.app.state.ListDataUiState
 import com.uiuang.cloudknowledge.bean.ClassifyResponse
 import com.uiuang.cloudknowledge.ui.fragment.gank.GankFragment
@@ -89,13 +98,13 @@ fun LoadService<*>.showLoading() {
 }
 
 fun loadServiceInit(view: View, callback: () -> Unit): LoadService<Any> {
-    val loadsir = LoadSir.getDefault().register(view) {
+    val loadSir = LoadSir.getDefault().register(view) {
         //点击重试时触发的操作
         callback.invoke()
     }
-    loadsir.showSuccess()
-//    SettingUtil.setLoadingColor(SettingUtil.getColor(appContext), loadsir)
-    return loadsir
+    loadSir.showSuccess()
+    SettingUtil.setLoadingColor(SettingUtil.getColor(appContext), loadSir)
+    return loadSir
 }
 
 //绑定普通的Recyclerview
@@ -144,7 +153,7 @@ fun SwipeRecyclerView.initFooter(loadMoreListener: SwipeRecyclerView.LoadMoreLis
     return footerView
 }
 
-fun RecyclerView.initFloatBtn(floatbtn: FloatingActionButton) {
+fun RecyclerView.initFloatBtn(floatBtn: FloatingActionButton) {
     //监听recyclerview滑动到顶部的时候，需要把向上返回顶部的按钮隐藏
 //    addOnScrollListener(object : RecyclerView.OnScrollListener() {
 //        @SuppressLint("RestrictedApi")
@@ -155,8 +164,8 @@ fun RecyclerView.initFloatBtn(floatbtn: FloatingActionButton) {
 //            }
 //        }
 //    })
-    floatbtn.backgroundTintList = SettingUtil.getOneColorStateList(appContext)
-    floatbtn.setOnClickListener {
+    floatBtn.backgroundTintList = SettingUtil.getOneColorStateList(appContext)
+    floatBtn.setOnClickListener {
         val layoutManager = layoutManager as LinearLayoutManager
         //如果当前recyclerview 最后一个视图位置的索引大于等于40，则迅速返回顶部，否则带有滚动动画效果返回到顶部
         if (layoutManager.findLastVisibleItemPosition() >= 40) {
@@ -223,11 +232,22 @@ fun setUiTheme(color: Int, vararg anyList: Any?) {
                     it.itemIconTintList = SettingUtil.getColorStateList(color)
                     it.itemTextColor = SettingUtil.getColorStateList(color)
                 }
+                is CompoundButton -> it.setTextColor(SettingUtil.getColorStateList(color))
+                is LinearLayout -> it.setBackgroundColor(color)
                 is Toolbar -> it.setBackgroundColor(color)
                 is TextView -> it.setTextColor(color)
-                is LinearLayout -> it.setBackgroundColor(color)
                 is ConstraintLayout -> it.setBackgroundColor(color)
+                is CollapsingToolbarLayout -> it.contentScrim = ColorDrawable(color)
+
+                is AppBarLayout -> it.setBackgroundColor(color)
+                is TabLayout -> {
+                    it.setTabTextColors(ContextCompat.getColor(appContext, R.color.colorGray),color)
+                    it.setSelectedTabIndicatorColor(color)
+                }
+                is View -> it.setBackgroundColor(color)
                 is FrameLayout -> it.setBackgroundColor(color)
+
+
             }
         }
     }

@@ -19,28 +19,32 @@ import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.bean.GankIOResultBean
-import com.uiuang.cloudknowledge.databinding.FragmentAndroidBinding
+import com.uiuang.cloudknowledge.bean.wan.WebBean
+import com.uiuang.cloudknowledge.data.enums.CollectType
+import com.uiuang.cloudknowledge.databinding.IncludeListBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.gank.GankAndroidAdapter
 import com.uiuang.cloudknowledge.ui.adapter.gank.ListIconDialogAdapter
-import com.uiuang.cloudknowledge.ui.fragment.web.WebViewFragment
 import com.uiuang.cloudknowledge.utils.CacheUtil
 import com.uiuang.cloudknowledge.utils.toast
 import com.uiuang.cloudknowledge.viewmodel.request.RequestGankViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
+import com.uiuang.mvvm.ext.nav
+import com.uiuang.mvvm.ext.navigateAction
 import com.uiuang.mvvm.util.dp2px
 import com.uiuang.mvvm.util.screenHeight
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.fragment_android.*
+import kotlinx.android.synthetic.main.include_list.*
+import kotlinx.android.synthetic.main.include_recyclerview.*
 
 
-class CustomFragment : BaseFragment<HomeViewModel, FragmentAndroidBinding>() {
+class CustomFragment : BaseFragment<HomeViewModel, IncludeListBinding>() {
 
     private var gankType: String? = null
 
     //界面状态管理者
-    private lateinit var loadsir: LoadService<Any>
+    private lateinit var loadSir: LoadService<Any>
 
     //请求ViewModel
     private val requestGankViewModel: RequestGankViewModel by viewModels()
@@ -71,15 +75,15 @@ class CustomFragment : BaseFragment<HomeViewModel, FragmentAndroidBinding>() {
         fun newInstance() = CustomFragment()
     }
 
-    override fun layoutId(): Int = R.layout.fragment_android
+    override fun layoutId(): Int = R.layout.include_list
 
     override fun initView(savedInstanceState: Bundle?) {
         val type = CacheUtil.getGankType()
         setSelectType(type)
         //状态页配置
-        loadsir = loadServiceInit(recyclerView) {
+        loadSir = loadServiceInit(recyclerView) {
             //点击重试时触发的操作
-            loadsir.showLoading()
+            loadSir.showLoading()
             val type = CacheUtil.getGankType()
             setSelectType(type)
             requestGankViewModel.loadGankData(true, this.gankType)
@@ -101,7 +105,7 @@ class CustomFragment : BaseFragment<HomeViewModel, FragmentAndroidBinding>() {
                 requestGankViewModel.loadGankData(false, gankType)
             })
             //初始化FloatingActionButton
-//            it.initFloatBtn(floatBtn)
+            it.initFloatBtn(floatBtn)
         }
         //初始化 SwipeRefreshLayout
         swipeRefresh.init {
@@ -110,9 +114,18 @@ class CustomFragment : BaseFragment<HomeViewModel, FragmentAndroidBinding>() {
             //触发刷新监听时请求数据
             requestGankViewModel.loadGankData(true, gankType)
         }
-        gankAndroidAdapter.setOnItemClickListener { adapter, view, position ->
-            val item: GankIOResultBean = adapter.getItem(position - 1) as GankIOResultBean
-            WebViewFragment.openDetail(view, item.url, item.desc)
+        gankAndroidAdapter.setOnItemClickListener { _, _, position ->
+            val item: GankIOResultBean = gankAndroidAdapter.getItem(position - 1)
+            nav().navigateAction(R.id.action_global_webViewFragment, Bundle().apply {
+                val webBean = WebBean(
+                    0,
+                    false,
+                    item.title,
+                    item.url,
+                    CollectType.Url.type
+                )
+                putParcelable("webBean", webBean)
+            })
         }
     }
 
@@ -124,9 +137,8 @@ class CustomFragment : BaseFragment<HomeViewModel, FragmentAndroidBinding>() {
         val view: LinearLayout =
             headerView.findViewById<LinearLayout>(R.id.ll_choose_catalogue)
         view.setOnClickListener { v ->
-
             MaterialDialog(requireActivity(), BottomSheet())
-                .cancelable(false)
+                .cancelable(true)
                 .lifecycleOwner(this)
                 .show {
                     setPeekHeight(requireActivity().screenHeight - requireActivity().dp2px(200))
@@ -142,35 +154,31 @@ class CustomFragment : BaseFragment<HomeViewModel, FragmentAndroidBinding>() {
                         }
                     }
                 }
-
-
-//            if (builder != null) {
-//                builder.show()
-//            }
         }
     }
 
     private fun changeContent(textView: TextView, content: String) {
         textView.text = content
         setSelectType(content)
-//        viewModel.setType(mType)
-//        viewModel.setPage(1)
         CacheUtil.setGankType(content)
-        loadsir.showLoading()
+        loadSir.showLoading()
         requestGankViewModel.loadGankData(true, mType = gankType)
-//        loadCustomData()
     }
 
     override fun createObserver() {
         requestGankViewModel.sisterDataState.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            loadListData(it, gankAndroidAdapter, loadsir, recyclerView, swipeRefresh)
+            loadListData(it, gankAndroidAdapter, loadSir, recyclerView, swipeRefresh)
+        })
+        appViewModel.appColor.observe(viewLifecycleOwner, Observer {
+            //监听全局的主题颜色改变
+            setUiTheme(it, floatBtn, swipeRefresh, loadSir, footView)
         })
     }
 
     override fun lazyLoadData() {
         //设置界面 加载中
-        loadsir.showLoading()
+        loadSir.showLoading()
         val type = CacheUtil.getGankType()
         setSelectType(type)
         requestGankViewModel.loadGankData(true, gankType)

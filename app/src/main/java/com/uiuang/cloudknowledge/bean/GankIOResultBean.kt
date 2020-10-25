@@ -20,5 +20,5 @@ data class GankIOResultBean(
     var author: String? = null,
     var images: List<String>? = null,
     var image: String = "",
-    var title: String? = null
+    var title: String = ""
 )

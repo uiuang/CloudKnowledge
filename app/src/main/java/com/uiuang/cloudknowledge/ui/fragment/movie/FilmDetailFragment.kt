@@ -33,7 +33,7 @@ import kotlinx.android.synthetic.main.fragment_film_detail.*
  */
 class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding>() {
     //界面状态管理者
-    private lateinit var loadsir: LoadService<Any>
+    private lateinit var loadSir: LoadService<Any>
     override fun layoutId(): Int = R.layout.fragment_film_detail
     private var movieId: Int = 0
 
@@ -43,17 +43,15 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
     private val filmDetailImageAdapter: FilmDetailImageAdapter by lazy {
         FilmDetailImageAdapter()
     }
-
-
     //请求ViewModel
     private val requestFilmDetailViewModel: RequestFilmDetailViewModel by viewModels()
 
     override fun initView(savedInstanceState: Bundle?) {
         movieId = requireArguments().getInt("movieId")
 
-        loadsir = loadServiceInit(img_item_bg) {
+        loadSir = loadServiceInit(img_item_bg) {
             //点击重试时触发的操作
-            loadsir.showLoading()
+            loadSir.showLoading()
             requestFilmDetailViewModel.getFilmDetail(movieId)
         }
 
@@ -84,9 +82,8 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
     }
 
     override fun createObserver() {
-        super.createObserver()
         requestFilmDetailViewModel.filmDetailBean.observe(viewLifecycleOwner, Observer {
-            loadsir.showSuccess()
+            loadSir.showSuccess()
             var basic: FilmDetailBean.Basic = it.basic
             toolbar.run {
                 initClose(basic.name, basic.nameEn) {
@@ -151,15 +148,22 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
                 ll_trailer.visibility = View.GONE
             }
             if (basic.stageImg.list != null) {
+                ll_stageImg.visibility = View.VISIBLE
                 filmDetailImageAdapter.setNewInstance(basic.stageImg.list)
+            }else{
+                ll_stageImg.visibility = View.GONE
             }
 
 
         })
+        appViewModel.appColor.observe(viewLifecycleOwner, Observer {
+            //监听全局的主题颜色改变
+            setUiTheme(it, toolbar, loadSir)
+        })
     }
 
 
-    fun getMovieType(type: List<String>): String {
+    private fun getMovieType(type: List<String>): String {
         if (type.isEmpty()) {
             return ""
         }
@@ -173,7 +177,7 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
         return stringBuilder.toString()
     }
 
-    fun getMovieActors(actors: List<FilmDetailBean.Basic.Actor>): String {
+    private fun getMovieActors(actors: List<FilmDetailBean.Basic.Actor>): String {
         if (actors.isEmpty()) {
             return ""
         }
@@ -188,7 +192,7 @@ class FilmDetailFragment : BaseFragment<HomeViewModel, FragmentFilmDetailBinding
 
     override fun lazyLoadData() {
         //设置界面 加载中
-        loadsir.showLoading()
+        loadSir.showLoading()
         requestFilmDetailViewModel.getFilmDetail(movieId)
     }
 

@@ -497,6 +497,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/ll_stageImg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
@@ -514,7 +515,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:text="剧照"
-                            android:textColor="@color/colorAccent"
+                            android:textColor="@color/colorBlack666"
                             android:textSize="17sp" />
 
                     </LinearLayout>

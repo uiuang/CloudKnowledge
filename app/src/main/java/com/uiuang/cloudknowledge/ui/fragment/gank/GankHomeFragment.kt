@@ -16,10 +16,7 @@ import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.databinding.FragmentGankHomeBinding
 import com.uiuang.cloudknowledge.databinding.HeaderItemEverydayBinding
-import com.uiuang.cloudknowledge.ext.init
-import com.uiuang.cloudknowledge.ext.initFooter
-import com.uiuang.cloudknowledge.ext.loadServiceInit
-import com.uiuang.cloudknowledge.ext.showLoading
+import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.gank.GankAndroidAdapter
 import com.uiuang.cloudknowledge.ui.adapter.gank.GankBannerAdapter
 import com.uiuang.cloudknowledge.viewmodel.request.RequestGankHomeViewModel
@@ -71,9 +68,7 @@ class GankHomeFragment : BaseFragment<HomeViewModel, FragmentGankHomeBinding>() 
             null,
             false
         )
-//        val px = requireActivity().dp2px(100)
         val screenWidth: Int = requireActivity().screenWidth
-//        val width: Int = screenWidth.minus(px)
         val height: Float = screenWidth / 2.2f
         val lp = ConstraintLayout.LayoutParams(screenWidth, height.toInt())
         headerItemEverydayBinding.banner.layoutParams = lp
@@ -124,6 +119,10 @@ class GankHomeFragment : BaseFragment<HomeViewModel, FragmentGankHomeBinding>() 
             } else {
 
             }
+        })
+        appViewModel.appColor.observe(viewLifecycleOwner, Observer {
+            //监听全局的主题颜色改变
+            setUiTheme(it, loadSir)
         })
     }
 

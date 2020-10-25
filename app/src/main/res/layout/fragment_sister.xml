@@ -24,7 +24,7 @@
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_behavior="com.uiuang.cloudknowledge.weight.recyclerview.FabScrollBehavior" />
+            app:layout_behavior="@string/fat_scroll_aware_fab_behavior" />
 
         <LinearLayout
             android:layout_width="match_parent"

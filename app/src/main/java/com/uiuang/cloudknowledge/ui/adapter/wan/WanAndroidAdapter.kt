@@ -12,9 +12,14 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.bean.ArticlesBean
 import com.uiuang.cloudknowledge.utils.DataUtil
+import com.uiuang.cloudknowledge.weight.customview.CollectView
 
 class WanAndroidAdapter(data: MutableList<ArticlesBean>) :
     BaseQuickAdapter<ArticlesBean, BaseViewHolder>(R.layout.item_wan_android, data) {
+
+    private var collectAction: (item: ArticlesBean, v: CollectView, position: Int) -> Unit =
+        { _: ArticlesBean, _: CollectView, _: Int -> }
+
     /**
      * 是我的收藏页进来的，全部是收藏状态。bean里面没有返回isCollect信息
      */
@@ -67,11 +72,13 @@ class WanAndroidAdapter(data: MutableList<ArticlesBean>) :
 
         holder.setText(R.id.tv_time, item.niceDate)
         holder.setText(R.id.tv_title, Html.fromHtml(item.title))
-        if (isCollectList) {
-            val cbCollect = holder.getView<CheckBox>(R.id.cb_collect)
-            cbCollect.isChecked = true
-        }
-
+        holder.getView<CollectView>(R.id.item_home_collect).isChecked = item.collect
+        holder.getView<CollectView>(R.id.item_home_collect)
+            .setOnCollectViewClickListener(object : CollectView.OnCollectViewClickListener {
+                override fun onClick(v: CollectView) {
+                    collectAction.invoke(item, v, holder.adapterPosition)
+                }
+            })
     }
 
     fun setCollectList() {
@@ -84,6 +91,10 @@ class WanAndroidAdapter(data: MutableList<ArticlesBean>) :
 
     fun setNoShowAuthorName() {
         isNoShowAuthorName = true
+    }
+
+    fun setCollectClick(inputCollectAction: (item: ArticlesBean, v: CollectView, position: Int) -> Unit) {
+        this.collectAction = inputCollectAction
     }
 
 

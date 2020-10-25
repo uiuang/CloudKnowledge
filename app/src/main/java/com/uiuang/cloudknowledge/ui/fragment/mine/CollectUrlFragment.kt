@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
+import com.uiuang.cloudknowledge.bean.wan.WebBean
+import com.uiuang.cloudknowledge.data.enums.CollectType
 import com.uiuang.cloudknowledge.databinding.IncludeListBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.wan.CollectUrlAdapter
@@ -14,6 +16,8 @@ import com.uiuang.cloudknowledge.viewmodel.request.RequestCollectViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.CollectViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.SpaceItemDecoration
 import com.uiuang.mvvm.base.appContext
+import com.uiuang.mvvm.ext.nav
+import com.uiuang.mvvm.ext.navigateAction
 import com.uiuang.mvvm.util.dp2px
 import kotlinx.android.synthetic.main.include_list.*
 import kotlinx.android.synthetic.main.include_recyclerview.*
@@ -59,9 +63,10 @@ class CollectUrlFragment : BaseFragment<CollectViewModel, IncludeListBinding>() 
                 }
             }
             setOnItemClickListener { _, view, position ->
-//                nav().navigateAction(R.id.action_to_webFragment, Bundle().apply {
-//                    putParcelable("collectUrl", articleAdapter.data[position])
-//                })
+                var item = articleAdapter.data[position]
+                nav().navigateAction(R.id.action_global_webViewFragment, Bundle().apply {
+                    putParcelable("webBean", WebBean(item.id,true,item.title,item.link,CollectType.Url.type))
+                })
             }
         }
     }

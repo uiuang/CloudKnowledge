@@ -7,11 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
+import com.uiuang.cloudknowledge.bean.wan.WebBean
+import com.uiuang.cloudknowledge.data.enums.CollectType
 import com.uiuang.cloudknowledge.databinding.FragmentNavigationBinding
-import com.uiuang.cloudknowledge.ext.init
-import com.uiuang.cloudknowledge.ext.loadServiceInit
-import com.uiuang.cloudknowledge.ext.showError
-import com.uiuang.cloudknowledge.ext.showLoading
+import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.wan.NavigationAdapter
 import com.uiuang.cloudknowledge.ui.adapter.wan.NavigationContentAdapter
 import com.uiuang.cloudknowledge.viewmodel.request.RequestNavigationViewModel
@@ -65,8 +64,17 @@ class NavigationFragment : BaseFragment<HomeViewModel, FragmentNavigationBinding
         }
         recyclerView.init(layoutManager2, navigationContentAdapter)
 
-        navigationContentAdapter.setNavigationAction { item, view ->
-            openDetail(item.link, item.title)
+        navigationContentAdapter.setNavigationAction { item, _ ->
+            nav().navigateAction(R.id.action_global_webViewFragment, Bundle().apply {
+                val webBean = WebBean(
+                    item.id,
+                    item.collect,
+                    item.title,
+                    item.link,
+                    CollectType.Url.type
+                )
+                putParcelable("webBean", webBean)
+            })
         }
 
 
@@ -85,6 +93,50 @@ class NavigationFragment : BaseFragment<HomeViewModel, FragmentNavigationBinding
             navigationAdapter.setNewInstance(it)
             0.selectItem()
         })
+
+        appViewModel.run {
+            //监听账户信息是否改变 有值时(登录)将相关的数据设置为已收藏，为空时(退出登录)，将已收藏的数据变为未收藏
+            userinfo.observe(viewLifecycleOwner, Observer {
+                if (it != null) {
+                    it.collectIds.forEach { id ->
+                        for (item in navigationContentAdapter.data) {
+                            for (articles in item.articles!!) {
+                                if (id.toInt() == articles.id) {
+                                    articles.collect = true
+                                    break
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    for (item in navigationContentAdapter.data) {
+                        for (articles in item.articles!!) {
+                            articles.collect = false
+
+                        }
+                    }
+                }
+                navigationContentAdapter.notifyDataSetChanged()
+            })
+
+            //监听全局的列表动画改编
+            appAnimation.observe(viewLifecycleOwner, Observer {
+                navigationContentAdapter.setAdapterAnimation(it)
+            })
+            //监听全局的收藏信息 收藏的Id跟本列表的数据id匹配则需要更新
+            eventViewModel.collectEvent.observe(viewLifecycleOwner, Observer {
+                for (index in navigationContentAdapter.data.indices) {
+                    for (item in navigationContentAdapter.data[index].articles!!) {
+                        if (item.id == it.id) {
+                            item.collect = it.collect
+                            navigationContentAdapter.notifyItemChanged(index)
+                            break
+                        }
+                    }
+                }
+            })
+        }
+
     }
 
     private fun Int.selectItem() {

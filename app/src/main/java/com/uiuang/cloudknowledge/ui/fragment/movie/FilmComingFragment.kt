@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.databinding.FragmentFilmComingBinding
+import com.uiuang.cloudknowledge.databinding.IncludeListBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.film.FilmComingAdapter
 import com.uiuang.cloudknowledge.viewmodel.request.RequestFilmComingViewModel
@@ -17,14 +17,14 @@ import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
 import com.uiuang.cloudknowledge.weight.recyclerview.GridSpaceItemDecoration
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
-import com.uiuang.mvvm.util.logd
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.fragment_sister.*
+import kotlinx.android.synthetic.main.include_list.*
+import kotlinx.android.synthetic.main.include_recyclerview.*
 
 
-class FilmComingFragment : BaseFragment<HomeViewModel, FragmentFilmComingBinding>() {
+class FilmComingFragment : BaseFragment<HomeViewModel, IncludeListBinding>() {
     //界面状态管理者
-    private lateinit var loadsir: LoadService<Any>
+    private lateinit var loadSir: LoadService<Any>
 
     //请求ViewModel
     private val requestFilmComingViewModel: RequestFilmComingViewModel by viewModels()
@@ -41,13 +41,13 @@ class FilmComingFragment : BaseFragment<HomeViewModel, FragmentFilmComingBinding
         fun newInstance() = FilmComingFragment()
     }
 
-    override fun layoutId(): Int = R.layout.fragment_film_coming
+    override fun layoutId(): Int = R.layout.include_list
 
     override fun initView(savedInstanceState: Bundle?) {
 
-        loadsir = loadServiceInit(swipeRefresh) {
+        loadSir = loadServiceInit(swipeRefresh) {
             //点击重试时触发的操作
-            loadsir.showLoading()
+            loadSir.showLoading()
             requestFilmComingViewModel.getComingFilm()
         }
         //初始化recyclerView
@@ -68,30 +68,31 @@ class FilmComingFragment : BaseFragment<HomeViewModel, FragmentFilmComingBinding
             requestFilmComingViewModel.getComingFilm()
         }
         filmComingAdapter.run {
-            setOnItemClickListener { adapter, view, position ->
-                var item = filmComingAdapter.getItem(position)
+            setOnItemClickListener { _, _, position ->
+                val item = filmComingAdapter.getItem(position)
                 nav().navigateAction(
                     R.id.action_mainFragment_to_filmDetailFragment,
                     Bundle().apply {
                         putInt("movieId", item.movieId)
                     })
-                item.movieId.toString().logd()
-
             }
         }
     }
 
     override fun createObserver() {
-        super.createObserver()
         requestFilmComingViewModel.filmComingDataState.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            loadListData(it, filmComingAdapter, loadsir, recyclerView, swipeRefresh)
+            loadListData(it, filmComingAdapter, loadSir, recyclerView, swipeRefresh)
+        })
+        appViewModel.appColor.observe(viewLifecycleOwner, Observer {
+            //监听全局的主题颜色改变
+            setUiTheme(it, floatBtn, swipeRefresh, loadSir, footView)
         })
     }
 
     override fun lazyLoadData() {
         //设置界面 加载中
-        loadsir.showLoading()
+        loadSir.showLoading()
         requestFilmComingViewModel.getComingFilm()
     }
 }

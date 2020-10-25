@@ -80,7 +80,7 @@ class RequestCollectViewModel : BaseViewModel() {
      * 不然会出错
      */
     fun unCollectUrl(id: Int) {
-        request({ getWanAndroidServer.unCollect(id) }, {
+        request({ getWanAndroidServer.delCollectUrl(id) }, {
             val uiState = CollectUiState(isSuccess = true, collect = false, id = id)
             collectUrlUiState.value = uiState
         }, {

@@ -17,7 +17,7 @@ class ArticlesBean(
     var origin: String? = null,
     var projectLink: String? = null,
     var publishTime: Long = 0,
-    var title: String? = null,
+    var title: String = "",
     var visible: Int? = 0,
     var zan: Int? = 0,
     var order: Int,

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.databinding.FragmentFilmShowingBinding
+import com.uiuang.cloudknowledge.databinding.IncludeListBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.film.FilmShowingAdapter
 import com.uiuang.cloudknowledge.viewmodel.request.RequestFilmShowingViewModel
@@ -19,14 +19,15 @@ import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.fragment_sister.*
+import kotlinx.android.synthetic.main.include_list.*
+import kotlinx.android.synthetic.main.include_recyclerview.*
 
 /**
  *热映榜
  */
-class FilmShowingFragment : BaseFragment<HomeViewModel, FragmentFilmShowingBinding>() {
+class FilmShowingFragment : BaseFragment<HomeViewModel, IncludeListBinding>() {
     //界面状态管理者
-    private lateinit var loadsir: LoadService<Any>
+    private lateinit var loadSir: LoadService<Any>
 
     //请求ViewModel
     private val requestFilmShowingViewModel: RequestFilmShowingViewModel by viewModels()
@@ -42,12 +43,12 @@ class FilmShowingFragment : BaseFragment<HomeViewModel, FragmentFilmShowingBindi
         fun newInstance() = FilmShowingFragment()
     }
 
-    override fun layoutId(): Int = R.layout.fragment_film_showing
+    override fun layoutId(): Int = R.layout.include_list
 
     override fun initView(savedInstanceState: Bundle?) {
-        loadsir = loadServiceInit(swipeRefresh) {
+        loadSir = loadServiceInit(swipeRefresh) {
             //点击重试时触发的操作
-            loadsir.showLoading()
+            loadSir.showLoading()
             requestFilmShowingViewModel.getHotFilm()
         }
         //初始化recyclerView
@@ -63,7 +64,6 @@ class FilmShowingFragment : BaseFragment<HomeViewModel, FragmentFilmShowingBindi
             )
             it.itemAnimator = DefaultItemAnimator()
             footView = it.initFooter(SwipeRecyclerView.LoadMoreListener {
-//                requestSisterViewModel.getPlazaData(false)
             })
             //初始化FloatingActionButton
             it.initFloatBtn(floatBtn)
@@ -86,16 +86,19 @@ class FilmShowingFragment : BaseFragment<HomeViewModel, FragmentFilmShowingBindi
     }
 
     override fun createObserver() {
-        super.createObserver()
         requestFilmShowingViewModel.filmShowingDataState.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            loadListData(it, filmShowingAdapter, loadsir, recyclerView, swipeRefresh)
+            loadListData(it, filmShowingAdapter, loadSir, recyclerView, swipeRefresh)
+        })
+        appViewModel.appColor.observe(viewLifecycleOwner, Observer {
+            //监听全局的主题颜色改变
+            setUiTheme(it, floatBtn, swipeRefresh, loadSir, footView)
         })
     }
 
     override fun lazyLoadData() {
         //设置界面 加载中
-        loadsir.showLoading()
+        loadSir.showLoading()
         requestFilmShowingViewModel.getHotFilm()
     }
 }

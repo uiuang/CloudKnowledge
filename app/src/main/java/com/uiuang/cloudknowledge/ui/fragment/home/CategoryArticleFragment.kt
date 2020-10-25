@@ -14,9 +14,13 @@ import com.uiuang.cloudknowledge.app.http.Constants.NAME
 import com.uiuang.cloudknowledge.app.http.Constants.WEB_ISTITLEFIX
 import com.uiuang.cloudknowledge.app.http.Constants.WEB_TITLE
 import com.uiuang.cloudknowledge.app.http.Constants.WEB_URL
+import com.uiuang.cloudknowledge.bean.CollectBus
+import com.uiuang.cloudknowledge.bean.wan.WebBean
+import com.uiuang.cloudknowledge.data.enums.CollectType
 import com.uiuang.cloudknowledge.databinding.FragmentCategoryDetailBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.wan.WanAndroidAdapter
+import com.uiuang.cloudknowledge.viewmodel.request.RequestCollectViewModel
 import com.uiuang.cloudknowledge.viewmodel.request.RequestWanHomeViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
@@ -24,6 +28,10 @@ import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.fragment_category_article.*
+import kotlinx.android.synthetic.main.fragment_category_article.recyclerView
+import kotlinx.android.synthetic.main.include_list.*
+import kotlinx.android.synthetic.main.include_recyclerview.*
+import kotlinx.android.synthetic.main.include_toolbar.*
 
 
 class CategoryArticleFragment : BaseFragment<HomeViewModel, FragmentCategoryDetailBinding>() {
@@ -34,6 +42,9 @@ class CategoryArticleFragment : BaseFragment<HomeViewModel, FragmentCategoryDeta
     //界面状态管理者
     private lateinit var loadSir: LoadService<Any>
     private lateinit var footView: DefineLoadMoreView
+
+    //收藏viewModel
+    private val requestCollectViewModel: RequestCollectViewModel by viewModels()
 
     private val requestWanHomeViewModel: RequestWanHomeViewModel by viewModels()
     private val wanAndroidAdapter: WanAndroidAdapter by lazy {
@@ -79,10 +90,26 @@ class CategoryArticleFragment : BaseFragment<HomeViewModel, FragmentCategoryDeta
                 requestWanHomeViewModel.getHomeArticleList(false, cid = categoryId)
             })
         }
-        wanAndroidAdapter.let {
-            it.setOnItemClickListener { _, _, position ->
-                val item = it.getItem(position)
-                openDetail(item.link, item.title)
+        wanAndroidAdapter.run {
+            setOnItemClickListener { _, _, position ->
+                val item = getItem(position)
+                nav().navigateAction(R.id.action_global_webViewFragment, Bundle().apply {
+                    val webBean = WebBean(
+                        item.id,
+                        item.collect,
+                        item.title,
+                        item.link,
+                        CollectType.Article.type
+                    )
+                    putParcelable("webBean", webBean)
+                })
+            }
+            setCollectClick { item, v, _ ->
+                if (v.isChecked) {
+                    requestCollectViewModel.unCollect(item.id)
+                } else {
+                    requestCollectViewModel.collect(item.id)
+                }
             }
         }
     }
@@ -91,6 +118,56 @@ class CategoryArticleFragment : BaseFragment<HomeViewModel, FragmentCategoryDeta
         requestWanHomeViewModel.articlesBean.observe(viewLifecycleOwner, Observer {
             loadListData(it, wanAndroidAdapter, loadSir, recyclerView)
         })
+        requestCollectViewModel.collectUiState.observe(viewLifecycleOwner, Observer {
+            if (it.isSuccess) {
+                //收藏或取消收藏操作成功，发送全局收藏消息
+                eventViewModel.collectEvent.value = CollectBus(it.id, it.collect)
+            } else {
+                showMessage(it.errorMsg)
+                for (index in wanAndroidAdapter.data.indices) {
+                    if (wanAndroidAdapter.data[index].id == it.id) {
+                        wanAndroidAdapter.data[index].collect = it.collect
+                        wanAndroidAdapter.notifyItemChanged(index)
+                        break
+                    }
+                }
+            }
+        })
+        appViewModel.run {
+            //监听账户信息是否改变 有值时(登录)将相关的数据设置为已收藏，为空时(退出登录)，将已收藏的数据变为未收藏
+            userinfo.observe(viewLifecycleOwner, Observer {
+                if (it != null) {
+                    it.collectIds.forEach { id ->
+                        for (item in wanAndroidAdapter.data) {
+                            if (id.toInt() == item.id) {
+                                item.collect = true
+                                break
+                            }
+                        }
+                    }
+                } else {
+                    for (item in wanAndroidAdapter.data) {
+                        item.collect = false
+                    }
+                }
+                wanAndroidAdapter.notifyDataSetChanged()
+            })
+
+            //监听全局的列表动画改编
+            appAnimation.observe(viewLifecycleOwner, Observer {
+                wanAndroidAdapter.setAdapterAnimation(it)
+            })
+            //监听全局的收藏信息 收藏的Id跟本列表的数据id匹配则需要更新
+            eventViewModel.collectEvent.observe(viewLifecycleOwner, Observer {
+                for (index in wanAndroidAdapter.data.indices) {
+                    if (wanAndroidAdapter.data[index].id == it.id) {
+                        wanAndroidAdapter.data[index].collect = it.collect
+                        wanAndroidAdapter.notifyItemChanged(index)
+                        break
+                    }
+                }
+            })
+        }
     }
 
     override fun lazyLoadData() {

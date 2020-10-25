@@ -196,13 +196,13 @@ interface ApiService {
      * 收藏
      */
     @POST("/lg/collect/{id}/json")
-    suspend fun collect(@Path("id") id: Int): ApiResponse<Any>
+    suspend fun collect(@Path("id") id: Int): ApiResponse<Any?>
 
     /**
      * 取消收藏
      */
     @POST("/lg/uncollect_originId/{id}/json")
-    suspend fun unCollect(@Path("id") id: Int): ApiResponse<Any>
+    suspend fun unCollect(@Path("id") id: Int): ApiResponse<Any?>
 
 
     /**
@@ -218,7 +218,7 @@ interface ApiService {
      * 取消收藏网址
      */
     @POST("lg/collect/deletetool/json")
-    suspend fun deletetool(@Query("id") id: Int): ApiResponse<Any?>
+    suspend fun delCollectUrl(@Query("id") id: Int): ApiResponse<Any?>
 
     /**
      * 获取收藏文章数据

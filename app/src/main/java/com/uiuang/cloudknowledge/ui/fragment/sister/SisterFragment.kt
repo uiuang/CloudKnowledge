@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_sister.*
 
 class SisterFragment : BaseFragment<HomeViewModel, FragmentSisterBinding>() {
     //界面状态管理者
-    private lateinit var loadsir: LoadService<Any>
+    private lateinit var loadSir: LoadService<Any>
 
     //请求ViewModel
     private val requestSisterViewModel: RequestSisterViewModel by viewModels()
@@ -54,9 +54,9 @@ class SisterFragment : BaseFragment<HomeViewModel, FragmentSisterBinding>() {
         }
 
         //状态页配置
-        loadsir = loadServiceInit(swipeRefresh) {
+        loadSir = loadServiceInit(swipeRefresh) {
             //点击重试时触发的操作
-            loadsir.showLoading()
+            loadSir.showLoading()
             requestSisterViewModel.getPlazaData(true)
         }
         //初始化recyclerView
@@ -108,13 +108,13 @@ class SisterFragment : BaseFragment<HomeViewModel, FragmentSisterBinding>() {
         super.createObserver()
         requestSisterViewModel.sisterDataState.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
-            loadListData(it, welfareAdapter, loadsir, recyclerView, swipeRefresh)
+            loadListData(it, welfareAdapter, loadSir, recyclerView, swipeRefresh)
         })
     }
 
     override fun lazyLoadData() {
         //设置界面 加载中
-        loadsir.showLoading()
+        loadSir.showLoading()
         requestSisterViewModel.getPlazaData(true)
     }
 

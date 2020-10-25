@@ -106,6 +106,29 @@ object SettingUtil {
         states[1] = intArrayOf()
         return ColorStateList(states, colors)
     }
+    fun getColorStateList2(color: Int): ColorStateList {
+        val colors = intArrayOf(color, ContextCompat.getColor(App.instance, R.color.colorGray))
+        val states = arrayOfNulls<IntArray>(2)
+        states[0] = intArrayOf(android.R.attr.state_selected, android.R.attr.state_selected)
+        states[1] = intArrayOf()
+        return ColorStateList(states, colors)
+    }
+
+     fun createColorStateList(defaultColor: Int, selectedColor: Int): ColorStateList {
+        val states = arrayOfNulls<IntArray>(2)
+        val colors = IntArray(2)
+        var i = 0
+        states[i] = intArrayOf()
+        colors[i] = selectedColor
+        i++
+
+        // Default enabled state
+        states[i] = intArrayOf()
+        colors[i] = defaultColor
+        i++
+        return ColorStateList(states, colors)
+    }
+
 
     fun getOneColorStateList(context: Context): ColorStateList {
         val colors = intArrayOf(
@@ -139,7 +162,7 @@ object SettingUtil {
     /**
      * 设置shap的渐变颜色
      */
-    fun setShapColor(view: View, color: IntArray, orientation: GradientDrawable.Orientation) {
+    fun setShapeColor(view: View, color: IntArray, orientation: GradientDrawable.Orientation) {
         val drawable = view.background as GradientDrawable
         drawable.orientation = orientation//渐变方向
         drawable.colors = color//渐变颜色数组

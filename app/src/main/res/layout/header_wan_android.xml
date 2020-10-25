@@ -36,6 +36,7 @@
             app:layout_constraintTop_toBottomOf="@+id/banner">
 
             <View
+                android:id="@+id/view_line"
                 android:layout_width="2dp"
                 android:layout_height="17dp"
                 android:background="@color/colorTheme" />

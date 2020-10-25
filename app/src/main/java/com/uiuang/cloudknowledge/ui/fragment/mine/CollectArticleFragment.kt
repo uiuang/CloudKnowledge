@@ -8,6 +8,8 @@ import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.bean.CollectBus
+import com.uiuang.cloudknowledge.bean.wan.WebBean
+import com.uiuang.cloudknowledge.data.enums.CollectType
 import com.uiuang.cloudknowledge.databinding.IncludeListBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.wan.CollectAdapter
@@ -15,6 +17,8 @@ import com.uiuang.cloudknowledge.viewmodel.request.RequestCollectViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.CollectViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.SpaceItemDecoration
 import com.uiuang.mvvm.base.appContext
+import com.uiuang.mvvm.ext.nav
+import com.uiuang.mvvm.ext.navigateAction
 import com.uiuang.mvvm.util.dp2px
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import kotlinx.android.synthetic.main.include_list.*
@@ -63,7 +67,13 @@ class CollectArticleFragment : BaseFragment<CollectViewModel, IncludeListBinding
                     requestCollectViewModel.collect(item.originId)
                 }
             }
-            setOnItemClickListener { _, view, position ->
+            setOnItemClickListener { _, _, position ->
+                var item = articleAdapter.data[position]
+                nav().navigateAction(R.id.action_global_webViewFragment, Bundle().apply {
+                    putParcelable("webBean", WebBean(item.id,true,item.title,item.link,
+                        CollectType.Article.type)
+                    )
+                })
 //                nav().navigateAction(R.id.action_global_loginFragment, Bundle().apply {
 //                    putParcelable("collect", articleAdapter.data[position])
 //                })
@@ -100,7 +110,7 @@ class CollectArticleFragment : BaseFragment<CollectViewModel, IncludeListBinding
             collectEvent.observe(viewLifecycleOwner, Observer {
                 for (index in articleAdapter.data.indices) {
                     if (articleAdapter.data[index].originId == it.id) {
-                        articleAdapter.remove(index)
+                        articleAdapter.data.removeAt(index)
                         if (articleAdapter.data.size == 0) {
                             loadSir.showEmpty()
                         }

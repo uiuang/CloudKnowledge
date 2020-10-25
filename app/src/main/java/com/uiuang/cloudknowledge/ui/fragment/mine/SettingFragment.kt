@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
@@ -197,6 +198,9 @@ class SettingFragment : PreferenceFragmentCompat(),
 //            }
             false
         }
+        shareViewModel.appColor.observe(this, Observer {
+            colorPreview?.setView()
+        })
     }
 
     private fun initPreferences() {
@@ -226,16 +230,22 @@ class SettingFragment : PreferenceFragmentCompat(),
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        when (key) {
-            PrefKey.COLOR -> colorPreview?.setView()
-            PrefKey.TOP -> SettingUtil.setIsNeedTop(
-                sharedPreferences!!.getBoolean(
-                    PrefKey.TOP,
-                    true
-                )
-            )
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
+        if (key == "color") {
+            colorPreview?.setView()
         }
+        if (key == "top") {
+            SettingUtil.setIsNeedTop(sharedPreferences.getBoolean("top", true))
+        }
+//        when (key) {
+//            PrefKey.COLOR -> colorPreview?.setView()
+//            PrefKey.TOP -> SettingUtil.setIsNeedTop(
+//                sharedPreferences!!.getBoolean(
+//                    PrefKey.TOP,
+//                    true
+//                )
+//            )
+//        }
     }
 
 

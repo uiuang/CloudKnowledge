@@ -6,6 +6,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.utils.SettingUtil
+import com.uiuang.mvvm.util.logd
 
 
 /**
@@ -30,7 +31,9 @@ class IconPreference(context: Context, attrs: AttributeSet) : Preference(context
     }
 
     fun setView() {
+
         val color = SettingUtil.getColor(context)
+        color.toString().logd()
         circleImageView?.color = color
         circleImageView?.border = color
     }

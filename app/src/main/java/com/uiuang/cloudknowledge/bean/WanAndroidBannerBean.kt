@@ -4,7 +4,10 @@ data class WanAndroidBannerBean(
     val desc: String,
     val imagePath: String,
     val title: String,
-    val url: String
+    val url: String,
+    var id: Int = 0,
+    var order: Int = 0,
+    var type: Int = 0
 ) {
 
     /**

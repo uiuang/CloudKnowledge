@@ -60,21 +60,20 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="?attr/actionBarSize"
+                    android:minHeight="?attr/actionBarSize"
+                    android:theme="@style/AppTheme.AppBarOverlay"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
                     app:contentInsetEnd="?attr/actionBarSize"
                     app:contentInsetLeft="0dp"
                     app:contentInsetStart="0dp"
                     app:contentInsetStartWithNavigation="0dp"
                     app:layout_collapseMode="pin"
                     app:navigationIcon="@drawable/icon_back"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:title=""
                     app:titleMarginStart="0dp"
                     app:titleTextColor="@color/colorTabTextNormal"
                     tools:title="基础知识"
-                    android:paddingLeft="0dp"
-                    android:paddingRight="?attr/actionBarSize" />
+                     />
 
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>

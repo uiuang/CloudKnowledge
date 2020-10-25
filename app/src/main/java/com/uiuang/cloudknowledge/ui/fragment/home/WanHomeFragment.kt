@@ -11,13 +11,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.databinding.FragmentWanHomeBinding
+import com.uiuang.cloudknowledge.bean.CollectBus
+import com.uiuang.cloudknowledge.bean.wan.WebBean
+import com.uiuang.cloudknowledge.data.enums.CollectType
+import com.uiuang.cloudknowledge.databinding.FragmentListBinding
 import com.uiuang.cloudknowledge.databinding.HeaderWanAndroidBinding
+import com.uiuang.cloudknowledge.databinding.IncludeListBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.wan.WanAndroidAdapter
 import com.uiuang.cloudknowledge.ui.adapter.wan.WanBannerAdapter
-import com.uiuang.cloudknowledge.ui.fragment.web.WebViewFragment
 import com.uiuang.cloudknowledge.utils.toast
+import com.uiuang.cloudknowledge.viewmodel.request.RequestCollectViewModel
 import com.uiuang.cloudknowledge.viewmodel.request.RequestWanHomeViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
 import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
@@ -27,14 +31,16 @@ import com.uiuang.mvvm.util.dp2px
 import com.uiuang.mvvm.util.screenWidth
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
 import com.youth.banner.indicator.CircleIndicator
-import kotlinx.android.synthetic.main.fragment_sister.recyclerView
-import kotlinx.android.synthetic.main.fragment_sister.swipeRefresh
-import kotlinx.android.synthetic.main.fragment_wan_home.*
+import kotlinx.android.synthetic.main.include_list.*
+import kotlinx.android.synthetic.main.include_recyclerview.*
+import kotlinx.android.synthetic.main.include_toolbar.*
 
 
-class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
+class WanHomeFragment : BaseFragment<HomeViewModel, IncludeListBinding>() {
     //界面状态管理者
     private lateinit var loadSir: LoadService<Any>
+    //收藏viewModel
+    private val requestCollectViewModel: RequestCollectViewModel by viewModels()
 
     private val requestWanHomeViewModel: RequestWanHomeViewModel by viewModels()
 
@@ -56,7 +62,7 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
         fun newInstance() = WanHomeFragment()
     }
 
-    override fun layoutId(): Int = R.layout.fragment_wan_home
+    override fun layoutId(): Int = R.layout.include_list
 
     override fun initView(savedInstanceState: Bundle?) {
         //状态页配置
@@ -106,7 +112,7 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
                 }
             })
 //            //初始化FloatingActionButton
-            it.initFloatBtn(floatBtnWanAndroid)
+            it.initFloatBtn(floatBtn)
         }
         //初始化 SwipeRefreshLayout
         swipeRefresh.init {
@@ -125,27 +131,50 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
             indicator = CircleIndicator(requireActivity())
             setOnBannerListener { _, position ->
                 val item = wanBannerAdapter.getData(position)
-                openDetail(item.url, item.title)
+                nav().navigateAction(R.id.action_global_webViewFragment, Bundle().apply {
+                    val webBean = WebBean(
+                        item.id,
+                        false,
+                        item.title,
+                        item.url,
+                        CollectType.Url.type
+                    )
+                    putParcelable("webBean", webBean)
+                })
+////                openDetail(item.url, item.title)
             }
         }
         wanAndroidAdapter.run {
-            addChildClickViewIds(R.id.tv_tag_name, R.id.cb_collect)
+            addChildClickViewIds(R.id.tv_tag_name)
             setOnItemClickListener { _, view, position ->
-                val item = getItem(position - 1)
-                WebViewFragment.openDetail(view, item.link, item.title)
-//                openDetail(item.link, item.title)
+                val item = getItem(position - this@WanHomeFragment.recyclerView.headerCount)
+                nav().navigateAction(R.id.action_global_webViewFragment, Bundle().apply {
+                    val webBean = WebBean(
+                        item.id,
+                        item.collect,
+                        item.title,
+                        item.link,
+                        CollectType.Article.type
+                    )
+                    putParcelable("webBean", webBean)
+                })
+            }
+            setCollectClick { item, v, position ->
+                if (v.isChecked) {
+                    requestCollectViewModel.unCollect(item.id)
+                } else {
+                    requestCollectViewModel.collect(item.id)
+                }
             }
             setOnItemChildClickListener { _, view, position ->
                 when (view.id) {
                     R.id.tv_tag_name -> getItem(position - 1).chapterName?.toast()
-                    R.id.cb_collect -> "未登录".toast()
                 }
             }
         }
     }
 
     override fun createObserver() {
-        super.createObserver()
         requestWanHomeViewModel.wanAndroidBannerBean.observe(viewLifecycleOwner, Observer {
             //设值 新写了个拓展函数，搞死了这个恶心的重复代码
             val listData = it.listData
@@ -157,6 +186,61 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
         requestWanHomeViewModel.articlesBean.observe(viewLifecycleOwner, Observer {
             loadListData(it, wanAndroidAdapter, loadSir, recyclerView, swipeRefresh)
         })
+
+        requestCollectViewModel.collectUiState.observe(viewLifecycleOwner, Observer {
+            if (it.isSuccess) {
+                //收藏或取消收藏操作成功，发送全局收藏消息
+                eventViewModel.collectEvent.value = CollectBus(it.id, it.collect)
+            } else {
+                showMessage(it.errorMsg)
+                for (index in wanAndroidAdapter.data.indices) {
+                    if (wanAndroidAdapter.data[index].id == it.id) {
+                        wanAndroidAdapter.data[index].collect = it.collect
+                        wanAndroidAdapter.notifyItemChanged(index)
+                        break
+                    }
+                }
+            }
+        })
+
+        appViewModel.run {
+            //监听账户信息是否改变 有值时(登录)将相关的数据设置为已收藏，为空时(退出登录)，将已收藏的数据变为未收藏
+            userinfo.observe(viewLifecycleOwner, Observer {
+                if (it != null) {
+                    it.collectIds.forEach { id ->
+                        for (item in wanAndroidAdapter.data) {
+                            if (id.toInt() == item.id) {
+                                item.collect = true
+                                break
+                            }
+                        }
+                    }
+                } else {
+                    for (item in wanAndroidAdapter.data) {
+                        item.collect = false
+                    }
+                }
+                wanAndroidAdapter.notifyDataSetChanged()
+            })
+            //监听全局的主题颜色改变
+            appColor.observe(viewLifecycleOwner, Observer {
+                setUiTheme(it, toolbar, floatBtn, swipeRefresh, loadSir, footView,headerWanAndroidBinding.viewLine,headerWanAndroidBinding.rb1,headerWanAndroidBinding.rb2)
+            })
+            //监听全局的列表动画改编
+            appAnimation.observe(viewLifecycleOwner, Observer {
+                wanAndroidAdapter.setAdapterAnimation(it)
+            })
+            //监听全局的收藏信息 收藏的Id跟本列表的数据id匹配则需要更新
+            eventViewModel.collectEvent.observe(viewLifecycleOwner, Observer {
+                for (index in wanAndroidAdapter.data.indices) {
+                    if (wanAndroidAdapter.data[index].id == it.id) {
+                        wanAndroidAdapter.data[index].collect = it.collect
+                        wanAndroidAdapter.notifyItemChanged(index)
+                        break
+                    }
+                }
+            })
+        }
     }
 
     override fun lazyLoadData() {
@@ -175,16 +259,6 @@ class WanHomeFragment : BaseFragment<HomeViewModel, FragmentWanHomeBinding>() {
             else
                 requestWanHomeViewModel.getHomeProjectList(isRefresh)
 
-        }
-    }
-
-    private fun openDetail(url: String?, title: String?, isTitleFix: Boolean = false) {
-        if (!url.isNullOrEmpty()) {
-            nav().navigateAction(R.id.action_global_webViewFragment, Bundle().apply {
-                putString("url", url)
-                putBoolean("isTitleFix", isTitleFix)
-                putString("title", if (title.isNullOrEmpty()) url else title)
-            })
         }
     }
 
