@@ -183,7 +183,7 @@ class SettingFragment : PreferenceFragmentCompat(),
         findPreference<Preference>(PrefKey.AUTHOR)?.setOnPreferenceClickListener {
             showMessage(
                 title = "联系作者",
-                message = "扣　扣：824868922\n\n微　信：hgj840\n\n邮　箱：824868922@qq.com"
+                message = "扣　扣：1782856895\n\n微　信：uiuang\n\n邮　箱：zsc7454@163.com"
             )
             false
         }
