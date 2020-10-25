@@ -5,9 +5,8 @@
 [2]:https://github.com/uiuang/CloudKnowledge
 [3]:https://img.shields.io/github/release/uiuang/CloudKnowledge.svg
 [4]:https://github.com/uiuang/CloudKnowledge/releases/latest
-[5]:https://img.shields.io/badge/license-Apache%202-blue.svg
+[5]:https://img.shields.io/github/license/uiuang/CloudKnowledge
 [6]:https://github.com/uiuang/CloudKnowledge/blob/master/LICENSE
-
 
 ## 简单介绍
 
