@@ -3,7 +3,7 @@
 
 [1]:https://img.shields.io/badge/platform-Android-blue.svg
 [2]:https://github.com/uiuang/CloudKnowledge
-[3]:https://img.shields.io/github/release/hegaojian/JetpackMvvm.svg
+[3]:https://img.shields.io/github/release/uiuang/CloudKnowledge.svg
 [4]:https://github.com/uiuang/CloudKnowledge/releases/latest
 [5]:https://img.shields.io/badge/license-Apache%202-blue.svg
 [6]:https://github.com/uiuang/CloudKnowledge/blob/master/LICENSE
