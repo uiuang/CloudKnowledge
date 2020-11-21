@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tencent.mmkv.MMKV
 import com.uiuang.cloudknowledge.app.http.Constants
-import com.uiuang.cloudknowledge.bean.UserInfo
+import com.uiuang.cloudknowledge.bean.wan.UserInfo
 
 object CacheUtil {
     /**

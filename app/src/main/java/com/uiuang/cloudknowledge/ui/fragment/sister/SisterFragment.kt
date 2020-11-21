@@ -10,7 +10,7 @@ import com.google.gson.GsonBuilder
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.bean.GankIOResultBean
+import com.uiuang.cloudknowledge.bean.gank.GankIOResultBean
 import com.uiuang.cloudknowledge.databinding.FragmentSisterBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.gank.WelfareAdapter

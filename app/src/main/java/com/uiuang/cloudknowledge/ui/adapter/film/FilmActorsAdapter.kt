@@ -4,7 +4,7 @@ import android.widget.ImageView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.FilmDetailBean
+import com.uiuang.cloudknowledge.bean.film.FilmDetailBean
 import com.uiuang.cloudknowledge.ext.imageUrl
 
 class FilmActorsAdapter(data: MutableList<FilmDetailBean.Basic.Actor>?) :

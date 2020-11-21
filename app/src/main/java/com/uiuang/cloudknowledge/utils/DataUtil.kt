@@ -4,7 +4,7 @@ import android.content.Context
 import android.text.TextUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.uiuang.cloudknowledge.bean.TabBean
+import com.uiuang.cloudknowledge.bean.wan.TabBean
 import com.uiuang.mvvm.util.toJson
 
 object DataUtil {

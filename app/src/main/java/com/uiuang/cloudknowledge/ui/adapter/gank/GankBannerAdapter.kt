@@ -3,7 +3,7 @@ package com.uiuang.cloudknowledge.ui.adapter.gank
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.uiuang.cloudknowledge.bean.GankIOResultBean
+import com.uiuang.cloudknowledge.bean.gank.GankIOResultBean
 import com.uiuang.cloudknowledge.ext.loadUrl
 import com.youth.banner.adapter.BannerAdapter
 

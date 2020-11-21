@@ -6,17 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.uiuang.cloudknowledge.R
+import com.uiuang.cloudknowledge.app.base.BaseFragment
+import com.uiuang.cloudknowledge.databinding.FragmentListBinding
+import com.uiuang.cloudknowledge.viewmodel.state.TodoViewModel
 
 
-class TodoListFragment : Fragment() {
+class TodoListFragment : BaseFragment<TodoViewModel, FragmentListBinding>() {
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_todo_list, container, false)
+    override fun layoutId(): Int = R.layout.fragment_list
+
+    override fun initView(savedInstanceState: Bundle?) {
     }
 
 

@@ -8,7 +8,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.ComingFilmBean
+import com.uiuang.cloudknowledge.bean.film.ComingFilmBean
 import com.uiuang.mvvm.util.dp2px
 import com.uiuang.mvvm.util.screenWidth
 

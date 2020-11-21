@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.bean.ArticlesBean
-import com.uiuang.cloudknowledge.bean.CollectBus
-import com.uiuang.cloudknowledge.bean.TabBean
+import com.uiuang.cloudknowledge.bean.wan.ArticlesBean
+import com.uiuang.cloudknowledge.bean.event.CollectBus
+import com.uiuang.cloudknowledge.bean.wan.TabBean
 import com.uiuang.cloudknowledge.bean.wan.WebBean
 import com.uiuang.cloudknowledge.data.enums.CollectType
 import com.uiuang.cloudknowledge.databinding.FragmentWanFindBinding
@@ -32,7 +32,6 @@ import kotlinx.android.synthetic.main.fragment_sister.swipeRefresh
 import kotlinx.android.synthetic.main.fragment_wan_find.*
 import kotlinx.android.synthetic.main.fragment_wan_find.recyclerView
 import kotlinx.android.synthetic.main.include_list.*
-import kotlinx.android.synthetic.main.include_recyclerview.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 
 
@@ -170,7 +169,11 @@ class WanFindFragment : BaseFragment<WanFindViewModel, FragmentWanFindBinding>()
         requestCollectViewModel.collectUiState.observe(viewLifecycleOwner, Observer {
             if (it.isSuccess) {
                 //收藏或取消收藏操作成功，发送全局收藏消息
-                eventViewModel.collectEvent.value = CollectBus(it.id, it.collect)
+                eventViewModel.collectEvent.value =
+                    CollectBus(
+                        it.id,
+                        it.collect
+                    )
             } else {
                 showMessage(it.errorMsg)
                 for (index in wanAndroidAdapter.data.indices) {

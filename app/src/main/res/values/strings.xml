@@ -26,7 +26,9 @@
     <string name="cancel">取消</string>
     <string name="done">完成</string>
     <string name="confirm">确定</string>
+    <string name="copyright_tip">本App使用的Api使用《鸿洋·玩安卓》，《代码家·干货集中营》，《时光网》，仅供于大家学习交流</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="fat_scroll_aware_fab_behavior" translatable="false">com.uiuang.cloudknowledge.weight.recyclerview.FatScrollAwareFabBehavior</string>
+    <string name="add_qq_group">E1OxUYr98M9DqpVNi4_gof_3Dm5GuxwA</string>
 </resources>

@@ -2,7 +2,6 @@ package com.uiuang.cloudknowledge.ui.adapter.wan
 
 import android.text.Html
 import android.text.TextUtils
-import android.widget.CheckBox
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -10,7 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.ArticlesBean
+import com.uiuang.cloudknowledge.bean.wan.ArticlesBean
 import com.uiuang.cloudknowledge.utils.DataUtil
 import com.uiuang.cloudknowledge.weight.customview.CollectView
 

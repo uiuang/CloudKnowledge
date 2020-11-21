@@ -1,6 +1,6 @@
 package com.uiuang.cloudknowledge.app.event
 
-import com.uiuang.cloudknowledge.bean.CollectBus
+import com.uiuang.cloudknowledge.bean.event.CollectBus
 import com.uiuang.mvvm.base.viewmodel.BaseViewModel
 import com.uiuang.mvvm.callback.livedata.event.EventLiveData
 

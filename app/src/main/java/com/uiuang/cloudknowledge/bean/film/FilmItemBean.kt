@@ -1,4 +1,4 @@
-package com.uiuang.cloudknowledge.bean
+package com.uiuang.cloudknowledge.bean.film
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

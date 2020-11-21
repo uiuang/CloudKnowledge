@@ -6,8 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.ArticlesBean
-import com.uiuang.cloudknowledge.bean.NavJsonBean
+import com.uiuang.cloudknowledge.bean.wan.ArticlesBean
+import com.uiuang.cloudknowledge.bean.wan.NavJsonBean
 
 
 /**

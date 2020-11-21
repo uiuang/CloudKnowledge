@@ -238,6 +238,7 @@
                                 android:layout_height="1dp"
                                 android:layout_marginLeft="16dp"
                                 android:layout_marginEnd="16dp"
+                                android:visibility="gone"
                                 android:background="@color/mine_line"
                                 android:layout_marginStart="16dp" />
 
@@ -248,6 +249,7 @@
                                 android:gravity="center_vertical"
                                 android:orientation="horizontal"
                                 android:paddingLeft="16dp"
+                                android:visibility="gone"
                                 android:onClick="@{()->click.todo()}"
                                 android:paddingRight="16dp">
 
@@ -393,6 +395,7 @@
                                 android:layout_height="1dp"
                                 android:layout_marginLeft="16dp"
                                 android:layout_marginEnd="16dp"
+                                android:visibility="gone"
                                 android:background="@color/mine_line"
                                 android:layout_marginStart="16dp" />
 
@@ -404,6 +407,7 @@
                                 android:orientation="horizontal"
                                 android:onClick="@{()->click.demo()}"
                                 android:paddingLeft="16dp"
+                                android:visibility="gone"
                                 android:paddingRight="16dp">
 
                                 <ImageView

@@ -1,20 +1,17 @@
 package com.uiuang.cloudknowledge.ui.fragment.home
 
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.bean.TabBean
+import com.uiuang.cloudknowledge.bean.wan.TabBean
 import com.uiuang.cloudknowledge.databinding.FragmentCategoryDetailBinding
 import com.uiuang.cloudknowledge.ext.initCategory
 import com.uiuang.cloudknowledge.ext.setUiTheme
 import com.uiuang.cloudknowledge.viewmodel.state.HomeViewModel
-import com.uiuang.mvvm.base.appContext
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.util.toHtml
 import jp.wasabeef.glide.transformations.BlurTransformation

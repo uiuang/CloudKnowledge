@@ -18,7 +18,7 @@ import com.afollestad.materialdialogs.list.customListAdapter
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.bean.GankIOResultBean
+import com.uiuang.cloudknowledge.bean.gank.GankIOResultBean
 import com.uiuang.cloudknowledge.bean.wan.WebBean
 import com.uiuang.cloudknowledge.data.enums.CollectType
 import com.uiuang.cloudknowledge.databinding.IncludeListBinding

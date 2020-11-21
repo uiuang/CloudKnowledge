@@ -5,7 +5,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.uiuang.cloudknowledge.bean.WanAndroidBannerBean
+import com.uiuang.cloudknowledge.bean.wan.WanAndroidBannerBean
 import com.youth.banner.adapter.BannerAdapter
 
 

@@ -20,6 +20,8 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.event.AppViewModel
 import com.uiuang.cloudknowledge.app.http.NetworkApi
+import com.uiuang.cloudknowledge.bean.wan.WebBean
+import com.uiuang.cloudknowledge.data.enums.CollectType
 import com.uiuang.cloudknowledge.ext.initClose
 import com.uiuang.cloudknowledge.ext.showMessage
 import com.uiuang.cloudknowledge.utils.*
@@ -29,6 +31,7 @@ import com.uiuang.cloudknowledge.weight.preference.PrefKey
 import com.uiuang.cloudknowledge.weight.preference.PreferenceCategory
 import com.uiuang.mvvm.ext.getAppViewModel
 import com.uiuang.mvvm.ext.nav
+import com.uiuang.mvvm.ext.navigateAction
 
 
 class SettingFragment : PreferenceFragmentCompat(),
@@ -172,12 +175,12 @@ class SettingFragment : PreferenceFragmentCompat(),
 
         findPreference<Preference>(PrefKey.VERSION)?.setOnPreferenceClickListener {
 //            Beta.checkUpgrade(true, false)
+            "暂无更新".toast()
             false
         }
         findPreference<Preference>(PrefKey.COPY_RIGHT)?.setOnPreferenceClickListener {
-//            activity?.let {
-//                showMessage(it.getString(R.string.copyright_tip))
-//            }
+
+            showMessage(getString(R.string.copyright_tip))
             false
         }
         findPreference<Preference>(PrefKey.AUTHOR)?.setOnPreferenceClickListener {
@@ -188,14 +191,21 @@ class SettingFragment : PreferenceFragmentCompat(),
             false
         }
         findPreference<Preference>(PrefKey.PROJECT)?.setOnPreferenceClickListener {
-//            val data = BannerResponse(
-//                title = "一位练习时长两年半的菜虚鲲制作的玩安卓App",
-//                url = findPreference<Preference>("project")?.summary.toString()
-//            )
-//            view?.let {
-//                nav().navigateAction(R.id.action_to_webFragment, Bundle()
-//                    .apply { putParcelable("bannerdata", data) })
-//            }
+            var projectUrl = findPreference<Preference>("project")?.summary.toString()
+
+            view?.let {
+                nav().navigateAction(R.id.action_global_webViewFragment, Bundle()
+                    .apply {
+                        val webBean = WebBean(
+                            0,
+                            url = projectUrl,
+                            title = "项目地址",
+                            collect = false,
+                            collectType = CollectType.Url.type
+                        )
+                        putParcelable("webBean", webBean)
+                    })
+            }
             false
         }
         shareViewModel.appColor.observe(this, Observer {

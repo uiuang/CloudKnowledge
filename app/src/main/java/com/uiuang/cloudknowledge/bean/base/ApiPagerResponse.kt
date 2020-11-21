@@ -1,26 +1,25 @@
-package com.uiuang.cloudknowledge.bean
+package com.uiuang.cloudknowledge.bean.base
 
 import java.io.Serializable
 
 /**
  *  分页数据的基类
  */
-data class FilmApiPagerResponse<T>(
-    var ms: T,
-    var lid: Int,
+data class ApiPagerResponse<T>(
+    var datas: T,
     var curPage: Int,
     var offset: Int,
     var over: Boolean,
     var pageCount: Int,
     var size: Int,
-    var totalComingMovie: Int
+    var total: Int
 ) : Serializable {
     /**
      * 数据是否为空
      */
     fun isEmpty(): Boolean {
 
-        return (ms as List<*>).size == 0
+        return (datas as List<*>).size == 0
     }
 
     /**

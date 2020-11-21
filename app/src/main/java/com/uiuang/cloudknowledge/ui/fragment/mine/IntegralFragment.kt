@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.bean.IntegralBean
+import com.uiuang.cloudknowledge.bean.wan.IntegralBean
 import com.uiuang.cloudknowledge.databinding.FragmentIntegralBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.wan.IntegralAdapter

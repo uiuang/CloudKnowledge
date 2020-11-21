@@ -3,8 +3,8 @@ package com.uiuang.cloudknowledge.viewmodel.request
 import androidx.lifecycle.MutableLiveData
 import com.uiuang.cloudknowledge.app.http.getWanAndroidServer
 import com.uiuang.cloudknowledge.app.state.ListDataUiState
-import com.uiuang.cloudknowledge.bean.ArticlesBean
-import com.uiuang.cloudknowledge.bean.WanAndroidBannerBean
+import com.uiuang.cloudknowledge.bean.wan.ArticlesBean
+import com.uiuang.cloudknowledge.bean.wan.WanAndroidBannerBean
 import com.uiuang.mvvm.base.viewmodel.BaseViewModel
 import com.uiuang.mvvm.ext.request
 

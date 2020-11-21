@@ -2,10 +2,8 @@ package com.uiuang.cloudknowledge.ext
 
 import android.app.Activity
 import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
@@ -14,7 +12,6 @@ import android.widget.CompoundButton
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatRadioButton
 import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -34,9 +31,8 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.app.App
 import com.uiuang.cloudknowledge.app.state.ListDataUiState
-import com.uiuang.cloudknowledge.bean.ClassifyResponse
+import com.uiuang.cloudknowledge.bean.wan.ClassifyResponse
 import com.uiuang.cloudknowledge.ui.fragment.gank.GankFragment
 import com.uiuang.cloudknowledge.ui.fragment.home.HomeFragment
 import com.uiuang.cloudknowledge.ui.fragment.mine.MineFragment

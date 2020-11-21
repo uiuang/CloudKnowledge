@@ -40,12 +40,12 @@
             android:title="版本" />
         <Preference
             android:key="author"
-            android:summary=""
+            android:summary="一个工作经验很少的安卓开发者~~"
             android:title="作者" />
         <Preference
             android:key="project"
             android:summary="项目源码"
-            android:title="" />
+            android:title="https://github.com/uiuang/CloudKnowledge" />
         <Preference
             android:key="open"
             android:summary="项目中用到的开源哭"
@@ -53,7 +53,7 @@
             app:isPreferenceVisible="false" />
         <Preference
             android:key="copyRight"
-            android:summary=""
+            android:summary="仅作个人及非商业用途"
             android:title="版权声明" />
     </com.uiuang.cloudknowledge.weight.preference.PreferenceCategory>
 

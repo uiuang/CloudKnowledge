@@ -7,7 +7,7 @@
 
         <variable
             name="data"
-            type="com.uiuang.cloudknowledge.bean.FilmDetailBean.Basic" />
+            type="com.uiuang.cloudknowledge.bean.film.FilmDetailBean" />
 
     </data>
 

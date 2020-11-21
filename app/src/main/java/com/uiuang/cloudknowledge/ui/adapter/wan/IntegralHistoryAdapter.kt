@@ -3,7 +3,7 @@ package com.uiuang.cloudknowledge.ui.adapter.wan
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.IntegralHistoryBean
+import com.uiuang.cloudknowledge.bean.wan.IntegralHistoryBean
 import com.uiuang.cloudknowledge.utils.SettingUtil
 import com.uiuang.mvvm.util.DatetimeUtil
 

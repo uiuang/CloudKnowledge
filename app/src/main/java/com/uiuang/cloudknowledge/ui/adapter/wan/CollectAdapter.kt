@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseDelegateMultiAdapter
 import com.chad.library.adapter.base.delegate.BaseMultiTypeDelegate
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.ArticlesBean
+import com.uiuang.cloudknowledge.bean.wan.ArticlesBean
 import com.uiuang.cloudknowledge.weight.customview.CollectView
 import com.uiuang.mvvm.util.toHtml
 

@@ -6,7 +6,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.gson.Gson
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.bean.GankIOResultBean
+import com.uiuang.cloudknowledge.bean.gank.GankIOResultBean
 import com.uiuang.cloudknowledge.databinding.FragmentBigImageBinding
 import com.uiuang.cloudknowledge.ui.adapter.gank.LocalPageAdapter
 import com.uiuang.cloudknowledge.ui.adapter.gank.ViewPagerAdapter

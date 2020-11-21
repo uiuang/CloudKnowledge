@@ -13,7 +13,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.bean.FilmDetailBean
+import com.uiuang.cloudknowledge.bean.film.FilmDetailBean
 import com.uiuang.cloudknowledge.databinding.FragmentFilmDetailBinding
 import com.uiuang.cloudknowledge.ext.*
 import com.uiuang.cloudknowledge.ui.adapter.film.FilmActorsAdapter

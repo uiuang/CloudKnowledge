@@ -1,4 +1,4 @@
-package com.uiuang.cloudknowledge.bean
+package com.uiuang.cloudknowledge.bean.gank
 
 import android.annotation.SuppressLint
 import android.os.Parcelable

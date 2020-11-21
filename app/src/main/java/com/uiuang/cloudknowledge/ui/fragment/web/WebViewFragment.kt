@@ -2,9 +2,7 @@ package com.uiuang.cloudknowledge.ui.fragment.web
 
 import android.content.DialogInterface
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.*
-import android.webkit.WebView
 import android.webkit.WebView.HitTestResult
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
@@ -14,25 +12,21 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.just.agentweb.AgentWeb
-import com.just.agentweb.WebChromeClient
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
 import com.uiuang.cloudknowledge.app.http.Constants
-import com.uiuang.cloudknowledge.bean.CollectBus
+import com.uiuang.cloudknowledge.bean.event.CollectBus
 import com.uiuang.cloudknowledge.bean.wan.WebBean
 import com.uiuang.cloudknowledge.data.enums.CollectType
 import com.uiuang.cloudknowledge.databinding.FragmentWebViewBinding
 import com.uiuang.cloudknowledge.ext.hideSoftKeyboard
 import com.uiuang.cloudknowledge.ext.initClose
-import com.uiuang.cloudknowledge.ext.jumpByLogin
 import com.uiuang.cloudknowledge.utils.*
 import com.uiuang.cloudknowledge.viewmodel.request.RequestCollectViewModel
 import com.uiuang.cloudknowledge.viewmodel.state.WebViewModel
-import com.uiuang.mvvm.base.appContext
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
 import com.uiuang.mvvm.util.ShareUtils
-import com.uiuang.mvvm.util.toHtml
 import kotlinx.android.synthetic.main.fragment_web_view.*
 import kotlinx.android.synthetic.main.include_toolbar.*
 
@@ -204,7 +198,11 @@ class WebViewFragment : BaseFragment<WebViewModel, FragmentWebViewBinding>() {
         requestCollectViewModel.collectUiState.observe(viewLifecycleOwner, Observer {
             if (it.isSuccess) {
                 mViewModel.collect = it.collect
-                eventViewModel.collectEvent.value = CollectBus(it.id, it.collect)
+                eventViewModel.collectEvent.value =
+                    CollectBus(
+                        it.id,
+                        it.collect
+                    )
                 //刷新一下menu
                 mActivity.window?.invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL)
                 mActivity.invalidateOptionsMenu()
@@ -213,7 +211,11 @@ class WebViewFragment : BaseFragment<WebViewModel, FragmentWebViewBinding>() {
         })
         requestCollectViewModel.collectUrlUiState.observe(viewLifecycleOwner, Observer {
             if (it.isSuccess) {
-                eventViewModel.collectEvent.value = CollectBus(it.id, it.collect)
+                eventViewModel.collectEvent.value =
+                    CollectBus(
+                        it.id,
+                        it.collect
+                    )
                 mViewModel.collect = it.collect
                 //刷新一下menu
                 mActivity.window?.invalidatePanelMenu(Window.FEATURE_OPTIONS_PANEL)

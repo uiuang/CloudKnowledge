@@ -8,8 +8,8 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.ChildrenBean
-import com.uiuang.cloudknowledge.bean.TabBean
+import com.uiuang.cloudknowledge.bean.wan.ChildrenBean
+import com.uiuang.cloudknowledge.bean.wan.TabBean
 import com.uiuang.cloudknowledge.utils.DataUtil
 import com.uiuang.cloudknowledge.utils.SettingUtil
 

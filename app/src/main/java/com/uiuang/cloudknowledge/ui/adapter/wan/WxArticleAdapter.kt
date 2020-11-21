@@ -5,7 +5,7 @@ import androidx.annotation.RequiresApi
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.ChildrenBean
+import com.uiuang.cloudknowledge.bean.wan.ChildrenBean
 
 class WxArticleAdapter(datas: MutableList<ChildrenBean>) :
     BaseQuickAdapter<ChildrenBean, BaseViewHolder>(R.layout.item_wxarticle) {

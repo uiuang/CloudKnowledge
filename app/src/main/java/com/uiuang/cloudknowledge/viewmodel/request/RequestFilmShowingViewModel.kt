@@ -3,7 +3,7 @@ package com.uiuang.cloudknowledge.viewmodel.request
 import androidx.lifecycle.MutableLiveData
 import com.uiuang.cloudknowledge.app.http.getMtimeTicketServer
 import com.uiuang.cloudknowledge.app.state.ListDataUiState
-import com.uiuang.cloudknowledge.bean.FilmItemBean
+import com.uiuang.cloudknowledge.bean.film.FilmItemBean
 import com.uiuang.mvvm.base.viewmodel.BaseViewModel
 import com.uiuang.mvvm.ext.request
 

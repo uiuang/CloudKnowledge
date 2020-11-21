@@ -3,7 +3,7 @@ package com.uiuang.cloudknowledge.viewmodel.request
 import androidx.lifecycle.MutableLiveData
 import com.uiuang.cloudknowledge.app.http.getGankIOServer
 import com.uiuang.cloudknowledge.app.state.ListDataUiState
-import com.uiuang.cloudknowledge.bean.GankIOResultBean
+import com.uiuang.cloudknowledge.bean.gank.GankIOResultBean
 import com.uiuang.mvvm.base.viewmodel.BaseViewModel
 import com.uiuang.mvvm.ext.request
 

@@ -40,10 +40,10 @@ fun String.openLink(context: Context?) {
 
 /****************
  *
- * 发起添加群流程。群号：Android 云知交流群(429648305) 的 key 为： UHs4rILhZQvKTKzb-14CQ7qi2_dSZT1i
- * 调用 joinQQGroup(UHs4rILhZQvKTKzb-14CQ7qi2_dSZT1i) 即可发起手Q客户端申请加群 Android 云知交流群(429648305)
+ * 发起添加群流程。群号：Android 云知交流群(429648305) 的 key 为： E1OxUYr98M9DqpVNi4_gof_3Dm5GuxwA
+ * 调用 joinQQGroup(E1OxUYr98M9DqpVNi4_gof_3Dm5GuxwA) 即可发起手Q客户端申请加群 Android 云知交流群(429648305)
  *
- *  由官网生成的key
+ * @param key 由官网生成的key
  * @return 返回true表示呼起手Q成功，返回false表示呼起失败
  ******************/
 fun String.joinQQGroup(context: Context?) {

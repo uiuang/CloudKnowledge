@@ -1,6 +1,6 @@
 package com.uiuang.cloudknowledge.app.event
 
-import com.uiuang.cloudknowledge.bean.UserInfo
+import com.uiuang.cloudknowledge.bean.wan.UserInfo
 import com.uiuang.cloudknowledge.utils.CacheUtil
 import com.uiuang.cloudknowledge.utils.SettingUtil
 import com.uiuang.mvvm.base.appContext

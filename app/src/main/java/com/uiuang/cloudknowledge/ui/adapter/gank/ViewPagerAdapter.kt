@@ -17,7 +17,7 @@ import com.bumptech.glide.request.target.Target
 import com.github.chrisbanes.photoview.OnPhotoTapListener
 import com.github.chrisbanes.photoview.PhotoView
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.GankIOResultBean
+import com.uiuang.cloudknowledge.bean.gank.GankIOResultBean
 import com.uiuang.cloudknowledge.ui.fragment.sister.BigImageFragment
 import com.uiuang.mvvm.util.windowManager
 

@@ -7,7 +7,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.FilmItemBean
+import com.uiuang.cloudknowledge.bean.film.FilmItemBean
 
 
 /**

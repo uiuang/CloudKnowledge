@@ -1,4 +1,6 @@
-package com.uiuang.cloudknowledge.bean
+package com.uiuang.cloudknowledge.bean.wan
+
+import com.uiuang.cloudknowledge.bean.wan.ArticlesBean
 
 
 /**

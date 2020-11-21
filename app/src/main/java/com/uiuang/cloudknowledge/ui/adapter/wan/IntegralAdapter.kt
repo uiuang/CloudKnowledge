@@ -4,7 +4,7 @@ import androidx.core.content.ContextCompat
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.IntegralBean
+import com.uiuang.cloudknowledge.bean.wan.IntegralBean
 import com.uiuang.cloudknowledge.utils.SettingUtil
 
 class IntegralAdapter(data: ArrayList<IntegralBean>) :

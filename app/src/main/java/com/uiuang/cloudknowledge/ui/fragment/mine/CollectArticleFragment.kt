@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.bean.CollectBus
+import com.uiuang.cloudknowledge.bean.event.CollectBus
 import com.uiuang.cloudknowledge.bean.wan.WebBean
 import com.uiuang.cloudknowledge.data.enums.CollectType
 import com.uiuang.cloudknowledge.databinding.IncludeListBinding
@@ -94,7 +94,11 @@ class CollectArticleFragment : BaseFragment<CollectViewModel, IncludeListBinding
         requestCollectViewModel.collectUiState.observe(viewLifecycleOwner, Observer {
             if (it.isSuccess) {
                 //收藏或取消收藏操作成功，发送全局收藏消息
-                eventViewModel.collectEvent.value = CollectBus(it.id, it.collect)
+                eventViewModel.collectEvent.value =
+                    CollectBus(
+                        it.id,
+                        it.collect
+                    )
             } else {
                 showMessage(it.errorMsg)
                 for (index in articleAdapter.data.indices) {

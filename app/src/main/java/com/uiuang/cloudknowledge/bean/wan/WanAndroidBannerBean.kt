@@ -1,4 +1,4 @@
-package com.uiuang.cloudknowledge.bean
+package com.uiuang.cloudknowledge.bean.wan
 
 data class WanAndroidBannerBean(
     val desc: String,

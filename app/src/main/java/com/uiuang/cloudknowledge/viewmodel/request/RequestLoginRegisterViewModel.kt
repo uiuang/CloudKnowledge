@@ -2,8 +2,8 @@ package com.uiuang.cloudknowledge.viewmodel.request
 
 import androidx.lifecycle.MutableLiveData
 import com.uiuang.cloudknowledge.app.http.getWanAndroidServer
-import com.uiuang.cloudknowledge.bean.ApiResponse
-import com.uiuang.cloudknowledge.bean.UserInfo
+import com.uiuang.cloudknowledge.bean.base.ApiResponse
+import com.uiuang.cloudknowledge.bean.wan.UserInfo
 import com.uiuang.mvvm.base.viewmodel.BaseViewModel
 import com.uiuang.mvvm.ext.request
 import com.uiuang.mvvm.network.AppException

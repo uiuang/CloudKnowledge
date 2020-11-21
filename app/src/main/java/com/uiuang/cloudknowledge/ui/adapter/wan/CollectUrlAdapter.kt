@@ -3,7 +3,7 @@ package com.uiuang.cloudknowledge.ui.adapter.wan
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.ArticlesBean
+import com.uiuang.cloudknowledge.bean.wan.ArticlesBean
 import com.uiuang.cloudknowledge.ext.setAdapterAnimation
 import com.uiuang.cloudknowledge.utils.SettingUtil
 import com.uiuang.cloudknowledge.weight.customview.CollectView

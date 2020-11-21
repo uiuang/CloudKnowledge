@@ -1,4 +1,4 @@
-package com.uiuang.cloudknowledge.bean
+package com.uiuang.cloudknowledge.bean.wan
 
 class ArticlesBean(
     var apkLink: String? = null,

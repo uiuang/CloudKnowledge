@@ -5,7 +5,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.bean.IntegralBean
+import com.uiuang.cloudknowledge.bean.wan.IntegralBean
+import com.uiuang.cloudknowledge.bean.wan.WebBean
+import com.uiuang.cloudknowledge.data.enums.CollectType
 import com.uiuang.cloudknowledge.databinding.FragmentMineBinding
 import com.uiuang.cloudknowledge.ext.init
 import com.uiuang.cloudknowledge.ext.jumpByLogin
@@ -108,12 +110,21 @@ class MineFragment : BaseFragment<MineViewModel, FragmentMineBinding>() {
         }
 
         fun home() {
-            nav().navigateAction(R.id.action_global_webViewFragment, Bundle())
+            nav().navigateAction(R.id.action_global_webViewFragment, Bundle().apply {
+                var webBean = WebBean(
+                    0,
+                    url = "https://www.wanandroid.com/",
+                    title = "玩安卓",
+                    collect = false,
+                    collectType = CollectType.Url.type
+                )
+                putParcelable("webBean", webBean)
+            })
         }
 
         /** 加入我们 */
         fun join() {
-            ("9n4i5sHt4189d4DvbotKiCHy-5jZtD4D").joinQQGroup(requireActivity())
+            getString(R.string.add_qq_group).joinQQGroup(requireActivity())
         }
 
         /** 设置*/

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kingja.loadsir.core.LoadService
 import com.uiuang.cloudknowledge.R
 import com.uiuang.cloudknowledge.app.base.BaseFragment
-import com.uiuang.cloudknowledge.bean.TabBean
+import com.uiuang.cloudknowledge.bean.wan.TabBean
 import com.uiuang.cloudknowledge.databinding.FragmentTreeBinding
 import com.uiuang.cloudknowledge.databinding.HeaderItemTreeBinding
 import com.uiuang.cloudknowledge.ext.init

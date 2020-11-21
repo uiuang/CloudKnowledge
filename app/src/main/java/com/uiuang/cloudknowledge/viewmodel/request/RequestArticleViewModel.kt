@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.uiuang.cloudknowledge.app.http.getWanAndroidServer
 import com.uiuang.cloudknowledge.app.state.ListDataUiState
 import com.uiuang.cloudknowledge.app.state.UpdateUiState
-import com.uiuang.cloudknowledge.bean.ArticlesBean
+import com.uiuang.cloudknowledge.bean.wan.ArticlesBean
 import com.uiuang.mvvm.base.viewmodel.BaseViewModel
 import com.uiuang.mvvm.ext.request
 import com.uiuang.mvvm.state.ResultState

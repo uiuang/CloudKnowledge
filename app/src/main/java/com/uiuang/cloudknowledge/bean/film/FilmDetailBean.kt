@@ -1,4 +1,4 @@
-package com.uiuang.cloudknowledge.bean
+package com.uiuang.cloudknowledge.bean.film
 
 data class FilmDetailBean(
     val advertisement: AdvertisementBean,

@@ -14,7 +14,7 @@ import com.uiuang.cloudknowledge.app.http.Constants.NAME
 import com.uiuang.cloudknowledge.app.http.Constants.WEB_ISTITLEFIX
 import com.uiuang.cloudknowledge.app.http.Constants.WEB_TITLE
 import com.uiuang.cloudknowledge.app.http.Constants.WEB_URL
-import com.uiuang.cloudknowledge.bean.CollectBus
+import com.uiuang.cloudknowledge.bean.event.CollectBus
 import com.uiuang.cloudknowledge.bean.wan.WebBean
 import com.uiuang.cloudknowledge.data.enums.CollectType
 import com.uiuang.cloudknowledge.databinding.FragmentCategoryDetailBinding
@@ -27,11 +27,7 @@ import com.uiuang.cloudknowledge.weight.recyclerview.DefineLoadMoreView
 import com.uiuang.mvvm.ext.nav
 import com.uiuang.mvvm.ext.navigateAction
 import com.yanzhenjie.recyclerview.SwipeRecyclerView
-import kotlinx.android.synthetic.main.fragment_category_article.*
 import kotlinx.android.synthetic.main.fragment_category_article.recyclerView
-import kotlinx.android.synthetic.main.include_list.*
-import kotlinx.android.synthetic.main.include_recyclerview.*
-import kotlinx.android.synthetic.main.include_toolbar.*
 
 
 class CategoryArticleFragment : BaseFragment<HomeViewModel, FragmentCategoryDetailBinding>() {
@@ -121,7 +117,11 @@ class CategoryArticleFragment : BaseFragment<HomeViewModel, FragmentCategoryDeta
         requestCollectViewModel.collectUiState.observe(viewLifecycleOwner, Observer {
             if (it.isSuccess) {
                 //收藏或取消收藏操作成功，发送全局收藏消息
-                eventViewModel.collectEvent.value = CollectBus(it.id, it.collect)
+                eventViewModel.collectEvent.value =
+                    CollectBus(
+                        it.id,
+                        it.collect
+                    )
             } else {
                 showMessage(it.errorMsg)
                 for (index in wanAndroidAdapter.data.indices) {

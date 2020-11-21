@@ -4,7 +4,7 @@ import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.uiuang.cloudknowledge.R
-import com.uiuang.cloudknowledge.bean.NavJsonBean
+import com.uiuang.cloudknowledge.bean.wan.NavJsonBean
 import com.uiuang.mvvm.util.toHtml
 
 

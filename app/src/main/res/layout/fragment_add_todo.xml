@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="click"
+            type="com.uiuang.cloudknowledge.ui.fragment.mine.AddTodoFragment.ProxyClick" />
+        <variable
+            name="vm"
+            type="com.uiuang.cloudknowledge.viewmodel.state.TodoViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/include_toolbar" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fadeScrollbars="true"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="标题"
+                    android:textColor="@color/colorBlack333"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edit_share_article"
+                    android:hint="标题"
+                    android:inputType="text"
+                    android:lines="1"
+                    android:maxLength="10"
+                    android:padding="12dp"
+                    android:text="@={vm.todoTitle}"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="内容"
+                    android:textColor="@color/colorBlack333"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edit_share_article"
+                    android:gravity="top|left"
+                    android:hint="内容描述"
+                    android:maxLength="100"
+                    android:minLines="4"
+                    android:padding="12dp"
+                    android:text="@={vm.todoContent}"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="预定完成时间"
+                    android:textColor="@color/colorBlack333"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edit_share_article"
+                    android:hint="选择预定完成时间"
+                    android:onClick="@{()->click.todoTime()}"
+                    android:padding="12dp"
+                    android:text="@{vm.todoTime}"
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="优先级"
+                    android:textColor="@color/colorBlack333"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/edit_share_article"
+                    android:onClick="@{()->click.todoType()}"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="12dp"
+                        android:text="@{vm.todoLevel}"
+                        android:textColor="@color/black"
+                        android:textSize="15dp" />
+
+                    <com.uiuang.cloudknowledge.weight.preference.ColorCircleView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="12dp"
+                        bind:colorCircleViewColor="@{vm.todoColor}"
+                        android:layout_marginEnd="12dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/addTodoSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="12dp"
+                    android:background="@drawable/button_submit_article"
+                    android:gravity="center"
+                    android:onClick="@{()->click.submit()}"
+                    android:text="提交"
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>
