@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?android:selectableItemBackground"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/item_todo_tag"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_todo_tag" />
+
+            <TextView
+                android:id="@+id/item_todo_title"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:maxLength="10"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                tools:text="今天晚上一起来开黑啊" />
+
+            <TextView
+                android:id="@+id/item_todo_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/colorBlack666"
+                android:textSize="12dp"
+                tools:text="2019-09-04" />
+
+            <ImageView
+                android:id="@+id/item_todo_setting"
+                android:layout_width="36dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/item_img_selector"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:src="@drawable/ic_todo_more" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/colorBackground" />
+
+        <TextView
+            android:id="@+id/item_todo_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="44dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="12dp"
+            android:lineSpacingMultiplier="1.2"
+            android:minLines="3"
+            android:textColor="@color/colorBlack666"
+            android:textSize="14dp"
+            tools:text="来一起打王者啊？我关羽6双鞋，跑的贼鸡儿快"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="44dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/item_todo_status"
+        android:src="@drawable/ic_done"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="36dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="36dp" />
+</RelativeLayout>

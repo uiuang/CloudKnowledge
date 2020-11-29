@@ -130,7 +130,11 @@
         android:id="@+id/todoListFragment"
         android:name="com.uiuang.cloudknowledge.ui.fragment.mine.TodoListFragment"
         android:label="fragment_todo_list"
-        tools:layout="@layout/fragment_todo_list" />
+        tools:layout="@layout/fragment_todo_list" >
+        <action
+            android:id="@+id/action_todoListFragment_to_addTodoFragment"
+            app:destination="@id/addTodoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/integralHistoryFragment"
         android:name="com.uiuang.cloudknowledge.ui.fragment.mine.IntegralHistoryFragment"
@@ -140,4 +144,8 @@
         android:name="com.uiuang.cloudknowledge.ui.fragment.mine.ShareArticleFragment"
         android:label="fragment_share_article"
         tools:layout="@layout/fragment_share_article" />
+    <fragment
+        android:id="@+id/addTodoFragment"
+        android:name="com.uiuang.cloudknowledge.ui.fragment.mine.AddTodoFragment"
+        android:label="AddTodoFragment" />
 </navigation>

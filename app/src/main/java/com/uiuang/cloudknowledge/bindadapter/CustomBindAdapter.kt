@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.uiuang.cloudknowledge.weight.preference.ColorCircleView
 import com.uiuang.mvvm.ext.view.textString
 
 /**
@@ -57,11 +58,11 @@ object CustomBindAdapter {
             .into(view)
     }
 
-//    @BindingAdapter(value = ["colorCircleViewColor"])
-//    @JvmStatic
-//    fun colorCircleViewColor(view: MyColorCircleView, color: Int) {
-//        view.setView(color)
-//    }
+    @BindingAdapter(value = ["colorCircleViewColor"])
+    @JvmStatic
+    fun colorCircleViewColor(view: ColorCircleView, color: Int) {
+        view.setView(color)
+    }
 
     @BindingAdapter(value = ["afterTextChanged"])
     @JvmStatic
